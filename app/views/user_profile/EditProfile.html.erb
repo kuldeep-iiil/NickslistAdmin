@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NicksList - User Registration</title>
+	
+</head>
+<body onload="SignupForm_AuthUser('<%= @authCode %>', '<%= @companyName %>', '<%= @incorporationType %>', '<%= @bussStreetAddress %>', '<%= @bussCity %>', '<%= @bussState %>', '<%= @bussZipCode %>', '<%= @mailStreetAddress %>', '<%= @mailCity %>', '<%= @mailState %>', '<%= @mailZipCode %>', '<%= @phoneNumber %>', '<%= @email %>', '<%= @license %>'); <% if(!@error.blank?)%> SignupForm_visibility(); <% end %>">
+	<div id="wrapper">
+	<%= render partial: "/layouts/header" %>
+	
+    <div id="main-content-wrapper">
+    	<div class="browser-center">
+        	<div id="signup-wrapper">
+               <div id="signup-header">
+                  <h1>My Profile</h1>
+               </div>
+               <!--<div class="steps"><%= image_tag("step1.jpg", :alt => "") %></div>-->
+               
+               <div id="singup-form-area">
+               		<div class="singup-form-heading">
+                    	<h1>Edit Profile</h1>
+                        <div id="Error"><%= @messageString %></div>        
+                    </div>
+                    
+               		<div class="singup-form">
+               			<div id="SignupForm">
+               			<form action="<%= user_profile_UpdateProfile_url %>" method="post">
+               			<input type="hidden" id="hiddenFilledCode" name="hiddenFilledCode" />
+                    	<div class="singup-textarea">
+                    	  <input type="text" name="textCompany" id="textCompany" readonly="readonly" required="true" class="singup-textbox"  placeholder="Name of Company" value="<%= @usercompanyName %>" />
+                    	</div>
+                        <div class="singup-textarea">
+                    	  <input type="text" name="textFirstName" id="textFirstName" required="true" class="singup-textbox-small"  placeholder="First Name" value="<%= @userfirstName %>" />
+                        </div>
+                        <div class="singup-textarea">
+                          <input type="text" name="textLastName" id="textLastName" required="true" class="singup-textbox-small"  placeholder="Last Name" value="<%= @userlastName %>" />
+                    	</div>
+                        <div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textIncorporationType" id="textIncorporationType" required="true" class="singup-textbox"  placeholder="Type of Incorporation" value="<%= @userincorporationType %>" />
+                    	</div>
+                    	<div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textPhoneNumber" id="textPhoneNumber" required="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= @userphoneNumber %>" />
+                    	</div>
+                        <div class="singup-textarea">
+                    	  <input type="email" name="textEmail" id="textEmail" required="true" class="singup-textbox-small"  placeholder="Email Address" value="<%= @useremail %>" />
+                        </div>
+                        <div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textLicense" id="textLicense" required="true" class="singup-textbox-small"  placeholder="Contractor License Number" value="<%= @userlicense %>" />
+                    	</div>
+                    	<div class="subscription-Title">Business Address</div>
+                    	<div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textBussStreetAddress" required="true" id="textBussStreetAddress" class="singup-textbox"  placeholder="Business Street Address" value="<%= @userbussStreetAddress %>" />
+                    	</div>
+                    	<div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textBussZipCode" id="textBussZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= @userbussZipCode %>" />
+                    	</div>
+                    	<div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= @userbussCity %>" />
+                    	</div>
+                    	<div class="subscription-Title">Mailing Address</div>
+                        <div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textMailStreetAddress" id="textMailStreetAddress" required="true" class="singup-textbox"  placeholder="Mailing Street Address" value="<%= @usermailStreetAddress %>" />
+                    	</div>
+                    	<div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textMailZipCode" id="textMailZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= @usermailZipCode %>" />
+                    	</div>
+                    	<div class="singup-textarea">
+                    	  <input type="text" readonly="readonly" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= @usermailCity %>" />
+                    	</div>
+                        
+                        <div class="singup-textarea">
+                        	<input type="submit" name="Submit" id="Submit" value="Save Profile" class="org-bt" />
+                        </div>
+                        </form>
+                        </div>
+                    </div>
+               </div>
+               
+             </div>
+        </div>
+    </div>
+    
+    <%= render partial: "/layouts/footer" %>
+    
+</div>
+</body>
+</html>

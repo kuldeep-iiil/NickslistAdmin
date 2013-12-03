@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Admins
+							<div style="float:right;">
+								<form id="getSelectedReview" action="<%= site_users_ManageUsers_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE USERS ACCOUNT" class="org-bt" />
+								</form>
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Edit User's Account</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= site_users_UpdateUser_url %>" method="post">
+
+										<div class="singup-textarea">
+											<div class="label">
+												First Name
+											</div>
+											<input type="text" name="textFirstName" id="textFirstName" required="true" class="singup-textbox-small"  placeholder="First Name" value="<%= @userFirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Last Name
+											</div>
+											<input type="text" name="textLastName" id="textLastName" required="true" class="singup-textbox-small"  placeholder="Last Name" value="<%= @userLastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Email ID
+											</div>
+											<input type="email" name="textEmail" id="textEmail" required="true" class="singup-textbox-small"  placeholder="Email Address" value="<%= @userEmail %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Username
+											</div>
+											<input type="text" readonly="readonly" name="textUserName" id="textUserName" required="true" class="singup-textbox-small"  placeholder="User Name" value="<%= @userUserName %>" />
+										</div>
+										<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+
+										<div class="singup-textarea">
+											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+								</div>
+							</div>
+							<div style="float:left; height: 20px;">&nbsp;</div>
+							<div class="singup-form-heading">
+								<h1>Change User's Password</h1>
+							</div>
+							<div style="float: left" id="Successs">
+									<%= @messageString %>
+								</div>
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= site_users_ChangePassword_url %>" method="post">
+
+										<div class="singup-textarea">
+											<div class="label">
+												Password
+											</div>
+											<input type="password" name="textPassword" id="textPassword" required="true" onchange="form.textConfirmPassword.pattern = this.value;" class="singup-textbox-small"  placeholder="Password" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Confirm Password
+											</div>
+											<input type="password"  name="textConfirmPassword" id="textConfirmPassword" required="true" class="singup-textbox-small"  placeholder="Confirm Password" />
+										</div>
+										<div style="width: 300px;">&nbsp;</div>
+
+										<div class="singup-textarea">
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="submit" name="Submit" id="Submit" value="Save New Password" class="org-bt" />
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

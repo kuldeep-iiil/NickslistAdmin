@@ -3,17 +3,6 @@ class AuthenticationController < ApplicationController
   def login
     userName = params[:textUserName]
     password = params[:textPassword]
- 
-      @firstName = params[:hidFirstName]
-      @lastName = params[:hidLastName]
-      @phoneNumber = params[:hidPhoneNumber]
-      @streetAddress = params[:hidStreetAddress]
-      @citystateVal = params[:hidselectCity]
-      @zipCode = params[:hidZipCode]
-      @redirectUrl = params[:hidredirectUrl]
-      @reviewerID = params[:hidReviewerID]
-      @reviewID = params[:hidReviewID]
-      @reviewCount = params[:hidReviewCount]
     
     @username = userName
     user = authenticate(userName, password)
@@ -23,11 +12,7 @@ class AuthenticationController < ApplicationController
       session[:user_id] = user.ID
       #session[:user_name] = user.FirstName + " " + user.LastName
       session[:user_name] = "Hi, " + user.FirstName
-      if(@redirectUrl.blank?)
-        redirect_to root_url
-      else
-        redirect_to @redirectUrl, flash:{:hidFirstName => @firstName, :hidLastName => @lastName, :hidPhoneNumber => @phoneNumber, :hidStreetAddress => @streetAddress, :hidselectCity => @citystateVal, :hidZipCode => @zipCode, :hidReviewerID => @reviewerID, :hidReviewID => @reviewID, :hidReviewCount => @reviewCount}  
-      end
+      redirect_to root_url
     else
       redirect_to root_url, flash:{:userName => @username, :error => "Invalid User Name or Password!"}
     end
@@ -42,7 +27,7 @@ class AuthenticationController < ApplicationController
   def requestpassword
     email_id = params[:textEmail]
     if(!email_id.blank?)
-      email = SubscribedUser.find_by(EmailID: email_id)
+      email = SiteUser.find_by(EmailID: email_id)
       if(email.blank?)
         redirect_to authentication_requestpassword_url, :notice => "Email ID is not valid!"
         return false
@@ -67,15 +52,15 @@ class AuthenticationController < ApplicationController
     currentTime = Time.new
     time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
     if(!@userID.blank?)
-      @userDetails = SubscribedUser.find_by(ID: @userID)
+      @siteUser = SiteUser.find_by(ID: @userID)
       
       @oldPass = params[:textOldPassword]
       @newPass = params[:textPassword]
 
-      if(password_decryption(@userDetails.Password, @userDetails.Salt) == @oldPass)
-        if(password_decryption(@userDetails.Password, @userDetails.Salt) != @newPass)
-          @userDetails.Password = password_encryption(@newPass, @userDetails.Salt)
-          @userDetails.save
+      if(password_decryption(@siteUser.Password, @siteUser.Salt) == @oldPass)
+        if(password_decryption(@siteUser.Password, @siteUser.Salt) != @newPass)
+          @siteUser.Password = password_encryption(@newPass, @siteUser.Salt)
+          @siteUser.save
         else
           @error = "Old password can not be use to create a new password!"
         end
@@ -92,11 +77,11 @@ class AuthenticationController < ApplicationController
   
   def authenticate(userName, password)
    
-    user = SubscribedUser.find_by(UserName: userName)
+    user = SiteUser.find_by(UserName: userName)
 
     #@pass = BCrypt::Engine.hash_secret(password, user.Salt)
     #if user && user.Password == BCrypt::Engine.hash_secret(password, user.Salt)
-    if (user && password == password_decryption(user.Password, user.Salt) && user.IsSubscribed)
+    if (user && password == password_decryption(user.Password, user.Salt) && user.IsEnabled)
       user
     else
       nil

@@ -1,0 +1,2 @@
+class SitecontentController < ApplicationController
+end

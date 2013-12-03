@@ -7,25 +7,12 @@ class UserProfileController < ApplicationController
     
     @userID = session[:user_id]
     if(!@userID.blank?)
-      userDetails = SubscribedUser.find_by(ID: @userID)
-      userBussAddressDetails = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
-      userMailAddressDetails = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
-    
-      @userfirstName = userDetails.FirstName
-      @userlastName = userDetails.LastName    
-      @usercompanyName = userDetails.CompanyName
-      @userincorporationType = userDetails.IncorporationType
-      @userbussStreetAddress = userBussAddressDetails.Address
-      @userbussCity = userBussAddressDetails.City + ', ' + userBussAddressDetails.State
-      #@bussState = userBussAddressDetails.State
-      @userbussZipCode = userBussAddressDetails.ZIPCode
-      @usermailStreetAddress = userMailAddressDetails.Address
-      @usermailCity = userMailAddressDetails.City + ', ' + userMailAddressDetails.State
-      #@mailState = userMailAddressDetails.State
-      @usermailZipCode = userMailAddressDetails.ZIPCode
-      @userphoneNumber = userDetails.ContactNumber
-      @useremail = userDetails.EmailID
-      @userlicense = userDetails.LicenseNumber
+      @siteUsers = SiteUser.find_by(ID: @userID)
+          
+      @userFirstName = @siteUsers.FirstName
+      @userLastName = @siteUsers.LastName    
+      @userUserName = @siteUsers.UserName
+      @userEmail = @siteUsers.EmailID
       @error = ""
     end
   end
@@ -38,23 +25,12 @@ class UserProfileController < ApplicationController
     
     @userID = session[:user_id]
     if(!@userID.blank?)
-      userDetails = SubscribedUser.find_by(ID: @userID)
-      userBussAddressDetails = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
-      userMailAddressDetails = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
+      @siteUser = SiteUser.find_by(ID: @userID)
     
-      @userfirstName = userDetails.FirstName
-      @userlastName = userDetails.LastName    
-      @usercompanyName = userDetails.CompanyName
-      @userincorporationType = userDetails.IncorporationType
-      @userbussStreetAddress = userBussAddressDetails.Address
-      @userbussCity = userBussAddressDetails.City + ', ' + userBussAddressDetails.State
-      @userbussZipCode = userBussAddressDetails.ZIPCode
-      @usermailStreetAddress = userMailAddressDetails.Address
-      @usermailCity = userMailAddressDetails.City + ', ' + userMailAddressDetails.State
-      @usermailZipCode = userMailAddressDetails.ZIPCode
-      @userphoneNumber = userDetails.ContactNumber
-      @useremail = userDetails.EmailID
-      @userlicense = userDetails.LicenseNumber
+      @userFirstName = @siteUser.FirstName
+      @userLastName = @siteUser.LastName    
+      @userUserName = @siteUser.UserName
+      @userEmail = @siteUser.EmailID
       @error = ""
     end
   end
@@ -64,17 +40,18 @@ class UserProfileController < ApplicationController
     currentTime = Time.new
     time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
     if(!@userID.blank?)
-      @userDetails = SubscribedUser.find_by(ID: @userID)
+      @siteUser = SiteUser.find_by(ID: @userID)
       
       @userfirstName = params[:textFirstName]
       @userlastName = params[:textLastName]
       @useremail = params[:textEmail]
-            
-      @userDetails.FirstName = @userfirstName
-      @userDetails.LastName = @userlastName
-      @userDetails.EmailID = @useremail
-      @userDetails.DateUpdated = time
-      @userDetails.save
+      @userUserName = params[:textUserName]    
+      @siteUser.FirstName = @userfirstName
+      @siteUser.LastName = @userlastName
+      @siteUser.EmailID = @useremail
+      @siteUser.UserName = @userUserName
+      @siteUser.DateUpdated = time
+      @siteUser.save
           
     end    
     redirect_to user_profile_ViewProfile_url, :notice => "Profile updated successfuly!"

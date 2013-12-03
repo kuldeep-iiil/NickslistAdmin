@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25,50,100,200],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+				});
+				
+				$('#linkEdit').click(function() {
+					
+				});
+				
+			});
+			function EditUser(userID)
+				{
+					var eID = '#frmEditUser' + userID 
+					$(eID).submit();
+				}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Users
+							<div style="float:right;">
+								<form id="getSelectedReview" action="<%= users_AddUser_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="ADD NEW USER" class="org-bt" />
+								</form>
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Manage Users Account</h1>
+								<p>
+									Fill the user information below to create account
+								</p>
+								<div id="Success"><%= flash[:notice] %></div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@subUser.blank?) %>
+
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">First Name</th>
+												<th align="center">Last Name</th>
+												<th align="center">Company</th>
+												<th align="center">License No.</th>
+												<th align="center">Subscribed</th>
+												<th align="center">Activated</th>
+												<th align="center">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% !@subUser.each do |sUser| %>
+											<tr>
+												<td><%= sUser.FirstName %></td>
+												<td><%= sUser.LastName %></td>
+												<td><%= sUser.CompanyName %></td>
+												<td align="center"><%= sUser.LicenseNumber %></td>
+												<td align="center">
+													<% if(sUser.IsSubscribed) %>
+													Yes
+													<% else %>
+													No
+													<% end %>
+												</td>
+												<td align="center">
+													<% if(sUser.IsActivated) %>
+													Yes
+													<% else %>
+													No
+													<% end %>
+												</td>
+												
+												<td align="center">
+													<form id="frmEditUser<%= sUser.ID %>" action="<%= users_EditUser_url %>" method="post">
+														<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.ID %>" />
+													</form>
+													<a id="linkEdit" href="#" onclick="EditUser(<%= sUser.ID %>);">Edit</a>	
+												</td>
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

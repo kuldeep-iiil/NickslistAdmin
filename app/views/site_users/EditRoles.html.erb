@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Admins
+							<div style="float:right;">
+								<form id="getSelectedReview" action="<%= site_users_ManageUsers_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE USERS ACCOUNT" class="org-bt" />
+								</form>
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Manage Permissions</h1>
+								<div id="Error">
+									<%= @messageString %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= site_users_AddUpdateRoles_url %>" method="post">
+										<% if(!@siteModule.blank?) %>
+											<% @siteModule.each do |siteModule| %>
+												<div class="singup-textarea">
+													<% if(!@siteModuleUser.blank?) %>
+														<% @found = '0' %>
+														<% @siteModuleUser.each do |siteModUser| %>
+											
+															<% if(siteModule.ID == siteModUser.ModuleID) %>
+																<div class="question-block">
+																	<div class="question-area">
+																		<div class="question-content">
+																			<input type="checkbox" checked="checked" id="chkModule<%= siteModule.ID %>" name="chkModule<%= siteModule.ID %>" value="<%= siteModule.ID %>" />
+																			<label for="chkModule<%= siteModule.ID %>"><%= siteModule.Module %></label>
+																		</div>
+																		<div class="question-content-answers">
+																			<div class="question-comment">
+																			<%= siteModule.Description %>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+																<% @found = '1' %>
+																<% break %>
+															<% end %>
+											
+														<% end %>
+														<% if(@found == '0') %>
+															<div class="question-block">
+																	<div class="question-area">
+																		<div class="question-content">
+																			<input type="checkbox" id="chkModule<%= siteModule.ID %>" name="chkModule<%= siteModule.ID %>" value="<%= siteModule.ID %>" />
+																			<label for="chkModule<%= siteModule.ID %>"><%= siteModule.Module %></label>
+																		</div>
+																		<div class="question-content-answers">
+																			<div class="question-comment">
+																			<%= siteModule.Description %>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+														<% end %>
+													<% else %>
+														<div class="question-block">
+																	<div class="question-area">
+																		<div class="question-content">
+																			<input type="checkbox" id="chkModule<%= siteModule.ID %>" name="chkModule<%= siteModule.ID %>" value="<%= siteModule.ID %>" />
+																			<label for="chkModule<%= siteModule.ID %>"><%= siteModule.Module %></label>
+																		</div>
+																		<div class="question-content-answers">
+																			<div class="question-comment">
+																			<%= siteModule.Description %>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+													<% end %>
+												</div>
+											<% end %>
+										<% end %>
+										<div class="singup-textarea">
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

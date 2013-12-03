@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-NicksListProj::Application.load_tasks
+NicksListAdminProj::Application.load_tasks

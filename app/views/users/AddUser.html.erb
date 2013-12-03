@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+		<script>
+			function check_chkAddress(chk) {
+				var idSignupCode = document.getElementById('SignupCode');
+				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
+				var idSignupForm = document.getElementById('SignupForm');
+				if (chk.checked) {
+					document.getElementById('textMailStreetAddress').value = document.getElementById('textBussStreetAddress').value;
+					document.getElementById('textMailStreetAddress').readOnly = true;
+					document.getElementById('textMailCity').value = document.getElementById('textBussCity').value;
+					document.getElementById('textMailCity').readOnly = true;
+					//document.getElementById('textMailState').value= document.getElementById('textBussState').value;
+					//document.getElementById('textMailState').readOnly= true;
+					document.getElementById('textMailZipCode').value = document.getElementById('textBussZipCode').value;
+					document.getElementById('textMailZipCode').readOnly = true;
+				} else {
+					document.getElementById('textMailStreetAddress').value = '';
+					document.getElementById('textMailStreetAddress').readOnly = false;
+					document.getElementById('textMailCity').value = '';
+					document.getElementById('textMailCity').readOnly = false;
+					//document.getElementById('textMailState').value= '';
+					//document.getElementById('textMailState').readOnly= false;
+					document.getElementById('textMailZipCode').value = '';
+					document.getElementById('textMailZipCode').readOnly = false;
+				}
+			}
+		</script>		
+	</head>
+	<body onload="SignupForm_AuthUser('<%= @userauthCode %>', '<%= @usercompanyName %>', '<%= @userincorporationType %>', '<%= @userbussStreetAddress %>', '<%= @userbussCity %>', '<%= @userbussState %>', '<%= @userbussZipCode %>', '<%= @usermailStreetAddress %>', '<%= @usermailCity %>', '<%= @usermailState %>', '<%= @usermailZipCode %>', '<%= @userphoneNumber %>', '<%= @useremail %>', '<%= @userlicense %>'); <% if(!@error.blank?)%> SignupForm_visibility(); <% end %>">
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Manage Users
+						<div style="float:right;">
+								<form id="getSelectedReview" action="<%= users_ManageUsers_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE USERS ACCOUNT" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Create User Account</h1>
+								<p>
+									Fill the user information below to create account
+								</p>
+								<div id="Error">
+									<%= @messageString %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= users_AddUser_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<div class="label">Company Name</div>
+											<input type="text" name="textCompany" id="textCompany" required="true" class="singup-textbox-small"  placeholder="Name of Company" value="<%= params[:textCompany] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">First Name</div>
+											<input type="text" name="textFirstName" id="textFirstName" required="true" class="singup-textbox-small"  placeholder="First Name" value="<%= params[:textFirstName] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Last Name</div>
+											<input type="text" name="textLastName" id="textLastName" required="true" class="singup-textbox-small"  placeholder="Last Name" value="<%= params[:textLastName] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Incorporation Type</div>
+											<input type="text" name="textIncorporationType" id="textIncorporationType" required="true" class="singup-textbox-small"  placeholder="Type of Incorporation" value="<%= params[:textIncorporationType] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Street Address</div>
+											<input type="text" name="textBussStreetAddress" required="true" id="textBussStreetAddress" class="singup-textbox"  placeholder="Business Street Address" value="<%= params[:textBussStreetAddress] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Zip Code</div>
+											<input type="text" name="textBussZipCode" id="textBussZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textBussZipCode] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">City, State</div>
+											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= params[:textBussCity] %>" />
+										</div>
+										<div class="singup-textarea">
+											<input type="checkbox" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
+											<label class="label" for="chkAddress">Use Business Address as Mailing Address.</label>
+										</div>
+										<div style="width:300px">&nbsp;</div>
+										<div class="singup-textarea">
+											<div class="label">Street Address</div>
+											<input type="text" name="textMailStreetAddress" id="textMailStreetAddress" required="true" class="singup-textbox"  placeholder="Mailing Street Address" value="<%= params[:textMailStreetAddress] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Zip Code</div>
+											<input type="text" name="textMailZipCode" id="textMailZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textMailZipCode] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">City, State</div>
+											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= params[:textMailCity] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Phone Number</div>
+											<input type="text" name="textPhoneNumber" id="textPhoneNumber" required="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= params[:textPhoneNumber] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Email ID</div>
+											<input type="email" name="textEmail" id="textEmail" required="true" class="singup-textbox-small"  placeholder="Email Address" value="<%= params[:textEmail] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">License No.</div>
+											<input type="text" name="textLicense" id="textLicense" required="true" class="singup-textbox-small"  placeholder="Contractor License Number" value="<%= params[:textLicense] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Username</div>
+											<input type="text" name="textUserName" id="textUserName" required="true" class="singup-textbox-small"  placeholder="User Name" value="<%= params[:textUserName] %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Password</div>
+											<input type="password" name="textPassword" id="textPassword" required="true" onchange="form.textConfirmPassword.pattern = this.value;" class="singup-textbox-small"  placeholder="Password" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Confirm Password</div>
+											<input type="password"  name="textConfirmPassword" id="textConfirmPassword" required="true" class="singup-textbox-small"  placeholder="Confirm Password" />
+										</div>
+										<div style="width:400px">
+											&nbsp;
+										</div>
+										
+										<div class="singup-textarea">
+											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

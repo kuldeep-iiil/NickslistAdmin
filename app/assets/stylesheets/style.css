@@ -194,12 +194,12 @@ input[type=button], input[type=submit], button
 
 #main-content-wrapper {
 	width: 100%;
+	min-height: 405px;
 	float: left;
-	margin-top: 50px
+	margin-top: 0px
 }
 
 #banner {/* max-width:1200px; margin:0 auto; */
-	background: #17215b;
 	float: left;
 	width: 100%;
 	position: relative
@@ -238,8 +238,7 @@ input[type=button], input[type=submit], button
 #innwe-banner-area {
 	width: 100%;
 	float: left;
-	background: url(/assets/banner.jpg) no-repeat;
-	min-height: 160px;
+	min-height: 30px;
 	position: relative
 }
 #search {
@@ -877,21 +876,21 @@ input[type=button], input[type=submit], button
 }
 
 #singup-form-area {
-	width: 435px;
+	width: 890px;
 	float: left;
 	background: #ffffff;
 	border: 1px solid #d7d7d7;
-	padding: 25px 150px;
-	margin: 25px 0 0 127px;
+	padding: 25px 50px;
+	margin-top:10px;
 	border-radius: 5px
 }
 
 .singup-form {
-	width: 429px;
+	width: 890px;
 	float: left
 }
 .singup-form-heading {
-	width: 97%;
+	width: 100%;
 	float: left;
 	margin-bottom: 20px
 }
@@ -984,8 +983,16 @@ input[type=button], input[type=submit], button
 	line-height: 25px;
 	font-weight: bold
 }
+.subscription-Column {
+	width: 30px;
+	float: left;
+	padding-left: 0px;
+	padding-right: 28px;
+	line-height: 25px;
+	font-weight: bold
+}
 .subscription-Value {
-	width: 215px;
+	width: 670px;
 	float: left;
 	padding-left: 0px;
 	line-height: 25px;
@@ -1146,8 +1153,7 @@ input[type=button], input[type=submit], button
 .question-block {
 	width: 100%;
 	float: left;
-	border-top: 1px solid #d9d9d9;
-	margin-top: 20px
+	border-bottom: 1px solid #d9d9d9;
 }
 .question-number {
 	width: 80px;
@@ -1179,6 +1185,7 @@ input[type=button], input[type=submit], button
 	width: 850px;
 	float: right;
 	margin-top: 17px;
+	margin-bottom: 20px;
 }
 .question-content {
 	width: 100%;
@@ -1352,4 +1359,11 @@ span.jPag-snext-img {
 
 .scroll {
 float:left;
+}
+
+.label{
+	margin-bottom: 5px; 
+	margin-top: 10px; 
+	font-weight: bold;
+	color: #666666;
 }

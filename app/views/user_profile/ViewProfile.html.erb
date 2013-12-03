@@ -17,9 +17,12 @@
 					<!--<div class="steps"><%= image_tag("step1.jpg", :alt => "") %></div>-->
 					<div id="singup-form-area">
 						<div class="singup-form-heading">
-							<div style="float:right; font-weight: bold">
-								<a href="<%= authentication_ChangePassword_url %>">Change Password</a>
-							</div>
+						
+							<div style="float:right; margin-top: -20px">
+								<form id="getSelectedReview" action="<%= authentication_ChangePassword_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="CHANGE PASSWORD" class="org-bt" />
+								</form>	
+								</div>
 							<h1>View Profile</h1>
 							<div id="Success"><%= flash[:notice] %></div>
 						</div>
@@ -27,132 +30,47 @@
 						<div class="singup-form">
 							<div id="SignupForm">
 								<form action="<%= user_profile_EditProfile_url %>" method="post">
+									
 									<div>
 										<div class="subscription-Item">
-											Company Name :
+											First Name
 										</div>
+										<div class="subscription-Column">:</div>
 										<div class="subscription-Value">
-											<%= @usercompanyName %>
+											<%= @userFirstName %>
 										</div>
-									</div>
-									<div>
-										<div class="subscription-Item">
-											First Name :
-										</div>
-										<div class="subscription-Value">
-											<%= @userfirstName %>
-										</div>
-									</div>
-									<div>
-										<div class="subscription-Item">
-											Last Name :
-										</div>
-										<div class="subscription-Value">
-											<%= @userlastName %>
-										</div>
-
-									</div>
-									<div>
-										<div class="subscription-Item">
-											Incorporation Type :
-										</div>
-										<div class="subscription-Value">
-											<%= @userincorporationType %>
-										</div>
-
-									</div>
-									<div>
-										<div class="subscription-Item">
-											Phone Number :
-										</div>
-										<div class="subscription-Value">
-											<%= @userphoneNumber %>
-										</div>
-
-									</div>
-									<div>
-										<div class="subscription-Item">
-											Email ID :
-										</div>
-										<div class="subscription-Value">
-											<%= @useremail %>
-										</div>
-										<% session[:email_id] =  @email %>
-									</div>
-									<div>
-										<div class="subscription-Item">
-											License Number :
-										</div>
-										<div class="subscription-Value">
-											<%= @userlicense %>
-										</div>
-
-									</div>
-									<div class="subscription-Title">
-										Business Address
-									</div>
-
-									<div>
-										<div class="subscription-Item">
-											Street Address :
-										</div>
-										<div class="subscription-Value">
-											<%= @userbussStreetAddress %>
-										</div>
-
-									</div>
-									<div>
-										<div class="subscription-Item">
-											City, State :
-										</div>
-										<div class="subscription-Value">
-											<%= @userbussCity %>
-										</div>
-
 									</div>
 									
 									<div>
 										<div class="subscription-Item">
-											Zip Code:
+											Last Name 
 										</div>
+										<div class="subscription-Column">:</div>
 										<div class="subscription-Value">
-											<%= @userbussZipCode %>
-										</div>
-
-									</div>
-									<div class="subscription-Title">
-										Mailing Address
-									</div>
-
-									<div>
-										<div class="subscription-Item">
-											Street Address :
-										</div>
-										<div class="subscription-Value">
-											<%= @usermailStreetAddress %>
+											<%= @userLastName %>
 										</div>
 
 									</div>
 									<div>
 										<div class="subscription-Item">
-											City, State :
+											Email ID
 										</div>
+										<div class="subscription-Column">:</div>
 										<div class="subscription-Value">
-											<%= @usermailCity %>
+											<%= @userEmail %>
+										</div>
+									</div>
+									<div>
+										<div class="subscription-Item">
+											User Name
+										</div>
+										<div class="subscription-Column">:</div>
+										<div class="subscription-Value">
+											<%= @userUserName %>
 										</div>
 
 									</div>
 									
-									<div>
-										<div class="subscription-Item">
-											Zip Code :
-										</div>
-										<div class="subscription-Value">
-											<%= @usermailZipCode %>
-										</div>
-										
-									</div>
-										
 									<div class="singup-textarea">
 									
 										<br /><br />

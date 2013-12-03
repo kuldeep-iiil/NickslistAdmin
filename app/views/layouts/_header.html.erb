@@ -24,23 +24,18 @@
 								<a href="<%= root_url %>" class="active">Home</a>
 							</li>
 							<li>
-								<a href="<%= nicks_list_About_url %>">About BillysList</a>
+								<a href="<%= site_users_ManageUsers_url %>">Manage Admins</a>
 							</li>
 							<li>
-								<a href="<%= nicks_list_HowItWorks_url %>">How it works </a>
+								<a href="<%= users_ManageUsers_url %>">Manage Users</a>
 							</li>
 							<li>
-								<a href="#">FAQ’s</a>
+								<a href="<%= reviews_ManageReviews_url %>">Manage Reviews</a>
 							</li>
 							<li>
-								<a href="#">Testimonials</a>
+								<a href="<%= sitecontent_ManageContent_url %>">Manage Site Content</a>
 							</li>
-							<li>
-								<a href="#">Press Release</a>
-							</li>
-							<li>
-								<a href="#">Contact Us</a>
-							</li>
+							
 						</ul>
 					</div>
 					<div class="login-wrapper">
@@ -113,46 +108,7 @@
 	<div id="banner">
 		<div class="browser-center">
 			<div id="innwe-banner-area">
-				<div class="banner-content">
-					<h1>Lorem Ipsum, consectetur, adipisci</h1>
-					<p>
-						If you want to know about your customer that he will pay for the quality services that you provide. BillysList is the right tool to confirm.
-					</p>
-					<p>
-						<a href="<%= nicks_list_About_url %>">More Information</a>
-					</p>
-				</div>
-				<div id="search">
-					<form action="<%= customer_search_GetDetails_url %>" method="post">
-                    	<div class="search-heading">Search Customer Rate/Reviews or Search for info on a potential customer.</div>
-                    	<div id="search-form">
-                        	<div class="form-textbox">
-                        	  <input name="txtFirstName" type="text" required="true" class="textbox-small" id="txtFirstName" placeholder="First Name" value="<%= @firstName %>" />
-                        	</div>
-                        	<div class="form-textbox">
-                        	  <input name="txtLastName" type="text" required="true" class="textbox-small" id="txtLastName" placeholder="Last Name" value="<%= @lastName %>" />
-                        	</div>
-                            <div class="form-textbox">
-                        	  <input name="txtStreetAddress" type="text" required="true" class="textbox" id="txtStreetAddress" placeholder="Street Address" value="<%= @streetAddress %>" />
-                        	</div>
-                          	<div class="form-textbox">
-                       	    	<input name="selectCity" type="text" required="true" autocomplete="off" class="textbox" id="selectCity" placeholder="City, State" value="<%= @citystateVal %>" />
-                        	</div>
-                        	<div class="form-textbox">
-                        	<!--<input name="selectState" type="text" required="true" class="textbox" id="selectState" placeholder="State" value="<%= params[:selectState] %>" />-->
-                        	</div>
-                            <div class="form-textbox">
-                        	  <input name="txtZipCode" type="text" required="true" class="textbox-small" id="txtZipCode" placeholder="Zipcode" value="<%= @zipCode %>" />
-                        	</div>
-                            <div class="form-textbox">
-                        	  <input name="txtPhoneNumber" type="text" required="true" class="textbox-small" id="txtPhoneNumber" placeholder="Phone Number" value="<%= @phoneNumber %>" />
-                        	</div>
-                            <div class="form-textbox">
-                       	  	  <input type="submit" name="Submit" id="Submit" value="Submit" class="search-bt" />
-                        	</div>
-                        	</form>
-				</div>
+
 			</div>
 		</div>
 	</div>
-</div>

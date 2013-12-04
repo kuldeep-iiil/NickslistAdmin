@@ -136,15 +136,42 @@
 											<input type="text" readonly="readonly" name="textUserName" id="textUserName" required="true" class="singup-textbox-small"  placeholder="User Name" value="<%= @userName %>" />
 										</div>
 										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
 											<label for="chkSubscribed">Subscribed</label>
 											<% if(@subUser.IsSubscribed) %>
 												<input type="checkbox" checked="checked" id="chkSubscribed" name="chkSubscribed" value="1" disabled="disabled" />
 											<% else %>
 												<input type="checkbox" id="chkSubscribed" name="chkSubscribed" value="1" disabled="disabled" />
 											<% end %>
+											</div>
+										</div>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label for="chkOwner">Company Owner</label>
+											<% if(@subUser.AuthCodeUsed) %>
+												<input type="checkbox" checked="checked" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
+											<% else %>
+												<input type="checkbox" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
+											<% end %>
+											</div>
 										</div>
 										
-										
+										<% if(!@subPrice.blank?) %>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label>Subscription Price: </label>
+												<%= @subPrice.TransactionAmount %>
+											</div>
+										</div>
+										<% end %>
+										<% if(!@subAuthKey.blank?) %>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label>Authorization Key: </label>
+												<%= @subAuthKey.Key %>
+											</div>
+										</div>
+										<% end %>
 										<div style="width:100px">&nbsp;</div>	
 													
 										<div class="singup-textarea">
@@ -156,11 +183,11 @@
 									<form action="<%= users_UserActivation_url %>" method="post">
 										<% if(@subUser.IsActivated) %>
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
-										<input type="hidden" id="hidActivate" name="hidActivate" value="0" />
+											<input type="hidden" id="hidActivate" name="hidActivate" value="0" />
 											<input type="submit" name="Submit" id="Submit" value="Deactivate User" onclick="return confirm_activation('0');" class="org-bt" />
 										<% else %>
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
-										<input type="hidden" id="hidActivate" name="hidActivate" value="1" />
+											<input type="hidden" id="hidActivate" name="hidActivate" value="1" />
 											<input type="submit" name="Submit" id="Submit" value="Activate User" onclick="return confirm_activation('1');" class="org-bt" />
 										<% end %>
 									</form>

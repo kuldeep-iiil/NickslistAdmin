@@ -2,6 +2,21 @@
 <html>
 	<head>
 		<title>NicksList - User Registration</title>
+		<script>
+			function confirm_activation(isactive){
+				var result;
+				if(isactive == 1)
+				{
+					result = window.confirm('Do you really want to activate this user.');				
+				}
+				else
+				{
+					result = window.confirm('Do you really want to deactivate this user.');
+				}
+				
+				return result;
+			}
+		</script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -21,7 +36,7 @@
 
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Edit User's Account</h1>
+								<h1>Edit Admin's Account</h1>
 							</div>
 
 							<div class="singup-form">
@@ -58,11 +73,24 @@
 											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
 										</div>
 									</form>
+									<div class="singup-textarea">
+									<form action="<%= site_users_UserActivation_url %>" method="post">
+										<% if(@siteUser.IsActivated) %>
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+										<input type="hidden" id="hidActivate" name="hidActivate" value="0" />
+											<input type="submit" name="Submit" id="Submit" value="Deactivate User" onclick="return confirm_activation('0');" class="org-bt" />
+										<% else %>
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+										<input type="hidden" id="hidActivate" name="hidActivate" value="1" />
+											<input type="submit" name="Submit" id="Submit" value="Activate User" onclick="return confirm_activation('1');" class="org-bt" />
+										<% end %>
+									</form>
+									</div>
 								</div>
 							</div>
 							<div style="float:left; height: 20px;">&nbsp;</div>
 							<div class="singup-form-heading">
-								<h1>Change User's Password</h1>
+								<h1>Change Admin's Password</h1>
 							</div>
 							<div style="float: left" id="Successs">
 									<%= @messageString %>
@@ -90,6 +118,7 @@
 											<input type="submit" name="Submit" id="Submit" value="Save New Password" class="org-bt" />
 										</div>
 									</form>
+									
 								</div>
 							</div>
 						</div>

@@ -45,10 +45,8 @@
 
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Manage Users Account</h1>
-								<p>
-									Fill the user information below to create account
-								</p>
+								<h1>Admin List</h1>
+								
 								<div id="Success">
 									<%= flash[:notice] %>
 								</div>
@@ -75,7 +73,7 @@
 												<td><%= sUser.FirstName %></td>
 												<td><%= sUser.LastName %></td>
 												<td><%= sUser.EmailID %></td>
-												<td align="center"> <% if(sUser.IsEnabled) %>
+												<td align="center"> <% if(sUser.IsActivated) %>
 												Yes
 												<% else %>
 												No

@@ -43,7 +43,7 @@ class AuthenticationController < ApplicationController
   
   def ChangePassword
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => authentication_SavePassword_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => authentication_SavePassword_url}
     end
   end
   
@@ -79,9 +79,7 @@ class AuthenticationController < ApplicationController
    
     user = SiteUser.find_by(UserName: userName)
 
-    #@pass = BCrypt::Engine.hash_secret(password, user.Salt)
-    #if user && user.Password == BCrypt::Engine.hash_secret(password, user.Salt)
-    if (user && password == password_decryption(user.Password, user.Salt) && user.IsEnabled)
+    if (user && password == password_decryption(user.Password, user.Salt) && user.IsActivated)
       user
     else
       nil

@@ -7,21 +7,27 @@
 				$('#tbSubUser').dataTable({
 					"sPaginationType" : "full_numbers",
 					"iDisplayLength" : 25,
-					"aLengthMenu" : [25,50,100,200],
+					"aLengthMenu" : [25, 50, 100, 200],
 					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
 				});
-				
+
 				$('#linkEdit').click(function() {
-					
+
 				});
-				
+				$("#textDateFrom").datepicker({dateFormat: 'yy/mm/dd' });
+				$("#textDateTo").datepicker({ minDate: new Date(), dateFormat: 'yy/mm/dd' });
+		
+
 			});
-			function EditUser(userID)
-				{
-					var eID = '#frmEditUser' + userID 
-					$(eID).submit();
-				}
-		</script>
+			function EditUser(userID) {
+				var eID = '#frmEditUser' + userID
+				$(eID).submit();
+			}
+
+			function GetUsersFilter() {
+				$("#frmGetUsersFilter").submit();
+			}
+			</script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -41,11 +47,56 @@
 
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Manage Users Account</h1>
-								<p>
-									Fill the user information below to create account
-								</p>
-								<div id="Success"><%= flash[:notice] %></div>
+								<h1>User List</h1>
+
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+								<div style="margin-top: 20px; float: left;">
+									<form id="frmGetUsersFilter" action="<%= users_ManageUsers_url %>" method="post">
+									<div class="singup-textarea">
+									<label for="selectStatus">Sort user list by status: </label>
+									<select id="selectStatus" name="selectStatus" onchange="GetUsersFilter();">
+										<% if(@filterString == '0') %>
+											<option selected="selected" value="0">All</option>
+										<% else %>
+											<option value="0">All</option>
+										<% end %>
+										<% if(@filterString == '1') %>
+											<option selected="selected" value="1">Activated</option>
+										<% else %>
+											<option value="1">Activated</option>
+										<% end %>
+										<% if(@filterString == '2') %>
+											<option selected="selected" value="2">Deactivated</option>
+										<% else %>
+											<option value="2">Deactivated</option>
+										<% end %>
+										<% if(@filterString == '3') %>
+											<option selected="selected" value="3">Subscribed</option>
+										<% else %>
+											<option value="3">Subscribed</option>
+										<% end %>
+										<% if(@filterString == '4') %>
+											<option selected="selected" value="4">Non-Subscribed</option>
+										<% else %>
+											<option value="4">Non-Subscribed</option>
+										<% end %>
+										
+									</select>
+									</div>
+									<div class="singup-textarea">
+											<input type="text" name="textDateFrom" id="textDateFrom" class="singup-textbox-small"  placeholder="Date From" value="<%= @DateFrom %>" />
+										</div>
+										<div class="singup-textarea">
+											<input type="text" name="textDateTo" id="textDateTo" class="singup-textbox-small"  placeholder="Date To" value="<%= @DateTo %>" />
+										</div>
+										<div class="singup-textarea">
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="submit" name="Submit" id="Submit" value="GO" class="org-bt" />
+										</div>
+									</form>
+								</div>
 							</div>
 
 							<div class="singup-form">
@@ -55,13 +106,14 @@
 									<table id="tbSubUser" style="width: 100%">
 										<thead>
 											<tr>
-												<th align="center">First Name</th>
-												<th align="center">Last Name</th>
-												<th align="center">Company</th>
-												<th align="center">License No.</th>
-												<th align="center">Subscribed</th>
-												<th align="center">Activated</th>
-												<th align="center">Action</th>
+												<th align="left">First Name</th>
+												<th align="left">Last Name</th>
+												<th align="left">Company</th>
+												<th align="left">Subscription Date</th>
+												<th align="left">Company Owner</th>
+												<th align="left">Subscribed</th>
+												<th align="left">Activated</th>
+												<th align="left">Action</th>
 											</tr>
 										</thead>
 
@@ -71,28 +123,31 @@
 												<td><%= sUser.FirstName %></td>
 												<td><%= sUser.LastName %></td>
 												<td><%= sUser.CompanyName %></td>
-												<td align="center"><%= sUser.LicenseNumber %></td>
+												<td align="center"> <% if(sUser.SubscriptionDate != nil) %>
+												<%= sUser.SubscriptionDate.strftime('%e %B, %Y') %>
+												<% else %>
+												-
+												<% end %> </td>
+												<td align="center"> <% if(sUser.AuthCodeUsed) %>
+												Yes
+												<% else %>
+												No
+												<% end %> </td>
+												<td align="center"> <% if(sUser.IsSubscribed) %>
+												Yes
+												<% else %>
+												No
+												<% end %> </td>
+												<td align="center"> <% if(sUser.IsActivated) %>
+												Yes
+												<% else %>
+												No
+												<% end %> </td>
+
 												<td align="center">
-													<% if(sUser.IsSubscribed) %>
-													Yes
-													<% else %>
-													No
-													<% end %>
-												</td>
-												<td align="center">
-													<% if(sUser.IsActivated) %>
-													Yes
-													<% else %>
-													No
-													<% end %>
-												</td>
-												
-												<td align="center">
-													<form id="frmEditUser<%= sUser.ID %>" action="<%= users_EditUser_url %>" method="post">
-														<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.ID %>" />
-													</form>
-													<a id="linkEdit" href="#" onclick="EditUser(<%= sUser.ID %>);">Edit</a>	
-												</td>
+												<form id="frmEditUser<%= sUser.ID %>" action="<%= users_EditUser_url %>" method="post">
+													<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.ID %>" />
+												</form><a id="linkEdit" href="#" onclick="EditUser(<%= sUser.ID %>);">Edit</a></td>
 											</tr>
 											<% end %>
 										</tbody>

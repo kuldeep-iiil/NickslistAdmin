@@ -7,9 +7,9 @@ class SiteUsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     @siteUser = SiteUser.all
   end
@@ -19,9 +19,9 @@ class SiteUsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
     if(params[:textFirstName] != nil && params[:textLastName] != nil && params[:textEmail] != nil && params[:textUserName] != nil && params[:textPassword] != nil)
@@ -61,7 +61,7 @@ class SiteUsersController < ApplicationController
         #Save User Information
         @siteUser = SiteUser.new(UserName: @userName, Password: password, Salt: salt, 
                   FirstName: @userfirstName, LastName: @userlastName, EmailID: @useremail, 
-                  IsEnabled: 1, DateCreated: time, DateUpdated: time)        
+                  IsActivated: 0, DateCreated: time, DateUpdated: time)        
         @siteUser.save
       
         redirect_to site_users_ManageUsers_url, :notice => "User added successfuly!"
@@ -69,22 +69,18 @@ class SiteUsersController < ApplicationController
     end
   end
 
-
   def EditUser
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
-    
-    if(!flash[:userID].blank?)
-        params[:hidUserID] = flash[:userID]
-        @messageString = flash[:message]
-      end
+   
     @userID = params[:hidUserID]
+    @messageString = params[:hidMessage]
     if(!@userID.blank?)
       @siteUser = SiteUser.find_by(ID: @userID)
       if(!@siteUser.blank?)
@@ -101,9 +97,9 @@ class SiteUsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
      
      if(params[:textFirstName] != nil && params[:textLastName] != nil && params[:textEmail] != nil && params[:textUserName] != nil)
@@ -133,9 +129,9 @@ class SiteUsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
       currentTime = Time.new
@@ -156,8 +152,6 @@ class SiteUsersController < ApplicationController
       @siteUser.DateUpdated = time      
       @siteUser.save
       
-      redirect_to site_users_EditUser_url, flash:{:userID => @userID, :message => "Password changed successfuly!"}
-      
   end
 
   def EditRoles
@@ -165,9 +159,9 @@ class SiteUsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
     @userID = params[:hidUserID]
@@ -181,9 +175,9 @@ class SiteUsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
     currentTime = Time.new
@@ -217,5 +211,25 @@ class SiteUsersController < ApplicationController
       @siteModuleUser = SiteModuleUserJoin.find_by_sql("DELETE FROM SiteModuleUserJoin where UserID =" + @userID)
     end
     redirect_to site_users_ManageUsers_url, :notice => "User's permission updated successfuly!"
+  end
+  
+  def UserActivation
+    @moduleID = SiteModule.find_by(Module: 'Manage Admin')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    end
+    
+    currentTime = Time.new
+    time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
+    @userID = params[:hidUserID]
+    @status = params[:hidActivate]
+    @siteUser = SiteUser.find_by(ID: @userID)
+    @siteUser.IsActivated = @status.to_i
+    @siteUser.DateUpdated = time
+    @siteUser.save 
   end
 end

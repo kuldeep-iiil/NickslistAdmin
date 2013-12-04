@@ -5,12 +5,59 @@ class UsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
+    end
+    @filterString = '0'
+    if(params[:selectStatus] != nil)
+      @filterString = params[:selectStatus]
     end
     
-    @subUser = SubscribedUser.all
+    @queryDate = ""
+    @DateFrom = ""
+    @DateTo = ""
+    if(params[:textDateFrom] != nil)
+      @DateFrom = params[:textDateFrom]
+    end
+    
+    if(params[:textDateTo] != nil)
+      @DateTo = params[:textDateTo]
+    end
+    if(@DateFrom != "" && @DateTo != "")
+      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateFrom + "' AND '" + @DateTo + "'"
+    elsif(@DateFrom != "" && @DateTo == "")
+      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateFrom + "' AND '" + @DateFrom + "'"
+    elsif(@DateFrom == "" && @DateTo != "")
+      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateTo + "' AND '" + @DateTo + "'"
+    else
+      @queryDate = ""
+    end
+    
+    @queryStatus = ""
+    if(@filterString == '0')
+      @queryStatus = ""
+    elsif(@filterString == '1')
+      @queryStatus = "subUser.IsActivated = '1'"
+    elsif(@filterString == '2')
+      @queryStatus = "subUser.IsActivated = '0'"
+    elsif(@filterString == '3')
+      @queryStatus = "subUser.IsSubscribed = '1'"
+    elsif(@filterString == '4')
+      @queryStatus = "subUser.IsSubscribed = '0'"
+    end
+    
+    if(@queryStatus != "" && @queryDate != "")
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
+                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryDate + " and " + @queryStatus)
+    elsif(@queryStatus != "" && @queryDate == "")
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
+                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryStatus)
+    else
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
+                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID")
+    end 
+          
   end
   
   def AddUser
@@ -19,9 +66,9 @@ class UsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
     @usercompanyName = params[:textCompany]
@@ -131,20 +178,18 @@ class UsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
-    if(!flash[:hidUserID].blank?)
-      params[:hidUserID] = flash[:hidUserID]
-    end
     @userID = params[:hidUserID]
     if(!@userID.blank?)
       @subUser = SubscribedUser.find_by(ID: @userID)
       @subAddress1 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
       @subAddress2 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
-      
+      @subPrice = UserPaymentDetail.find_by(UserID: @userID)
+      @subAuthKey = Key.find_by(UserID: @userID)
       if(!@subUser.blank?)
         @usercompanyName = @subUser.CompanyName
         @userfirstName = @subUser.FirstName
@@ -177,9 +222,9 @@ class UsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
     currentTime = Time.new
@@ -263,17 +308,18 @@ class UsersController < ApplicationController
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
     elsif(@authCount.to_i == 0)
-      redirect_to nicks_list_Index_url
+      redirect_to nicks_admin_Index_url
     end
     
+    currentTime = Time.new
+    time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
     @userID = params[:hidUserID]
     @status = params[:hidActivate]
     @subUser = SubscribedUser.find_by(ID: @userID)
     @subUser.IsActivated = @status.to_i
+    @subUser.DateUpdated = time
     @subUser.save
-    
-    redirect_to users_EditUser_url, flash:{:hidUserID => @userID}
   end
 end

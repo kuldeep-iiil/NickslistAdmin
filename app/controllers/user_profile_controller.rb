@@ -2,7 +2,7 @@ class UserProfileController < ApplicationController
   skip_before_action :verify_authenticity_token
   def EditProfile
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => user_profile_ViewProfile_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => user_profile_ViewProfile_url}
     end
     
     @userID = session[:user_id]
@@ -20,7 +20,7 @@ class UserProfileController < ApplicationController
   def ViewProfile
     
     if(!session[:user_id])
-      redirect_to nicks_list_Index_url, flash:{:redirectUrl => user_profile_ViewProfile_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => user_profile_ViewProfile_url}
     end
     
     @userID = session[:user_id]
@@ -36,6 +36,9 @@ class UserProfileController < ApplicationController
   end
   
   def UpdateProfile
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => user_profile_ViewProfile_url}
+    end
     @userID = session[:user_id]
     currentTime = Time.new
     time = currentTime.strftime("%Y-%m-%d %H:%M:%S")

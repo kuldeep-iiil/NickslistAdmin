@@ -149,6 +149,7 @@ class SiteUsersController < ApplicationController
       
       @siteUser = SiteUser.find_by(ID: @userID)
       @siteUser.Password = password
+      @siteUser.Salt = salt
       @siteUser.DateUpdated = time      
       @siteUser.save
       

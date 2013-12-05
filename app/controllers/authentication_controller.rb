@@ -3,7 +3,7 @@ class AuthenticationController < ApplicationController
   def login
     userName = params[:textUserName]
     password = params[:textPassword]
-    
+    @redirectUrl = params[:hidredirectUrl]
     @username = userName
     user = authenticate(userName, password)
     @user = user
@@ -12,7 +12,11 @@ class AuthenticationController < ApplicationController
       session[:user_id] = user.ID
       #session[:user_name] = user.FirstName + " " + user.LastName
       session[:user_name] = "Hi, " + user.FirstName
-      redirect_to root_url
+      if(@redirectUrl.blank?)
+        redirect_to root_url
+      else
+        redirect_to @redirectUrl
+      end
     else
       redirect_to root_url, flash:{:userName => @username, :error => "Invalid User Name or Password!"}
     end

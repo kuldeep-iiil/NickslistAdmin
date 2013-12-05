@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - Add Reviews</title>
+		<script>
+			$(document).ready(function() {
+				
+    			$("input[name$='radYesNo2']").click(function() {	
+        		var rbvalue = $(this).val();
+				if(rbvalue == 'No')
+				{
+					$("#divSubQuest3").hide();
+					$("#divSubQuest4").hide();
+					$("#divSubQuest5").hide();
+					$("#divSubQuest6").hide();
+					$("#divSubQuest7").hide();
+				}
+				else
+				{
+					$("#divSubQuest3").show();
+					$("#divSubQuest4").show();
+					$("#divSubQuest5").show();
+					$("#divSubQuest6").show();
+					$("#divSubQuest7").show();
+				}        		
+    			});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+
+					<!--<div id="review-header">
+						<div id="review-header-left">
+							<h1><%= @revfirstName %>  <%= @revlastName %></h1>
+						</div>
+						<div id="review-header-right">
+							<div class="address-desc">
+								<%= @revstreetAddress %>,	<%= @revcitystateVal %> <%= @revzipCode %>
+							</div>
+							<div class="address-phone">
+								<%= @phoneNumber %>
+							</div>
+						</div>
+					</div>-->
+
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Reviews
+							<div style="float:right; margin-bottom: 20px">
+								<form id="frmManageReview" action="<%= reviews_ManageReviews_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO REVIEW LISTING" class="org-bt" />
+								</form>	
+							</div>
+						</div>
+						
+						<div class="singup-form-heading">
+								<h1>Edit Review </h1>
+								
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+							</div>
+							
+						
+						
+						<% if(!@reviewQuestion.blank?) %>
+						<form action="<%= reviews_UpdateReview_url %>" method="post">
+								<% i = 1 %>
+								<% @reviewQuestion.each do |quset| %>
+								
+								<% if(quset.ParentID == nil) %>
+
+								<div class="question-block">
+									<div class="question-number">
+										<h1><%= i %></h1>
+										<p>
+											Question
+										</p>
+									</div>
+									<div class="question-area">
+										<div class="question-content">
+											<%= quset.Description %>?
+										</div>
+										<div class="question-content-answers">
+											<div class="question-option">
+											<% if(quset.ID != 17) %>
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "Yes") %>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_Y<%= quset.ID %>" value="Yes" />
+												<label for="radYesNo_Y<%= quset.ID %>">Yes</label>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_N<%= quset.ID %>" value="No" />
+												<label for="radYesNo_N<%= quset.ID %>">No</label>
+
+												<% elsif(@reviewAnswers[quset.ID - 1].IsYes == "No") %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Y<%= quset.ID %>" value="Yes" />
+												<label for="radYesNo_Y<%= quset.ID %>">Yes</label>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_N<%= quset.ID %>" value="No" />
+												<label for="radYesNo_N<%= quset.ID %>">No</label>
+
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Y<%= quset.ID %>" value="Yes" />
+												<label for="radYesNo_Y<%= quset.ID %>">Yes</label>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_N<%= quset.ID %>" value="No" />
+												<label for="radYesNo_N<%= quset.ID %>">No</label>
+												<% end %>
+											<% end %>
+											</div>
+											<div class="question-comment">
+												<% if(quset.ID != 2) %>
+												<textarea id="quesComment<%= quset.ID %>" class="comment-area" rows="5" cols="45" name="quesComment<%= quset.ID %>"><%= @reviewAnswers[quset.ID - 1].Comments %></textarea>
+												<% end %>
+
+											</div>
+										</div>
+									</div>
+								</div>
+								<% i = i + 1 %>
+								<% else %>
+								<% if(@reviewAnswers[1].IsYes) == 'Yes' %>
+								<div id="divSubQuest<%= quset.ID %>" class="sub-question">
+								<% else %>
+								<div id="divSubQuest<%= quset.ID %>" class="sub-question" style="display: none">
+								<% end %>
+									<div class="sub-question-area">
+										<div class="question-content">
+											<%= quset.Description %>?
+										</div>
+										<div class="question-content-answers">
+											<div class="question-option">
+												<% if(quset.ID != 7) %>
+
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "Yes") %>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_Y<%= quset.ID %>" value="Yes" />
+												<label for="radYesNo_Y<%= quset.ID %>">Yes</label>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_N<%= quset.ID %>" value="No" />
+												<label for="radYesNo_N<%= quset.ID %>">No</label>
+												<% elsif(@reviewAnswers[quset.ID - 1].IsYes == "No") %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Y<%= quset.ID %>" value="Yes" />
+												<label for="radYesNo_Y<%= quset.ID %>">Yes</label>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_N<%= quset.ID %>" value="No" />
+												<label for="radYesNo_N<%= quset.ID %>">No</label>
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Y<%= quset.ID %>" value="Yes" />
+												<label for="radYesNo_Y<%= quset.ID %>">Yes</label>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_N<%= quset.ID %>" value="No" />
+												<label for="radYesNo_N<%= quset.ID %>">No</label>
+												<% end %>
+
+												<% else %>
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "Bid process") %>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_Bid<%= quset.ID %>" value="Bid process" />
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Bid<%= quset.ID %>" value="Bid process" />
+
+												<% end %>
+												<label for="radYesNo_Bid<%= quset.ID %>">Bid process?</label>
+
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "Doing the work") %>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_Work<%= quset.ID %>" value="Doing the work" />
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Work<%= quset.ID %>" value="Doing the work" />
+
+												<% end %>
+												<label for="radYesNo_Work<%= quset.ID %>">Doing the work?</label>
+
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "Completion") %>
+												<input type="radio" checked="checked" name="radYesNo_Completion<%= quset.ID %>" id="radYesNo<%= quset.ID %>" value="Completion" />
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_Completion<%= quset.ID %>" value="Completion" />
+
+												<% end %>
+												<label for="radYesNo_Completion<%= quset.ID %>">Completion?</label>
+
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "After completion") %>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_AfterComp<%= quset.ID %>" value="After completion" />
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_AfterComp<%= quset.ID %>" value="After completion" />
+
+												<% end %>
+												<label for="radYesNo_AfterComp<%= quset.ID %>">After completion?</label>
+
+												<% if(@reviewAnswers[quset.ID - 1].IsYes == "All of the above") %>
+												<input type="radio" checked="checked" name="radYesNo<%= quset.ID %>" id="radYesNo_All<%= quset.ID %>" value="All of the above" />
+												<% else %>
+												<input type="radio" name="radYesNo<%= quset.ID %>" id="radYesNo_All<%= quset.ID %>" value="All of the above" />
+												<% end %>
+												<label for="radYesNo_All<%= quset.ID %>">All of the above?</label>
+												<% end %>
+											</div>
+
+										</div>
+									</div>
+								</div>
+
+								<% end %>
+								<% end %>
+
+								
+								<div class="review-submit-bt">
+									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
+									<input type="submit" name="Submit" id="Submit" value="Update" class="org-bt" />
+								</div>
+							</div>
+						</form>
+						<div class="review-submit-bt">
+							<form action="<%= reviews_PublishReview_url %>" method="post">
+								<% if(@reviews.IsPublished) %>
+									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
+									<input type="hidden" id="hidIsPublish" name="hidIsPublish" value="0" />
+									<input type="submit" name="Submit" id="Submit" value="Un-Publish" class="org-bt" />
+								<% else %>
+									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
+									<input type="hidden" id="hidIsPublish" name="hidIsPublish" value="1" />
+									<input type="submit" name="Submit" id="Submit" value="Publish" class="org-bt" />
+								<% end %>
+							</form>
+						</div>
+						<div class="review-submit-bt">
+							<form action="<%= reviews_ApproveReview_url %>" method="post">
+								<% if(@reviews.IsApproved) %>
+									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
+									<input type="hidden" id="hidIsApproved" name="hidIsApproved" value="0" />
+									<input type="submit" name="Submit" id="Submit" value="Dis-Approve" class="org-bt" />
+								<% else %>
+									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
+									<input type="hidden" id="hidIsApproved" name="hidIsApproved" value="1" />
+									<input type="submit" name="Submit" id="Submit" value="Approve" class="org-bt" />
+								<% end %>
+							</from>
+						</div>
+						<% end %>
+					</div>
+
+				</div>
+
+				<%= render partial: "/layouts/footer" %>
+
+			</div>
+	</body>
+</html>

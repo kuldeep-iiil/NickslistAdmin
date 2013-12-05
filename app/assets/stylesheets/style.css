@@ -939,6 +939,19 @@ input[type=button], input[type=submit], button
 	background: #ffffff;
 	padding: 0 5px
 }
+
+.singup-select-small {
+	width: 197px;
+	height: 34px;
+	border: 1px solid #d7d7d7;
+	line-height: 34px;
+	font-size: 13px;
+	color: #666666;
+	border-radius: 5px;
+	background: #ffffff;
+	padding: 0 5px
+}
+
 .singup-label {
 	width: 410px;
 	height: 34px;

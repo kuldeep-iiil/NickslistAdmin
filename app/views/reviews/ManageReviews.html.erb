@@ -53,7 +53,7 @@
 									<div class="singup-textarea">
 										
 									<label for="selectStatus">Sort review list by status: </label>
-									<select id="selectStatus" name="selectStatus" onchange="GetReviewsFilter();">
+									<select id="selectStatus" name="selectStatus" class="singup-select-small" onchange="GetReviewsFilter();">
 										<% if(@filterString == '0') %>
 											<option selected="selected" value="0">All</option>
 										<% else %>
@@ -83,13 +83,13 @@
 									</select>
 									</div>
 									<div class="singup-textarea">
-											<input type="text" name="textDateFrom" id="textDateFrom" class="singup-textbox-small"  placeholder="Review Date From" value="<%= @DateFrom %>" />
+											<input type="text" name="textDateFrom" id="textDateFrom" autocomplete="off" class="singup-textbox-small"  placeholder="Review Date From" value="<%= @DateFrom %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateTo" id="textDateTo" class="singup-textbox-small"  placeholder="Review Date To" value="<%= @DateTo %>" />
+											<input type="text" name="textDateTo" id="textDateTo" autocomplete="off" class="singup-textbox-small"  placeholder="Review Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="submit" name="Submit" id="Submit" value="GO" class="org-bt" />
+											<input type="submit" name="Submit" id="Submit" style="margin-top: -4px" value="GO" class="org-bt" />
 										</div>
 									</form>
 								</div>
@@ -103,7 +103,7 @@
 									<table id="tbSubUser" style="width: 100%">
 										<thead>
 											<tr>
-												<th align="center">ID</th>
+												<th align="center">Review ID</th>
 												<th align="center">Published</th>
 												<th align="center">Approved</th>
 												<th align="center">Review Date</th>

@@ -56,7 +56,7 @@
 									<form id="frmGetUsersFilter" action="<%= users_ManageUsers_url %>" method="post">
 									<div class="singup-textarea">
 									<label for="selectStatus">Sort user list by status: </label>
-									<select id="selectStatus" name="selectStatus" onchange="GetUsersFilter();">
+									<select id="selectStatus" name="selectStatus" class="singup-select-small" onchange="GetUsersFilter();">
 										<% if(@filterString == '0') %>
 											<option selected="selected" value="0">All</option>
 										<% else %>
@@ -86,14 +86,14 @@
 									</select>
 									</div>
 									<div class="singup-textarea">
-											<input type="text" name="textDateFrom" id="textDateFrom" class="singup-textbox-small"  placeholder="Subscription Date From" value="<%= @DateFrom %>" />
+											<input type="text" name="textDateFrom" id="textDateFrom" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date From" value="<%= @DateFrom %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateTo" id="textDateTo" class="singup-textbox-small"  placeholder="Subscription Date To" value="<%= @DateTo %>" />
+											<input type="text" name="textDateTo" id="textDateTo" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
-											<input type="submit" name="Submit" id="Submit" value="GO" class="org-bt" />
+											<input type="submit" name="Submit" id="Submit" value="GO" style="margin-top: -4px" class="org-bt" />
 										</div>
 									</form>
 								</div>

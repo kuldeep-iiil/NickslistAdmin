@@ -51,7 +51,8 @@
 								<div style="margin-top: 20px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= reviews_ManageReviews_url %>" method="post">
 									<div class="singup-textarea">
-									<label for="selectStatus">Sort user list by status: </label>
+										
+									<label for="selectStatus">Sort review list by status: </label>
 									<select id="selectStatus" name="selectStatus" onchange="GetReviewsFilter();">
 										<% if(@filterString == '0') %>
 											<option selected="selected" value="0">All</option>
@@ -82,10 +83,10 @@
 									</select>
 									</div>
 									<div class="singup-textarea">
-											<input type="text" name="textDateFrom" id="textDateFrom" class="singup-textbox-small"  placeholder="Date From" value="<%= @DateFrom %>" />
+											<input type="text" name="textDateFrom" id="textDateFrom" class="singup-textbox-small"  placeholder="Review Date From" value="<%= @DateFrom %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateTo" id="textDateTo" class="singup-textbox-small"  placeholder="Date To" value="<%= @DateTo %>" />
+											<input type="text" name="textDateTo" id="textDateTo" class="singup-textbox-small"  placeholder="Review Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
 											<input type="submit" name="Submit" id="Submit" value="GO" class="org-bt" />

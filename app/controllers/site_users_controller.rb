@@ -205,6 +205,33 @@ class SiteUsersController < ApplicationController
         @siteModuleUser.save
       end
     end
+    
+    if(!params[:chkModule3].blank?)
+      if(!@moduleIDs.blank?)
+        @moduleIDs = @moduleIDs + ',' + params[:chkModule3]   
+      else
+        @moduleIDs = params[:chkModule3]
+      end
+      @count = SiteModuleUserJoin.where(ModuleID: params[:chkModule3], UserID: @userID).count
+      if(@count.to_i == 0)
+        @siteModuleUser = SiteModuleUserJoin.new(ModuleID: params[:chkModule3].to_i, UserID: @userID.to_i, DateCreated: time, DateUpdated: time)
+        @siteModuleUser.save
+      end
+    end
+    
+    if(!params[:chkModule4].blank?)
+      if(!@moduleIDs.blank?)
+        @moduleIDs = @moduleIDs + ',' + params[:chkModule4]   
+      else
+        @moduleIDs = params[:chkModule4]
+      end
+      @count = SiteModuleUserJoin.where(ModuleID: params[:chkModule4], UserID: @userID).count
+      if(@count.to_i == 0)
+        @siteModuleUser = SiteModuleUserJoin.new(ModuleID: params[:chkModule4].to_i, UserID: @userID.to_i, DateCreated: time, DateUpdated: time)
+        @siteModuleUser.save
+      end
+    end
+    
     if(!@moduleIDs.blank?)
       @siteModuleUser = SiteModuleUserJoin.find_by_sql("DELETE FROM SiteModuleUserJoin where UserID =" + @userID + " and ModuleID NOT IN (" + @moduleIDs + ")" )
     else

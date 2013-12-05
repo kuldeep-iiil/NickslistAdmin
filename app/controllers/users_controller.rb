@@ -50,6 +50,9 @@ class UsersController < ApplicationController
     if(@queryStatus != "" && @queryDate != "")
       @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
                   LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryDate + " and " + @queryStatus)
+    elsif(@queryStatus == "" && @queryDate != "")
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
+                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryDate)
     elsif(@queryStatus != "" && @queryDate == "")
       @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
                   LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryStatus)

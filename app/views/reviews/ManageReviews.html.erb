@@ -114,7 +114,7 @@
 										<tbody>
 											<% !@reviews.each do |rev| %>
 											<tr>
-												<td><%= rev.ID %></td>
+												<td><%= rev.id %></td>
 												<td align="center"> 
 												<% if(rev.IsPublished) %>
 												Yes
@@ -129,10 +129,10 @@
 												<% end %> </td>
 												<td><%= rev.DateCreated.strftime('%e %B, %Y') %></td>
 												<td align="center">
-												<form id="frmEditUser<%= rev.ID %>" action="<%= reviews_EditReview_url %>" method="post">
-													<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= rev.ID %>" />
+												<form id="frmEditUser<%= rev.id %>" action="<%= reviews_EditReview_url %>" method="post">
+													<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= rev.id %>" />
 												</form>
-												<a id="linkManageRoles" href="#" onclick="EditReview(<%= rev.ID %>);">Edit</a>
+												<a id="linkManageRoles" href="#" onclick="EditReview(<%= rev.id %>);">Edit</a>
 												
 												</td>
 											</tr>

@@ -80,17 +80,17 @@
 												<% end %> </td>
 												<td align="center">
 												<diV style="float: left; margin-left: 20px">
-												<form id="frmEditUser<%= sUser.ID %>" action="<%= site_users_EditUser_url %>" method="post">
-													<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.ID %>" />
+												<form id="frmEditUser<%= sUser.id %>" action="<%= site_users_EditUser_url %>" method="post">
+													<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.id %>" />
 												</form>
-												<a id="linkManageRoles" href="#" onclick="EditUser(<%= sUser.ID %>);">Edit</a>
+												<a id="linkManageRoles" href="#" onclick="EditUser(<%= sUser.id %>);">Edit</a>
 												</diV>
 												
 												<diV style="float: left; margin-left: 20px">
-												<form id="frmManageRoles<%= sUser.ID %>" action="<%= site_users_EditRoles_url %>" method="post">
-													<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.ID %>" />
+												<form id="frmManageRoles<%= sUser.id %>" action="<%= site_users_EditRoles_url %>" method="post">
+													<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.id %>" />
 												</form>
-												<a id="linkEdit" href="#" onclick="EditRoles(<%= sUser.ID %>);">Add/Edit Roles</a>
+												<a id="linkEdit" href="#" onclick="EditRoles(<%= sUser.id %>);">Add/Edit Roles</a>
 												</div>
 												</td>
 												</tr>

@@ -4,7 +4,7 @@ class SiteUsersController < ApplicationController
   
   def ManageUsers
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -16,7 +16,7 @@ class SiteUsersController < ApplicationController
 
   def AddUser
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -71,7 +71,7 @@ class SiteUsersController < ApplicationController
 
   def EditUser
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -94,7 +94,7 @@ class SiteUsersController < ApplicationController
 
   def UpdateUser
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -126,7 +126,7 @@ class SiteUsersController < ApplicationController
 
   def ChangePassword
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -157,7 +157,7 @@ class SiteUsersController < ApplicationController
 
   def EditRoles
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -173,7 +173,7 @@ class SiteUsersController < ApplicationController
   
   def AddUpdateRoles
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => site_users_ManageUsers_url}
@@ -234,16 +234,16 @@ class SiteUsersController < ApplicationController
     end
     
     if(!@moduleIDs.blank?)
-      @siteModuleUser = SiteModuleUserJoin.find_by_sql("DELETE FROM SiteModuleUserJoin where UserID =" + @userID + " and ModuleID NOT IN (" + @moduleIDs + ")" )
+      @siteModuleUser = SiteModuleUserJoin.find_by_sql("DELETE FROM site_module_user_joins where UserID =" + @userID + " and ModuleID NOT IN (" + @moduleIDs + ")" )
     else
-      @siteModuleUser = SiteModuleUserJoin.find_by_sql("DELETE FROM SiteModuleUserJoin where UserID =" + @userID)
+      @siteModuleUser = SiteModuleUserJoin.find_by_sql("DELETE FROM site_module_user_joins where UserID =" + @userID)
     end
     redirect_to site_users_ManageUsers_url, :notice => "User's permission updated successfuly!"
   end
   
   def UserActivation
     @moduleID = SiteModule.find_by(Module: 'Manage Admin')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}

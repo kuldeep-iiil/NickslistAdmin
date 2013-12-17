@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
   def ManageUsers
     @moduleID = SiteModule.find_by(Module: 'Manage Users')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
@@ -48,17 +48,21 @@ class UsersController < ApplicationController
     end
     
     if(@queryStatus != "" && @queryDate != "")
-      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
-                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryDate + " and " + @queryStatus)
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate 
+                  FROM subscribed_users subUser
+                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID where " + @queryDate + " and " + @queryStatus)
     elsif(@queryStatus == "" && @queryDate != "")
-      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
-                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryDate)
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate 
+                  FROM subscribed_users subUser
+                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID where " + @queryDate)
     elsif(@queryStatus != "" && @queryDate == "")
-      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
-                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID where " + @queryStatus)
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate 
+                  FROM subscribed_users subUser
+                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID where " + @queryStatus)
     else
-      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate FROM SubscribedUsers subUser
-                  LEFT JOIN UserPaymentDetails userPay ON subUser.id = userPay.UserID")
+      @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate 
+                  FROM subscribed_users subUser
+                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID")
     end 
           
   end
@@ -66,7 +70,7 @@ class UsersController < ApplicationController
   def AddUser
     
     @moduleID = SiteModule.find_by(Module: 'Manage Users')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
@@ -164,10 +168,10 @@ class UsersController < ApplicationController
           user = SubscribedUser.find_by(UserName: @userName)
         
           #Save Address Details
-          @userBussAddressDetail = UserAddressDetail.new(UserID: user.ID, AddressType: 'Business', Address: @userbussStreetAddress, City: @userbussCity, State: @userbussState, ZIPCode: @userbussZipCode, DateCreated: time, DateUpdated: time)
+          @userBussAddressDetail = UserAddressDetail.new(UserID: user.id, AddressType: 'Business', Address: @userbussStreetAddress, City: @userbussCity, State: @userbussState, ZipCode: @userbussZipCode, DateCreated: time, DateUpdated: time)
           @userBussAddressDetail.save
         
-          @userMailAddressDetail = UserAddressDetail.new(UserID: user.ID, AddressType: 'Mailing' , Address: @usermailStreetAddress, City: @usermailCity, State: @usermailState, ZIPCode: @usermailZipCode, DateCreated: time, DateUpdated: time)
+          @userMailAddressDetail = UserAddressDetail.new(UserID: user.id, AddressType: 'Mailing' , Address: @usermailStreetAddress, City: @usermailCity, State: @usermailState, ZipCode: @usermailZipCode, DateCreated: time, DateUpdated: time)
           @userMailAddressDetail.save
         
           redirect_to users_ManageUsers_url, :notice => "User added successfuly!"      
@@ -178,7 +182,7 @@ class UsersController < ApplicationController
        
   def EditUser
     @moduleID = SiteModule.find_by(Module: 'Manage Users')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
@@ -205,11 +209,11 @@ class UsersController < ApplicationController
         
         @userbussStreetAddress = @subAddress1.Address    
         @userbusscitystateVal = @subAddress1.City + ', ' + @subAddress1.State     
-        @userbussZipCode = @subAddress1.ZIPCode 
+        @userbussZipCode = @subAddress1.ZipCode 
         
         @usermailStreetAddress = @subAddress2.Address  
         @usermailcitystateVal = @subAddress2.City + ', ' + @subAddress2.State 
-        @usermailZipCode = @subAddress2.ZIPCode
+        @usermailZipCode = @subAddress2.ZipCode
         
         if(@userbussStreetAddress == @usermailStreetAddress && @userbusscitystateVal == @userbusscitystateVal && @userbussZipCode == @usermailZipCode)
           @addressCheck = true
@@ -222,7 +226,7 @@ class UsersController < ApplicationController
   
   def UpdateUser
     @moduleID = SiteModule.find_by(Module: 'Manage Users')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
@@ -292,14 +296,14 @@ class UsersController < ApplicationController
       @subAddress1.Address = @userbussStreetAddress
       @subAddress1.City = @userbussCity
       @subAddress1.State = @userbussState
-      @subAddress1.ZIPCode = @userbussZipCode
+      @subAddress1.ZipCode = @userbussZipCode
       @subAddress1.DateUpdated = time
       @subAddress1.save
         
       @subAddress2.Address = @usermailStreetAddress
       @subAddress2.City = @usermailCity
       @subAddress2.State = @usermailState
-      @subAddress2.ZIPCode = @usermailZipCode
+      @subAddress2.ZipCode = @usermailZipCode
       @subAddress2.DateUpdated = time
       @subAddress2.save
       
@@ -308,7 +312,7 @@ class UsersController < ApplicationController
   
   def UserActivation
     @moduleID = SiteModule.find_by(Module: 'Manage Users')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}

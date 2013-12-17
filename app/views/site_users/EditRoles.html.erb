@@ -37,12 +37,12 @@
 														<% @found = '0' %>
 														<% @siteModuleUser.each do |siteModUser| %>
 											
-															<% if(siteModule.ID == siteModUser.ModuleID) %>
+															<% if(siteModule.id == siteModUser.ModuleID) %>
 																<div class="question-block">
 																	<div class="question-area">
 																		<div class="question-content">
-																			<input type="checkbox" checked="checked" id="chkModule<%= siteModule.ID %>" name="chkModule<%= siteModule.ID %>" value="<%= siteModule.ID %>" />
-																			<label for="chkModule<%= siteModule.ID %>"><%= siteModule.Module %></label>
+																			<input type="checkbox" checked="checked" id="chkModule<%= siteModule.id %>" name="chkModule<%= siteModule.id %>" value="<%= siteModule.id %>" />
+																			<label for="chkModule<%= siteModule.id %>"><%= siteModule.Module %></label>
 																		</div>
 																		<div class="question-content-answers">
 																			<div class="question-comment">
@@ -60,8 +60,8 @@
 															<div class="question-block">
 																	<div class="question-area">
 																		<div class="question-content">
-																			<input type="checkbox" id="chkModule<%= siteModule.ID %>" name="chkModule<%= siteModule.ID %>" value="<%= siteModule.ID %>" />
-																			<label for="chkModule<%= siteModule.ID %>"><%= siteModule.Module %></label>
+																			<input type="checkbox" id="chkModule<%= siteModule.id %>" name="chkModule<%= siteModule.id %>" value="<%= siteModule.id %>" />
+																			<label for="chkModule<%= siteModule.id %>"><%= siteModule.Module %></label>
 																		</div>
 																		<div class="question-content-answers">
 																			<div class="question-comment">
@@ -75,8 +75,8 @@
 														<div class="question-block">
 																	<div class="question-area">
 																		<div class="question-content">
-																			<input type="checkbox" id="chkModule<%= siteModule.ID %>" name="chkModule<%= siteModule.ID %>" value="<%= siteModule.ID %>" />
-																			<label for="chkModule<%= siteModule.ID %>"><%= siteModule.Module %></label>
+																			<input type="checkbox" id="chkModule<%= siteModule.id %>" name="chkModule<%= siteModule.id %>" value="<%= siteModule.id %>" />
+																			<label for="chkModule<%= siteModule.id %>"><%= siteModule.Module %></label>
 																		</div>
 																		<div class="question-content-answers">
 																			<div class="question-comment">

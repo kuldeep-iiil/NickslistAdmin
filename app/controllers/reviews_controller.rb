@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def ManageReviews
     @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reviews_ManageReviews_url}
@@ -50,20 +50,20 @@ class ReviewsController < ApplicationController
     end
     
     if(@queryStatus != "" && @queryDate != "")
-      @reviews = Review.find_by_sql("SELECT distinct * FROM Reviews where " + @queryDate + " and " + @queryStatus)
+      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews where " + @queryDate + " and " + @queryStatus)
     elsif(@queryStatus == "" && @queryDate != "")
-      @reviews = Review.find_by_sql("SELECT distinct * FROM Reviews where " + @queryDate)
+      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews where " + @queryDate)
     elsif(@queryStatus != "" && @queryDate == "")
-      @reviews = Review.find_by_sql("SELECT distinct * FROM Reviews where " + @queryStatus)
+      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews where " + @queryStatus)
     else
-      @reviews = Review.find_by_sql("SELECT distinct * FROM Reviews")
+      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews")
     end 
   end
   
   def EditReview
     
     @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reviews_ManageReviews_url}
@@ -79,7 +79,7 @@ class ReviewsController < ApplicationController
   
   def UpdateReview
     @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reviews_ManageReviews_url}
@@ -99,7 +99,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment1
@@ -114,7 +114,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = ""
@@ -129,7 +129,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = ""
@@ -144,7 +144,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = ""
@@ -159,7 +159,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = ""
@@ -174,7 +174,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = ""
@@ -189,7 +189,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = ""
@@ -205,7 +205,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment8
@@ -221,7 +221,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment9
@@ -237,7 +237,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment10
@@ -253,7 +253,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment11
@@ -269,7 +269,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment12
@@ -285,7 +285,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment13
@@ -301,7 +301,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment14
@@ -317,7 +317,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment15
@@ -333,7 +333,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment16
@@ -348,7 +348,7 @@ class ReviewsController < ApplicationController
     if(!@reviewAnswer.blank?)
     @reviewAnswer.destroy
     end
-    @reviewAnswer = ReviewAnswerHistory.new(ID: @reviewAnswerUpdate.ID, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
+    @reviewAnswer = ReviewAnswerHistory.new(id: @reviewAnswerUpdate.id, ReviewID: @reviewAnswerUpdate.ReviewID, QuestionID: @reviewAnswerUpdate.QuestionID, Comments: @reviewAnswerUpdate.Comments, IsYes: @reviewAnswerUpdate.IsYes, DateCreated: @reviewAnswerUpdate.DateCreated, DateUpdated: @reviewAnswerUpdate.DateUpdated)
     @reviewAnswer.save
 
     @reviewAnswerUpdate.Comments = @quesComment17
@@ -361,7 +361,7 @@ class ReviewsController < ApplicationController
   
   def PublishReview
     @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reviews_ManageReviews_url}
@@ -374,7 +374,7 @@ class ReviewsController < ApplicationController
     currentTime = Time.new
     time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
     
-    @reviews = Review.find_by(ID: @reviewID)
+    @reviews = Review.find_by(id: @reviewID)
     @reviews.IsPublished = @isPublish.to_i
     @reviews.DateUpdated = time
     @reviews.save
@@ -382,7 +382,7 @@ class ReviewsController < ApplicationController
   
   def ApproveReview
     @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
-    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.ID, UserID: session[:user_id]).count
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
     
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reviews_ManageReviews_url}

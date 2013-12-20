@@ -27,11 +27,11 @@ class ReviewsController < ApplicationController
       @DateTo = params[:textDateTo]
     end
     if(@DateFrom != "" && @DateTo != "")
-      @queryDate = "DateCreated BETWEEN '" + @DateFrom + "' AND '" + @DateTo + "'"
+      @queryDate = "rev.DateCreated BETWEEN '" + @DateFrom + "' AND '" + @DateTo + "'"
     elsif(@DateFrom != "" && @DateTo == "")
-      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateFrom + "' AND '" + @DateFrom + "'"
+      @queryDate = "rev.DateCreated BETWEEN '" + @DateFrom + "' AND '" + @DateFrom + "'"
     elsif(@DateFrom == "" && @DateTo != "")
-      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateTo + "' AND '" + @DateTo + "'"
+      @queryDate = "rev.DateCreated BETWEEN '" + @DateTo + "' AND '" + @DateTo + "'"
     else
       @queryDate = ""
     end
@@ -40,23 +40,23 @@ class ReviewsController < ApplicationController
     if(@filterString == '0')
       @queryStatus = ""
     elsif(@filterString == '1')
-      @queryStatus = "IsApproved = '1'"
+      @queryStatus = "rev.IsApproved = '1'"
     elsif(@filterString == '2')
-      @queryStatus = "IsApproved = '0'"
+      @queryStatus = "rev.IsApproved = '0'"
     elsif(@filterString == '3')
-      @queryStatus = "IsPublished = '1'"
+      @queryStatus = "rev.IsPublished = '1'"
     elsif(@filterString == '4')
-      @queryStatus = "IsPublished = '0'"
+      @queryStatus = "rev.IsPublished = '0'"
     end
     
     if(@queryStatus != "" && @queryDate != "")
-      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews where " + @queryDate + " and " + @queryStatus)
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id where " + @queryDate + " and " + @queryStatus)
     elsif(@queryStatus == "" && @queryDate != "")
-      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews where " + @queryDate)
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id where " + @queryDate)
     elsif(@queryStatus != "" && @queryDate == "")
-      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews where " + @queryStatus)
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id where " + @queryStatus)
     else
-      @reviews = Review.find_by_sql("SELECT distinct * FROM reviews")
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id")
     end 
   end
   

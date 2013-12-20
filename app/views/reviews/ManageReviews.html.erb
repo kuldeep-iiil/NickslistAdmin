@@ -16,7 +16,10 @@
 				});
 				
 				$("#textDateFrom").datepicker({dateFormat: 'yy/mm/dd' });
-				$("#textDateTo").datepicker({ minDate: new Date(), dateFormat: 'yy/mm/dd' });
+				$("#textDateFrom").change(function(){
+					$("#textDateTo").datepicker({ minDate: new Date($("#textDateFrom").val()), dateFormat: 'yy/mm/dd' });
+				});
+				
 		
 
 			});
@@ -103,7 +106,8 @@
 									<table id="tbSubUser" style="width: 100%">
 										<thead>
 											<tr>
-												<th align="center">Review ID</th>
+												<th align="center">Reviewed User</th>
+												<th align="center">Reviewed By</th>
 												<th align="center">Published</th>
 												<th align="center">Approved</th>
 												<th align="center">Review Date</th>
@@ -114,7 +118,8 @@
 										<tbody>
 											<% !@reviews.each do |rev| %>
 											<tr>
-												<td><%= rev.id %></td>
+												<td><%= rev.cFirstName %> <%= rev.cLastName %></td>
+												<td><%= rev.sFirstName %> <%= rev.sLastName %></td>
 												<td align="center"> 
 												<% if(rev.IsPublished) %>
 												Yes
@@ -127,7 +132,7 @@
 												<% else %>
 												No
 												<% end %> </td>
-												<td><%= rev.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center"><%= rev.DateCreated.strftime('%e %B, %Y') %></td>
 												<td align="center">
 												<form id="frmEditUser<%= rev.id %>" action="<%= reviews_EditReview_url %>" method="post">
 													<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= rev.id %>" />

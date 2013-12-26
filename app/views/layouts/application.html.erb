@@ -28,6 +28,13 @@
 					if ($(evt.target).parents('#logout-reg').length == 0 && $(evt.target).parents('#signout_menu').length == 0 && evt.target.id != 'signout_menu') {
 						$('#signout_menu').hide();
 					}
+					if ($(evt.target).parents('#linkSiteContent').length == 0 && $(evt.target).parents('#subMenuPanel').length == 0 && evt.target.id != 'subMenuPanel') {
+						$('#subMenuPanel').hide();
+					}
+				});
+				
+				$('.site-content a').click(function() {
+					$('#subMenuPanel').toggle();
 				});
 			});
 
@@ -39,6 +46,15 @@
       			source: availableCities
     		});
     		$( "#textMailCity" ).autocomplete({
+      			source: availableCities
+    		});
+    		$( "#textGrantCity" ).autocomplete({
+      			source: availableCities
+    		});
+    		$( "#textDefCity" ).autocomplete({
+      			source: availableCities
+    		});
+    		$( "#textPlainCity" ).autocomplete({
       			source: availableCities
     		});
   		});

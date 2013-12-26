@@ -939,7 +939,27 @@ input[type=button], input[type=submit], button
 	background: #ffffff;
 	padding: 0 5px
 }
+.singup-textbox-large {
+	width: 840px;
+	height: 34px;
+	border: 1px solid #d7d7d7;
+	line-height: 34px;
+	font-size: 13px;
+	color: #666666;
+	border-radius: 5px;
+	background: #ffffff;
+	padding: 0 5px
+}
 
+.singup-textarea-large {
+	width: 840px;
+	border: 1px solid #d7d7d7;
+	font-size: 13px;
+	color: #666666;
+	border-radius: 5px;
+	background: #ffffff;
+	padding: 0 5px
+}
 .singup-select-small {
 	width: 197px;
 	height: 34px;
@@ -989,6 +1009,15 @@ input[type=button], input[type=submit], button
 	text-transform: uppercase;
 	line-height: 30px;
 }
+.subscription-sub-Title {
+	width: 100%;
+	color: #ff8a00;
+	float: left;
+	font-size: 16px;
+	font-weight: normal;
+	line-height: 30px;
+}
+
 .subscription-Item {
 	width: 153px;
 	float: left;
@@ -1379,4 +1408,19 @@ float:left;
 	margin-top: 10px; 
 	font-weight: bold;
 	color: #666666;
+}
+
+#subMenuPanel{
+	display: none;
+	position: absolute;
+	width: 184px;
+	height: auto;
+	z-index: 9999;
+	background: url(/assets/nav-bg.jpg) repeat;
+}
+
+.content-textarea {
+	width: 884px;
+	float: left;
+	margin: 0 5px 5px 0
 }

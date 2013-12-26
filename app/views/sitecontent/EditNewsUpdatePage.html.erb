@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+	<head>
+					
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Manage Site Content
+						<div style="float:right;">
+								<form id="getSelectedReview" action="<%= sitecontent_ManageTestimonialsPage_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE TESTIMONIALS" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Edit News & Update</h1>
+								<div id="Error">
+									<%= @messageString %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= sitecontent_AddUpdateNewsUpdatePage_url	 %>" method="post">
+										<div class="singup-textarea">
+											<div class="label">Comments</div>
+											<textarea id="textComment" name="textComment" rows="10" cols="103"><%= @comments %></textarea>
+										</div>
+										
+										<div style="width:100px">&nbsp;</div>	
+													
+										<div class="singup-textarea">
+											<input type="hidden" name="hidNewID" id="hidNewID" value="<%= @newID %>" />
+										<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+									<div class="singup-textarea">
+									<form action="<%= sitecontent_EnableDisableNewsUpdate_url %>" method="post">
+										<% if(@newsUpdates.IsEnabled) %>
+											<input type="hidden" name="hidNewID" id="hidNewID" value="<%= @newID %>" />
+											<input type="hidden" id="hidEnable" name="hidEnable" value="0" />
+											<input type="submit" name="Submit" id="Submit" value="Disable" class="org-bt" />
+										<% else %>
+											<input type="hidden" name="hidNewID" id="hidNewID" value="<%= @newID %>" />
+											<input type="hidden" id="hidEnable" name="hidEnable" value="1" />
+											<input type="submit" name="Submit" id="Submit" value="Enable" class="org-bt" />
+										<% end %>
+									</form>
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

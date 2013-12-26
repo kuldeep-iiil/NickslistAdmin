@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					"aaSorting" : [[2,'desc']]
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+				});
+			});
+			function EditNewsUpdates(NewID) {
+				var eID = '#frmNewsUpdates' + NewID
+				$(eID).submit();
+			}
+			function DeleteNewsUpdates(NewID) {
+				result = window.confirm('Do you really want to delete this record?');
+				if(result == true)
+				var eID = '#frmDeleteNewsUpdates' + NewID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Site Content
+							<div style="float:right;">
+								<form id="frmAddFAQ" action="<%= sitecontent_AddNewsUpdatePage_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="ADD NEW NEWS & UPDATE" class="org-bt" />
+								</form>
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>News & Updates List</h1>
+								
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@newsUpdatesList.blank?) %>
+
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">News&Updates</th>
+												<th align="center">Enabled</th>
+												<th align="center">Date Created</th>
+												<th align="center">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% !@newsUpdatesList.each do |new| %>
+											<tr>
+												<td><%= new.Comments %></td>
+												<td align="center"> <% if(new.IsEnabled) %>
+												Yes
+												<% else %>
+												No
+												<% end %> </td>
+												<td align="center"><%= new.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center">
+												<div style="float: left">
+												<form id="frmNewsUpdates<%= new.id %>" action="<%= sitecontent_EditNewsUpdatePage_url %>" method="post">
+													<input type="hidden" name="hidNewID" id="hidNewID" value="<%= new.id %>" />
+												</form>
+												<a id="linkNewsUpdates" href="#" onclick="EditNewsUpdates(<%= new.id %>);">Edit</a>
+												</div>
+												<div style="float: left; margin-left: 5px">
+												<form id="frmDeleteNewsUpdates<%= new.id %>" action="<%= sitecontent_DeleteNewsUpdatePage_url %>" method="post">
+													<input type="hidden" name="hidNewID" id="hidNewID" value="<%= new.id %>" />
+												</form>
+												<a id="linkNewsUpdates" href="#" onclick="DeleteNewsUpdates(<%= new.id %>);">Delete</a>
+												</div>
+												</td>
+												
+												
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

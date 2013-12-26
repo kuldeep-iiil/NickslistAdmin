@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					"aaSorting" : [[2,'desc']]
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+				});
+			});
+			function EditFAQ(faqID) {
+				var eID = '#frmFAQ' + faqID
+				$(eID).submit();
+			}
+			function DeleteFAQ(faqID) {
+				result = window.confirm('Do you really want to delete this record?');
+				if(result == true)
+				var eID = '#frmDeleteFAQ' + faqID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Site Content
+							<div style="float:right;">
+								<form id="frmAddFAQ" action="<%= sitecontent_AddFAQPage_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="ADD NEW FAQ" class="org-bt" />
+								</form>
+							</div>
+						</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>FAQ's List</h1>
+								
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+						</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@faqList.blank?) %>
+									
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">Questions</th>
+												<th align="center">Enabled</th>
+												<th align="center">Date Created</th>
+												<th align="center">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% !@faqList.each do |faq| %>
+											<tr>
+												<td><%= faq.Answers %></td>
+												<td align="center"> 
+												<% if(faq.IsEnabled) %>
+												Yes
+												<% else %>
+												No
+												<% end %> </td>
+												<td align="center"><%= faq.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center">
+												<div style="float: left">
+												<form id="frmFAQ<%= faq.id %>" action="<%= sitecontent_EditFAQPage_url %>" method="post">
+													<input type="hidden" name="hidFAQID" id="hidFAQID" value="<%= faq.id %>" />
+												</form>
+												<a id="linkFAQ" href="#" onclick="EditFAQ(<%= faq.id %>);">Edit</a>
+												</div>
+												<div style="float: left; margin-left: 5px">
+												<form id="frmDeleteFAQ<%= faq.id %>" action="<%= sitecontent_DeleteFAQPage_url %>" method="post">
+													<input type="hidden" name="hidFAQID" id="hidFAQID" value="<%= faq.id %>" />
+												</form>
+												<a id="linkFAQ" href="#" onclick="DeleteFAQ(<%= faq.id %>);">Delete</a>
+												</div>
+												</td>
+												
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

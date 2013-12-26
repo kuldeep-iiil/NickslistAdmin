@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					"aaSorting" : [[4,'desc']]
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+				});
+			});
+			function EditTestimonial(testID) {
+				var eID = '#frmTestimonial' + testID
+				$(eID).submit();
+			}
+			function DeleteTestimonial(testID) {
+				result = window.confirm('Do you really want to delete this record?');
+				if(result == true)
+				var eID = '#frmDeleteTestimonial' + testID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Site Content
+							<% if(@count < 10 )%>
+							<div style="float:right;">
+								<form id="frmAddFAQ" action="<%= sitecontent_AddTestimonialsPage_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="ADD NEW TESTIMONIAL" class="org-bt" />
+								</form>
+							</div>
+							<% end %>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Testimonials List</h1>
+
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@testimonialList.blank?) %>
+
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">First Name</th>
+												<th align="center">Last Name</th>
+												<th align="center">Occupation</th>
+												<th align="center">Enabled</th>
+												<th align="center">Date Created</th>
+												<th align="center">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% !@testimonialList.each do |test| %>
+											<tr>
+												<td><%= test.FirstName %></td>
+												<td><%= test.LastName %></td>
+												<td align="center"> <%= test.Occupation %> </td>
+												<td align="center"> <% if(test.IsEnabled) %>
+												Yes
+												<% else %>
+												No
+												<% end %> </td>
+												<td align="center"><%= test.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center">
+												<div style="float: left">
+												<form id="frmTestimonial<%= test.id %>" action="<%= sitecontent_EditTestimonialsPage_url %>" method="post">
+													<input type="hidden" name="hidTestID" id="hidTestID" value="<%= test.id %>" />
+												</form><a id="linkTestimonial" href="#" onclick="EditTestimonial(<%= test.id %>);">Edit</a>
+												</div>
+												<div style="float: left; margin-left: 5px">
+												<form id="frmDeleteTestimonial<%= test.id %>" action="<%= sitecontent_DeleteTestimonialsPage_url %>" method="post">
+													<input type="hidden" name="hidTestID" id="hidTestID" value="<%= test.id %>" />
+												</form><a id="linkTestimonial" href="#" onclick="DeleteTestimonial(<%= test.id %>);">Delete</a>
+												</div>
+												</td>
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

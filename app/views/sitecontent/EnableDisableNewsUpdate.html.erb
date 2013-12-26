@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<script>
+			$(function(){			
+			
+			//$('#x_relay_response').val("FALSE");
+			$("#frmActivation").submit();
+		});
+		</script>
+	</head>
+	<body>
+		<form id="frmActivation" action="<%= sitecontent_EditNewsUpdatePage_url %>" method="post">
+			<input type="hidden" name="hidNewID" id="hidNewID" value="<%= @newID %>" />
+		</form>
+	</body>
+</html>

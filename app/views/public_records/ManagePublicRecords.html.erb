@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - User Registration</title>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+				});
+
+				$('#linkEdit').click(function() {
+
+				});
+				$("#textDateFrom").datepicker({dateFormat: 'yy/mm/dd' });
+				$("#textDateTo").datepicker({ minDate: new Date(), dateFormat: 'yy/mm/dd' });
+		
+
+			});
+			function EditMLJudgements(addID) {
+				var eID = '#frmEditMLJudgements' + addID
+				$(eID).submit();
+			}
+			
+			function EditCourtProceedings(addID) {
+				var eID = '#frmEditCourtPro' + addID
+				$(eID).submit();
+			}
+			
+			function GetUsersFilter() {
+				$("#frmGetUsersFilter").submit();
+			}
+			</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Public Records
+							
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Address List</h1>
+
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@addresses.blank?) %>
+
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="left">Address</th>
+												<th align="left">City</th>
+												<th align="left">State</th>
+												<th align="left">ZipCode</th>
+												<th align="left">ML&Judgements</th>
+												<th align="left">Court Proceedings</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% !@addresses.each do |add| %>
+											<tr>
+												<td><%= add.StreetAddress %></td>
+												<td><%= add.City %></td>
+												<td><%= add.State %></td>
+												<td align="center"><%= add.ZipCode %></td>
+												<td align="center">
+													<form id="frmEditMLJudgements<%= add.id %>" action="<%= public_records_EditMLJudgements_url %>" method="post">
+														<input type="hidden" name="hidAddressID" id="hidAddressID" value="<%= add.id %>" />
+													</form>
+													<a id="linkEdit" href="#" onclick="EditMLJudgements(<%= add.id %>);">Edit</a></td>
+												<td align="center">
+													<form id="frmEditCourtPro<%= add.id %>" action="<%= public_records_EditCourtProceedings_url %>" method="post">
+														<input type="hidden" name="hidAddressID" id="hidAddressID" value="<%= add.id %>" />
+													</form>
+													<a id="linkEdit" href="#" onclick="EditCourtProceedings(<%= add.id %>);">Edit</a></td>
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

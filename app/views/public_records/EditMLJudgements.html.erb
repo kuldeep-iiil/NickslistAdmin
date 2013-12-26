@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - ML Judgements</title>
+					
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Manage Public Records
+						<div style="float:right;">
+								<form id="frmManagePublicRecords" action="<%= public_records_ManagePublicRecords_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE PUBLIC RECORDS" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Edit ML&Judgement Details </h1>
+								<div id="Error">
+									<%= @messageString %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= public_records_UpdateMLJudgements_url %>" method="post">
+										
+										<div id="public-records-header">
+
+											<div id="review-header-right">
+												<div class="address-desc">
+													<%= @textStreetAddress %>
+													<br />
+													<%= @textCity %>, <%= @textState %> <%= @textZipCode  %>
+												</div>
+
+											</div>
+										</div>
+										
+										<!--<div class="singup-textarea">
+											<div class="label">Address</div>
+											<input type="text" name="textAddress" id="textAddress" required="true" readonly="readonly" class="singup-textbox-large" value="<%= @textStreetAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">City</div>
+											<input type="text" name="textCity" id="textCity" required="true" readonly="readonly" class="singup-textbox-small" value="<%= @textCity %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">State</div>
+											<input type="text" name="textState" id="textState" required="true" readonly="readonly" class="singup-textbox-small" value="<%= @textState %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">ZipCode</div>
+											<input type="text" name="textZipCode" id="textZipCode" readonly="readonly" required="true" class="singup-textbox-small" value="<%= @textZipCode  %>" />
+										</div>-->
+										<div class="singup-textarea">
+											<div class="label">ML&Judgements</div>
+											<textarea id="textMLJudgements" name="textMLJudgements" rows="10" class="singup-textarea-large"><%= @textMLJudgements %></textarea>
+											
+										</div>
+										
+										<div style="width:100px">&nbsp;</div>	
+													
+										<div class="singup-textarea">
+											<input type="hidden" name="hidAddressID" id="hidAddressID" value="<%= @addressID %>" />
+										<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+									
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

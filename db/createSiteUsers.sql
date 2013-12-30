@@ -60,6 +60,7 @@ CREATE TABLE `site_users` (
   `LastName` varchar(20) NOT NULL,
   `EmailID` varchar(50) NOT NULL,
   `IsActivated` tinyint(1) NOT NULL,
+  `IsSuperAdmin` tinyint(1) NOT NULL,
   `DateCreated` datetime NOT NULL,
   `DateUpdated` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -72,7 +73,7 @@ CREATE TABLE `site_users` (
 
 LOCK TABLES `site_users` WRITE;
 /*!40000 ALTER TABLE `site_users` DISABLE KEYS */;
-INSERT INTO `site_users` (`id`, `UserName`, `Password`, `Salt`, `FirstName`, `LastName`, `EmailID`, `IsActivated`, `DateCreated`, `DateUpdated`) VALUES (1,'admin','hÏkC·âYh4¯ëc\\','20131217','nick','serge','nicks@iiil.in',1,'2013-12-16 20:27:11','2013-12-17 13:39:22'),(2,'billys','Œ—Ðœ.ÐÐ>\\á³\'úÂ&Ü','20131217','Billy','Serge','billys@iiil.in',1,'2013-12-17 12:51:00','2013-12-17 12:51:49');
+INSERT INTO `site_users` (`id`, `UserName`, `Password`, `Salt`, `FirstName`, `LastName`, `EmailID`, `IsActivated`, `IsSuperAdmin`, `DateCreated`, `DateUpdated`) VALUES (1,'admin','hÏkC·âYh4¯ëc\\','20131217','Nick','Perkins','nicks@iiil.in',1,1,'2013-12-16 20:27:11','2013-12-17 13:39:22');
 /*!40000 ALTER TABLE `site_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

@@ -10,8 +10,9 @@ class SitecontentController < ApplicationController
       redirect_to nicks_admin_Index_url
     end
     
-    @siteContent = SiteContent.find_by(Title: "About BillyList")
+    @siteContent = SiteContent.find_by(PageCode: 101)
     if(!@siteContent.blank?)
+      @title = @siteContent.Title
       @content = @siteContent.Content
       @contentID = @siteContent.id
     end
@@ -27,8 +28,9 @@ class SitecontentController < ApplicationController
       redirect_to nicks_admin_Index_url
     end
     
-    @siteContent = SiteContent.find_by(Title: "How It Works")
+    @siteContent = SiteContent.find_by(PageCode: 102)
     if(!@siteContent.blank?)
+      @title = @siteContent.Title
       @content = @siteContent.Content
       @contentID = @siteContent.id
     end
@@ -44,8 +46,45 @@ class SitecontentController < ApplicationController
       redirect_to nicks_admin_Index_url
     end
     
-    @siteContent = SiteContent.find_by(Title: "Press Release")
+    @siteContent = SiteContent.find_by(PageCode: 103)
     if(!@siteContent.blank?)
+      @title = @siteContent.Title
+      @content = @siteContent.Content
+      @contentID = @siteContent.id
+    end
+  end
+  
+  def EditPrivacyPolicy
+    @moduleID = SiteModule.find_by(Module: 'Manage Site Content')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => sitecontent_EditPressReleasePage_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    end
+    
+    @siteContent = SiteContent.find_by(PageCode: 104)
+    if(!@siteContent.blank?)
+      @title = @siteContent.Title
+      @content = @siteContent.Content
+      @contentID = @siteContent.id
+    end
+  end
+  
+  def EditTermsConditions
+    @moduleID = SiteModule.find_by(Module: 'Manage Site Content')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => sitecontent_EditPressReleasePage_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    end
+    
+    @siteContent = SiteContent.find_by(PageCode: 105)
+    if(!@siteContent.blank?)
+      @title = @siteContent.Title
       @content = @siteContent.Content
       @contentID = @siteContent.id
     end
@@ -57,6 +96,7 @@ class SitecontentController < ApplicationController
     @editPageURL = params[:hidEditPageUrl]
     if(!@siteContent.blank?)
       @siteContent.Content = params[:textContent]
+      @siteContent.Title = params[:textTitle]
       @siteContent.save
     end
     
@@ -116,7 +156,7 @@ class SitecontentController < ApplicationController
       @faq.save
       @result = "FAQ updated successfuly!"
     else
-      @faq = Faq.new(Question: @question, Answers: @answers, IsEnabled: 0, DateCreated: time,  DateUpdated: time)
+      @faq = Faq.new(Question: @question, Answers: @answers, IsEnabled: 1, DateCreated: time,  DateUpdated: time)
       @faq.save
       @result = "FAQ added successfuly!"
     end
@@ -225,7 +265,7 @@ class SitecontentController < ApplicationController
       @testimonial.save
       @result = "Testimonial updated successfuly!"
     else
-      @testimonial = Testimonials.new(FirstName: @firstName, LastName: @lastName, Occupation: @occupation, Comments: @comments, IsEnabled: 0, DateCreated: time,  DateUpdated: time)
+      @testimonial = Testimonials.new(FirstName: @firstName, LastName: @lastName, Occupation: @occupation, Comments: @comments, IsEnabled: 1, DateCreated: time,  DateUpdated: time)
       @testimonial.save
       @result = "Testimonial added successfuly!"
     end
@@ -318,7 +358,7 @@ class SitecontentController < ApplicationController
       @newsUpdates.save
       @result = "News&Update updated successfuly!"
     else
-      @newsUpdates = NewsUpdates.new(Comments: @comments, IsEnabled: 0, DateCreated: time,  DateUpdated: time)
+      @newsUpdates = NewsUpdates.new(Comments: @comments, IsEnabled: 1, DateCreated: time,  DateUpdated: time)
       @newsUpdates.save
       @result = "News&Update added successfuly!"
     end

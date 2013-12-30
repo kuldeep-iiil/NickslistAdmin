@@ -180,17 +180,10 @@ input[type=button], input[type=submit], button
 	background: url(/assets/hover.jpg) repeat-x;
 }
 
-#nav li.first a:hover {
-	background: url(/assets/hover.jpg) repeat-x;
-	border-radius: 5px 0 0 5px
-}
 #nav li a.active {
 	background: url(/assets/hover.jpg) repeat-x
 }
-#nav li.first a.active {
-	background: url(/assets/hover.jpg) repeat-x;
-	border-radius: 5px 0 0 5px
-}
+
 
 #main-content-wrapper {
 	width: 100%;
@@ -472,7 +465,7 @@ input[type=button], input[type=submit], button
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	float: left
+	float: left;
 }
 .footer-links li {
 	font-size: 12px;

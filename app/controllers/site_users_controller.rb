@@ -61,7 +61,7 @@ class SiteUsersController < ApplicationController
         #Save User Information
         @siteUser = SiteUser.new(UserName: @userName, Password: password, Salt: salt, 
                   FirstName: @userfirstName, LastName: @userlastName, EmailID: @useremail, 
-                  IsActivated: 0, DateCreated: time, DateUpdated: time)        
+                  IsActivated: 0, IsSuperAdmin: 0, DateCreated: time, DateUpdated: time)        
         @siteUser.save
       
         redirect_to site_users_ManageUsers_url, :notice => "User added successfuly!"

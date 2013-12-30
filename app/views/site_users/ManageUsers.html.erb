@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NicksList - User Registration</title>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#tbSubUser').dataTable({
@@ -69,6 +68,7 @@
 
 										<tbody>
 											<% !@siteUser.each do |sUser| %>
+											<% if(sUser.IsSuperAdmin == false) %>
 											<tr>
 												<td><%= sUser.FirstName %></td>
 												<td><%= sUser.LastName %></td>
@@ -94,6 +94,7 @@
 												</div>
 												</td>
 												</tr>
+												<% end %>
 											<% end %>
 										</tbody>
 

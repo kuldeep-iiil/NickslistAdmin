@@ -50,13 +50,13 @@ class ReviewsController < ApplicationController
     end
     
     if(@queryStatus != "" && @queryDate != "")
-      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id where " + @queryDate + " and " + @queryStatus)
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN subscribed_users suser on rev.UserID = suser.id where " + @queryDate + " and " + @queryStatus)
     elsif(@queryStatus == "" && @queryDate != "")
-      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id where " + @queryDate)
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN subscribed_users suser on rev.UserID = suser.id where " + @queryDate)
     elsif(@queryStatus != "" && @queryDate == "")
-      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id where " + @queryStatus)
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN subscribed_users suser on rev.UserID = suser.id where " + @queryStatus)
     else
-      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN site_users suser on rev.UserID = suser.id")
+      @reviews = Review.find_by_sql("SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id JOIN subscribed_users suser on rev.UserID = suser.id")
     end 
   end
   

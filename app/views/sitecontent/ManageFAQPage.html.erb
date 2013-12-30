@@ -56,17 +56,17 @@
 									<table id="tbSubUser" style="width: 100%">
 										<thead>
 											<tr>
-												<th align="center">Questions</th>
-												<th align="center">Enabled</th>
-												<th align="center">Date Created</th>
-												<th align="center">Action</th>
+												<th align="center" style="width: 64%">Questions</th>
+												<th align="center" style="width: 8%">Enabled</th>
+												<th align="center" style="width: 18%">Date Created</th>
+												<th align="center" style="width: 10%">Action</th>
 											</tr>
 										</thead>
 
 										<tbody>
 											<% !@faqList.each do |faq| %>
 											<tr>
-												<td><%= faq.Answers %></td>
+												<td><%= faq.Question %></td>
 												<td align="center"> 
 												<% if(faq.IsEnabled) %>
 												Yes

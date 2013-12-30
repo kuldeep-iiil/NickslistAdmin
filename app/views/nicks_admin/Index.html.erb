@@ -12,59 +12,203 @@
 		</script>
 	</head>
 	<body onload="openLogin('<%= @openLogin %>');">
-		<%= render partial: "/layouts/header" %>
-		<div id="main-content-wrapper">
-			<div class="browser-center">
-				<div id="three-block">
-					<div class="blue-block">
-						<%= image_tag("about-icon.png", :alt => "") %>
-						<h1>About BillysList</h1>
-						<p>
-							BillysList.com was founded by a small business owner who realized that just as good people need to beaware of bad contractors; good contractors need to be aware of bad people.
-						</p>
-					</div>
 
-					<div class="org-block">
-						<%= image_tag("how-work.png", :alt => "") %>
-						<h1>How it Works</h1>
-						<p>
-							When you login to BillysList.com you have the option to either rate/review a customer or searchfor info on a potential customer.
-						</p>
-					</div>
+		<div id="wrapper">
+			<div id="header-wrapper">
+				<div class="browser-center">
+					<div id="header-area">
+						<div id="logo">
+							<a href="/"><%= image_tag("logo.jpg", :alt => "") %></a>
+						</div>
+						<div id="facebook-like">
+							<%= image_tag("facebook-like.jpg", :alt => "") %>
+						</div>
+						<div id="customer-support">
+							<p>
+								Customer Support
+							</p>
+							<h1>703 555 5555</h1>
+							<p>
+								Any Questions <a href="mailto:">Email Us</a>
+							</p>
+						</div>
+						<div id="navigation">
+							<div id="nav">
+								<ul>
+									<li class="first">
+										<a href="<%= nicks_admin_Index_path %>" class="active">Home</a>
+									</li>
+									<li>
+										<a href="<%= site_users_ManageUsers_url %>">Manage Admins</a>
+									</li>
+									<li>
+										<a href="<%= users_ManageUsers_url %>">Manage Users</a>
+									</li>
+									<li>
+										<a href="<%= reviews_ManageReviews_url %>">Manage Reviews</a>
+									</li>
+									<li>
+										<div id="linkSiteContent" class="site-content">
+											<a href="javascript:void(0)">Manage Site Content</a>
+										</div>
+										<div id="subMenuPanel">
+											<ul>
+												<li>
+													<a href="<%= sitecontent_EditAboutPage_url %>">About BillyList</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_EditHowItWorksPage_url %>">How It Works</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_EditPressReleasePage_url %>">Press Release</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_EditPrivacyPolicy_url %>">Privacy Policy</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_EditTermsConditions_url %>">Terms & Conditions</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_ManageFAQPage_url %>">FAQ's</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_ManageTestimonialsPage_url %>">Testimonials</a>
+												</li>
+												<li>
+													<a href="<%= sitecontent_ManageNewsUpdatePage_url %>">News & updates</a>
+												</li>
 
-					<div class="blue-block">
-						<%= image_tag("testimonial.png", :alt => "") %>
-						<h1>Client Testimonials</h1>
-						<p>
-							There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-						</p>
+											</ul>
+										</div>
+									</li>
+
+								</ul>
+							</div>
+							<div class="login-wrapper">
+								<% if(session[:user_id] == nil) %>
+								<div id="login-reg" class="login-register">
+									<a href="javascript:void(0)">Login / Register</a>
+								</div>
+								<div id="signin_menu">
+									<form action="<%= authentication_login_url %>" method="post">
+										<p>
+											<label for="username">Username</label>
+											<input id="textUserName" name="textUserName" required="required" value="<%= @userName %>" title="User Name" tabindex="4" type="text">
+										</p>
+										<p>
+											<label for="password">Password</label>
+											<input id="textPassword" name="textPassword" required="required" value="" title="password" tabindex="5" type="password">
+										</p>
+										<% if(!@errorMessage.blank?) %>
+										<div id="Error">
+											<%= @errorMessage %>
+										</div>
+										<% end %>
+										<p class="remember">
+
+											<input type="hidden" name="hidFirstName" id="hidFirstName" value="<%= @firstName %>" />
+											<input type="hidden" name="hidLastName" id="hidLastName" placeholder="Last Name" value="<%= @lastName %>" />
+											<input type="hidden" name="hidStreetAddress" id="hidStreetAddress" placeholder="Street Address" value="<%= @streetAddress %>" />
+											<input type="hidden" name="hidselectCity" id="hidselectCity" placeholder="City, State" value="<%= @citystateVal %>" />
+											<input type="hidden" name="hidZipCode" id="hidZipCode" placeholder="Zipcode" value="<%= @zipCode %>" />
+											<input type="hidden" name="hidPhoneNumber" id="hidPhoneNumber" placeholder="Phone Number" value="<%= @phoneNumber %>" />
+											<input type="hidden" name="hidredirectUrl" id="hidredirectUrl" value="<%= @redirectUrl %>" />
+											<input type="hidden" name="hidReviewerID" id="hidReviewerID" value="<%= @reviewerID %>" />
+											<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
+											<input type="hidden" name="hidReviewCount" id="hidReviewCount" value="<%= @reviewCount %>" />
+											<input id="signin_submit" value="Sign in" tabindex="6" type="submit">
+											<!--<input id="remember" name="remember_me" value="1" tabindex="7" type="checkbox">
+											<label for="remember">Remember me</label>-->
+										</p>
+
+										<p class="forgot">
+											<a href="<%= authentication_requestpassword_url %>" id="resend_password_link">Forgot your password?</a>
+										</p>
+
+									</form>
+								</div>
+								<% else %>
+								<div id="logout-reg" class="logout-register">
+									<% @signedUser =SiteUser.find_by(id: session[:user_id]) %>
+									<a href="javascript:void(0);"><%= image_tag("user.png", :alt => "",:style => "vertical-align:top", :width => "40px", :height=> "40px") %><%= @signedUser.FirstName %></a>
+								</div>
+								<div id="signout_menu">
+									<form action="<%= user_profile_ViewProfile_url %>" method="post">
+
+										<input id="signout_submit" value="My Profile" tabindex="6" type="submit">
+
+									</form>
+									<form action="<%= authentication_logout_url %>" method="post">
+
+										<input id="signout_submit" value="Sign Out" tabindex="6" type="submit">
+
+									</form>
+								</div>
+								<% end %>
+							</div>
+						</div>
 					</div>
 				</div>
-
-				<div id="latest-news">
-					<div class="news-heading">
-						Latest News and Updates
-					</div>
-					<div class="news-point">
-						<ul class="bxslider">
-							<li>
-								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-							</li>
-							<li>
-								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-							</li>
-							<li>
-								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
-							</li>
-						</ul>
-
-					</div>
-				</div>
-
 			</div>
+			<div id="banner">
+				<div class="browser-center">
+					<div id="innwe-banner-area">
+
+					</div>
+				</div>
+			</div>
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div id="three-block">
+						<div class="blue-block">
+							<%= image_tag("about-icon.png", :alt => "") %>
+							<h1>About BillysList</h1>
+							<p>
+								BillysList.com was founded by a small business owner who realized that just as good people need to beaware of bad contractors; good contractors need to be aware of bad people.
+							</p>
+						</div>
+
+						<div class="org-block">
+							<%= image_tag("how-work.png", :alt => "") %>
+							<h1>How it Works</h1>
+							<p>
+								When you login to BillysList.com you have the option to either rate/review a customer or searchfor info on a potential customer.
+							</p>
+						</div>
+
+						<div class="blue-block">
+							<%= image_tag("testimonial.png", :alt => "") %>
+							<h1>Client Testimonials</h1>
+							<p>
+								There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+							</p>
+						</div>
+					</div>
+
+					<div id="latest-news">
+						<div class="news-heading">
+							Latest News and Updates
+						</div>
+						<div class="news-point">
+							<ul class="bxslider">
+								<li>
+									There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+								</li>
+								<li>
+									There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+								</li>
+								<li>
+									There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.
+								</li>
+							</ul>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
 		</div>
-
-		<%= render partial: "/layouts/footer" %>
-
 	</body>
 </html>

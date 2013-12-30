@@ -50,6 +50,12 @@ NicksListAdminProj::Application.routes.draw do
   post "/sitecontent/EditPressReleasePage"
   get "/sitecontent/EditPressReleasePage"
   
+  post "/sitecontent/EditPrivacyPolicy"
+  get "/sitecontent/EditPrivacyPolicy"
+  
+  post "/sitecontent/EditTermsConditions"
+  get "/sitecontent/EditTermsConditions"
+  
   post "/public_records/UpdateCourtProceedings"
   get "/public_records/UpdateCourtProceedings"
   post "/public_records/EditCourtProceedings"

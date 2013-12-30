@@ -12,5 +12,9 @@ class CreateSiteUsers < ActiveRecord::Migration
       t.column :DateCreated, :datetime, :null => false
       t.column :DateUpdated, :datetime, :null => false
     end
+    
+    change_table :site_users do |t|
+      t.add :IsSuperAdmin, :boolean, :null => false
+    end
   end
 end

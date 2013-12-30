@@ -8,9 +8,5 @@ class CreateSiteContents < ActiveRecord::Migration
       t.column :DateCreated, :datetime, :null => false
       t.column :DateUpdated, :datetime, :null => false
     end
-    
-    change_table :site_contents do |t|
-      t.add :PageCode, :integer, :limit => 3, :null => false
-    end
   end
 end

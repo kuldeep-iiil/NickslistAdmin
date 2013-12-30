@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>NicksList - Manage Site Content</title>
+		<script type="text/javascript">
+			tinyMCE.init({
+				selector : "textarea",
+				theme : "modern",
+				plugins : ["advlist autolink lists link image charmap print preview hr anchor pagebreak", "searchreplace wordcount visualblocks visualchars code fullscreen", "insertdatetime media nonbreaking save table contextmenu directionality", "emoticons template paste textcolor"],
+				toolbar1 : "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+				toolbar2 : "print preview media | forecolor backcolor emoticons",
+				image_advtab : true,
+				templates : [{
+					title : 'Test template 1',
+					content : 'Test 1'
+				}, {
+					title : 'Test template 2',
+					content : 'Test 2'
+				}]
+			});
+		</script>			
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Manage Site Content
+						
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Edit Terms & conditions</h1>
+								<div id="Success">
+									<%= flash[:notice] %>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= sitecontent_UpdateSiteContent_url %>" method="post">
+									
+										
+										<div class="content-textarea">
+											<div class="singup-textarea">
+											<div class="label">Page Title</div>
+											<input type="text" name="textTitle" id="textTitle" required="true" class="singup-textbox-large" value="<%= @title %>" />
+										</div>
+										<div class="content-textarea">
+											<div class="label">Page Content</div>
+											<textarea id="textContent" name="textContent" rows="30"><%= @content %></textarea>
+										</div>
+										
+										<div style="width:100px">&nbsp;</div>	
+													
+										<div class="singup-textarea">
+											<input type="hidden" name="hidContentID" id="hidContentID" value="<%= @contentID %>" />
+											<input type="hidden" name="hidEditPageUrl" id="hidEditPageUrl" value="<%= sitecontent_EditHowItWorksPage_url %>" />
+											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+									
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

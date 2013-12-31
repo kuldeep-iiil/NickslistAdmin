@@ -118,9 +118,8 @@ h1, h2, h3, h4, p {
 	text-transform: uppercase;
 }
 
-input[type=button], input[type=submit], button
-{
-	cursor:pointer;
+input[type=button], input[type=submit], button {
+	cursor: pointer;
 }
 
 .login-register a {
@@ -144,7 +143,7 @@ input[type=button], input[type=submit], button
 	line-height: 42px
 }
 .logout-register a {
-	
+
 	color: #ffffff;
 	font-family: Arial, sans-serif;
 	font-weight: normal;
@@ -171,6 +170,7 @@ input[type=button], input[type=submit], button
 	text-transform: uppercase;
 	height: 42px;
 	line-height: 42px;
+	position: relative;
 }
 #nav li a {
 	color: #ffffff;
@@ -184,6 +184,33 @@ input[type=button], input[type=submit], button
 	background: url(/assets/hover.jpg) repeat-x
 }
 
+#nav li ul {
+	display: none;
+	width: 183px;
+	position: absolute;
+	top: 39px;
+	background: #174986;
+	padding-top: 3px
+}
+#nav ul ul li {
+	width: 183px;
+	float: left;
+	text-transform: none;
+	height: 30px;
+	line-height: 30px;
+	border-bottom: 1px solid #2f76cd;
+}
+#nav ul ul li:last-child {
+	border-bottom: none;
+}
+#nav ul ul li a {
+	width: 163px;
+	float: left;
+	padding: 0 10px;
+}
+#nav li:hover ul {
+	display: block
+}
 
 #main-content-wrapper {
 	width: 100%;
@@ -874,7 +901,7 @@ input[type=button], input[type=submit], button
 	background: #ffffff;
 	border: 1px solid #d7d7d7;
 	padding: 25px 50px;
-	margin-top:10px;
+	margin-top: 10px;
 	border-radius: 5px
 }
 
@@ -958,11 +985,10 @@ input[type=button], input[type=submit], button
 	height: 34px;
 	border: 1px solid #d7d7d7;
 	line-height: 34px;
-	font-size: 13px;
 	color: #666666;
 	border-radius: 5px;
 	background: #ffffff;
-	padding: 0 5px
+	padding: 6px 5px
 }
 
 .singup-label {
@@ -1174,16 +1200,16 @@ input[type=button], input[type=submit], button
 
 /*add review css*/
 .page-heading {
-	float:left;
-	width:100%;
+	float: left;
+	width: 100%;
 	font-size: 35px;
 	font-family: 'OpenSans', Arial, sans-serif;
 	color: #333
 }
-.question-block-1{
+.question-block-1 {
 	width: 100%;
 	float: left;
-	border-top: 1px solid #d9d9d9;	
+	border-top: 1px solid #d9d9d9;
 }
 .question-block {
 	width: 100%;
@@ -1287,12 +1313,12 @@ input[type=button], input[type=submit], button
 /*-------jPaginate-----------*/
 
 #review-pager {
-	float:right;
-	margin-right:59px;
-	margin-top:22px;
-	min-width:100px;
-	width:auto;
-	}
+	float: right;
+	margin-right: 59px;
+	margin-top: 22px;
+	min-width: 100px;
+	width: auto;
+}
 
 .jPaginate {
 	height: 34px;
@@ -1319,7 +1345,6 @@ input[type=button], input[type=submit], button
 }
 .jPaginate span {
 	cursor: pointer;
-	
 }
 ul.jPag-pages {
 	float: left;
@@ -1393,23 +1418,14 @@ span.jPag-snext-img {
 /*-----END----*/
 
 .scroll {
-float:left;
+	float: left;
 }
 
-.label{
-	margin-bottom: 5px; 
-	margin-top: 10px; 
+.label {
+	margin-bottom: 5px;
+	margin-top: 10px;
 	font-weight: bold;
 	color: #666666;
-}
-
-#subMenuPanel{
-	display: none;
-	position: absolute;
-	width: 184px;
-	height: auto;
-	z-index: 9999;
-	background: url(/assets/nav-bg.jpg) repeat;
 }
 
 .content-textarea {

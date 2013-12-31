@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131224111837) do
+ActiveRecord::Schema.define(version: 20131231045308) do
 
   create_table "court_proceedings", force: true do |t|
     t.integer  "AddressID",                   null: false
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20131224111837) do
   end
 
   create_table "faqs", force: true do |t|
-    t.string   "Question",    limit: 20,  null: false
-    t.string   "Answers",     limit: 100, null: false
+    t.string   "Question",    limit: 200, null: false
+    t.text     "Answers",                 null: false
     t.boolean  "IsEnabled",               null: false
     t.datetime "DateCreated",             null: false
     t.datetime "DateUpdated",             null: false
@@ -114,10 +114,10 @@ ActiveRecord::Schema.define(version: 20131224111837) do
   end
 
   create_table "news_updates", force: true do |t|
-    t.string   "Comments",    limit: 50, null: false
-    t.boolean  "IsEnabled",              null: false
-    t.datetime "DateCreated",            null: false
-    t.datetime "DateUpdated",            null: false
+    t.text     "Comments",    null: false
+    t.boolean  "IsEnabled",   null: false
+    t.datetime "DateCreated", null: false
+    t.datetime "DateUpdated", null: false
   end
 
   create_table "plaintiffs", force: true do |t|
@@ -167,8 +167,10 @@ ActiveRecord::Schema.define(version: 20131224111837) do
   end
 
   create_table "site_contents", force: true do |t|
+    t.integer  "PageCode",               null: false
     t.string   "Title",       limit: 20, null: false
     t.text     "Content",                null: false
+    t.integer  "IsEnabled",              null: false
     t.datetime "DateCreated",            null: false
     t.datetime "DateUpdated",            null: false
   end
@@ -188,15 +190,16 @@ ActiveRecord::Schema.define(version: 20131224111837) do
   end
 
   create_table "site_users", force: true do |t|
-    t.string   "UserName",    limit: 20,  null: false
-    t.string   "Password",    limit: 100, null: false
-    t.string   "Salt",        limit: 45,  null: false
-    t.string   "FirstName",   limit: 20,  null: false
-    t.string   "LastName",    limit: 20,  null: false
-    t.string   "EmailID",     limit: 50,  null: false
-    t.boolean  "IsActivated",             null: false
-    t.datetime "DateCreated",             null: false
-    t.datetime "DateUpdated",             null: false
+    t.string   "UserName",     limit: 20,  null: false
+    t.string   "Password",     limit: 100, null: false
+    t.string   "Salt",         limit: 45,  null: false
+    t.string   "FirstName",    limit: 20,  null: false
+    t.string   "LastName",     limit: 20,  null: false
+    t.string   "EmailID",      limit: 50,  null: false
+    t.datetime "DateCreated",              null: false
+    t.boolean  "IsActivated",              null: false
+    t.boolean  "IsSuperAdmin",             null: false
+    t.datetime "DateUpdated",              null: false
   end
 
   create_table "subscribed_users", force: true do |t|
@@ -219,13 +222,13 @@ ActiveRecord::Schema.define(version: 20131224111837) do
   end
 
   create_table "testimonials", force: true do |t|
-    t.string   "FirstName",   limit: 20,  null: false
-    t.string   "LastName",    limit: 20,  null: false
-    t.string   "Occupation",  limit: 20,  null: false
-    t.string   "Comments",    limit: 100, null: false
-    t.boolean  "IsEnabled",               null: false
-    t.datetime "DateCreated",             null: false
-    t.datetime "DateUpdated",             null: false
+    t.string   "FirstName",   limit: 20, null: false
+    t.string   "LastName",    limit: 20, null: false
+    t.string   "Occupation",  limit: 20, null: false
+    t.text     "Comments",               null: false
+    t.boolean  "IsEnabled",              null: false
+    t.datetime "DateCreated",            null: false
+    t.datetime "DateUpdated",            null: false
   end
 
   create_table "user_address_details", force: true do |t|

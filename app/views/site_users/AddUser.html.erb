@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>NicksList - User Registration</title>		
-	</head>
-	<body onload="SignupForm_AuthUser('<%= @userauthCode %>', '<%= @usercompanyName %>', '<%= @userincorporationType %>', '<%= @userbussStreetAddress %>', '<%= @userbussCity %>', '<%= @userbussState %>', '<%= @userbussZipCode %>', '<%= @usermailStreetAddress %>', '<%= @usermailCity %>', '<%= @usermailState %>', '<%= @usermailZipCode %>', '<%= @userphoneNumber %>', '<%= @useremail %>', '<%= @userlicense %>'); <% if(!@error.blank?)%> SignupForm_visibility(); <% end %>">
+	<body>
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -22,10 +19,6 @@
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
 								<h1>Create Admin Account</h1>
-								
-								<div id="Error">
-									<%= @messageString %>
-								</div>
 							</div>
 
 							<div class="singup-form">

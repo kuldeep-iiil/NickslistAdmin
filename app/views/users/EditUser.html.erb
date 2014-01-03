@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>NicksList - User Registration</title>
 		<script>
 			function confirm_activation(isactive){
 				var result;
@@ -60,10 +58,14 @@
 						
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Edit User's Account</h1>
-								<div id="Error">
-									<%= @messageString %>
-								</div>
+								<h1>
+									<div>Edit User's Account</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
 							</div>
 
 							<div class="singup-form">

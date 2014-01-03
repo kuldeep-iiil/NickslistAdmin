@@ -284,11 +284,11 @@ class UsersController < ApplicationController
       @subUser.ContactNumber = @userphoneNumber 
       @subUser.LicenseNumber = @userlicense
       
-      if(@isActivated)
-        @subUser.IsActivated = 1 
-      else
-        @subUser.IsActivated = 0
-      end
+      #if(@isActivated)
+      #  @subUser.IsActivated = 1 
+      #else
+      #  @subUser.IsActivated = 0
+      #end
       
       @subUser.DateUpdated = time        
       @subUser.save 
@@ -328,5 +328,13 @@ class UsersController < ApplicationController
     @subUser.IsActivated = @status.to_i
     @subUser.DateUpdated = time
     @subUser.save
+    
+    if(@status.to_i == 1)
+      @userfirstName = @subUser.FirstName
+      @userlastName = @subUser.LastName
+      @useremail = @subUser.EmailID
+      mail_to_user = UserMailer.UserActivation(@userfirstName, @userlastName, @useremail)
+      mail_to_user.deliver
+    end  
   end
 end

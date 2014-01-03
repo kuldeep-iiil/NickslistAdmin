@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>NicksList - User Registration</title>
-
-	</head>
-	<body onload="SignupForm_AuthUser('<%= @authCode %>', '<%= @companyName %>', '<%= @incorporationType %>', '<%= @bussStreetAddress %>', '<%= @bussCity %>', '<%= @bussState %>', '<%= @bussZipCode %>', '<%= @mailStreetAddress %>', '<%= @mailCity %>', '<%= @mailState %>', '<%= @mailZipCode %>', '<%= @phoneNumber %>', '<%= @email %>', '<%= @license %>'); <% if(!@error.blank?)%> SignupForm_visibility(); <% end %>">
+	<body>
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -23,11 +19,14 @@
 								<input type="submit" name="Submit" id="Submit" value="GO BACK TO MY PROFILE" class="org-bt" />
 								</form>	
 								</div>
-								<h1>Edit Profile</h1>
-								
-								<div id="Error">
-									<%= @messageString %>
-								</div>
+								<h1>
+									<div>Edit Profile</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
 							</div>
 
 							<div class="singup-form">

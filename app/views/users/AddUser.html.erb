@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NicksList - User Registration</title>
 		<script>
 			function check_chkAddress(chk) {
 				var idSignupCode = document.getElementById('SignupCode');
@@ -29,7 +28,7 @@
 			}
 		</script>		
 	</head>
-	<body onload="SignupForm_AuthUser('<%= @userauthCode %>', '<%= @usercompanyName %>', '<%= @userincorporationType %>', '<%= @userbussStreetAddress %>', '<%= @userbussCity %>', '<%= @userbussState %>', '<%= @userbussZipCode %>', '<%= @usermailStreetAddress %>', '<%= @usermailCity %>', '<%= @usermailState %>', '<%= @usermailZipCode %>', '<%= @userphoneNumber %>', '<%= @useremail %>', '<%= @userlicense %>'); <% if(!@error.blank?)%> SignupForm_visibility(); <% end %>">
+	<body>
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -47,13 +46,14 @@
 						
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Create User Account</h1>
-								<p>
-									Fill the user information below to create account
-								</p>
-								<div id="Error">
-									<%= @messageString %>
-								</div>
+								<h1>
+									<div>Create User Account</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
 							</div>
 
 							<div class="singup-form">

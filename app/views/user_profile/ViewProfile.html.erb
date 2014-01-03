@@ -1,9 +1,5 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>NicksList - User Registration</title>
-		
-	</head>
 	<body>
 		<div id="wrapper">
 		<%= render partial: "/layouts/header" %>
@@ -23,8 +19,15 @@
 								<input type="submit" name="Submit" id="Submit" value="CHANGE PASSWORD" class="org-bt" />
 								</form>	
 								</div>
-							<h1>View Profile</h1>
-							<div id="Success"><%= flash[:notice] %></div>
+							<h1>
+								<div>View Profile</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+										<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
+							
 						</div>
 
 						<div class="singup-form">

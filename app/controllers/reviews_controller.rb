@@ -369,6 +369,7 @@ class ReviewsController < ApplicationController
       redirect_to nicks_admin_Index_url
     end
     
+    @userID = session[:user_id]
     @reviewID = params[:hidReviewID]
     @isPublish = params[:hidIsPublish]
     currentTime = Time.new
@@ -378,6 +379,27 @@ class ReviewsController < ApplicationController
     @reviews.IsPublished = @isPublish.to_i
     @reviews.DateUpdated = time
     @reviews.save
+    
+    if(@isPublish.to_i == 1)
+      @searchID = @reviews.CustomerSearchID
+      @search = CustomerSearch.find_by_sql("select cs.FirstName, cs.LastName, ca.StreetAddress, ca.City, ca.State, ca.ZipCode, cp.ContactNumber 
+                from customer_searches cs join customer_addresses ca on cs.AddressID = ca.id
+                join customer_phones cp on cs.id = cp.CustomerSearchID where cs.id = " + @searchID.to_s)
+      @firstName = @search[0].FirstName
+      @lastName = @search[0].LastName
+      @phoneNumber = @search[0].ContactNumber
+      @streetAddress = @search[0].StreetAddress
+      @zipCode = @search[0].ZipCode
+      @cityState = @search[0].City + ", " + @search[0].State
+      
+      @subscribedUser = SubscribedUser.find_by(ID: @userID)
+      @userfirstName = @subscribedUser.FirstName
+      @userlastName = @subscribedUser.LastName
+      @userEmail = @subscribedUser.EmailID
+       
+      mail_to_user = UserMailer.ReviewPublished(@userfirstName, @userlastName, @userEmail, @firstName, @lastName, @phoneNumber, @streetAddress, @zipCode, @cityState)
+      mail_to_user.deliver
+    end
   end
   
   def ApproveReview

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NicksList - User Registration</title>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$('#tbSubUser').dataTable({
@@ -57,12 +56,16 @@
 
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Review List</h1>
+								<h1>
+									<div>Review List</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
 								<div style="float: right; margin-top: -20px">
 									<a href="<%= public_records_ManagePublicRecords_url %>" style="text-decoration: underline">Manage Public Records</a>
-								</div>
-								<div id="Success">
-									<%= flash[:notice] %>
 								</div>
 								<div style="margin-top: 20px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= reviews_ManageReviews_url %>" method="post">

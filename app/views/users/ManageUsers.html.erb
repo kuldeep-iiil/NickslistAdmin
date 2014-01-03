@@ -60,11 +60,15 @@
 
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>User List</h1>
-
-								<div id="Success">
+								<h1>
+									<div>User List</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
 									<%= flash[:notice] %>
-								</div>
+									</div>
+									<% end %>
+									</h1>
+								
 								<div style="margin-top: 20px; float: left;">
 									<form id="frmGetUsersFilter" action="<%= users_ManageUsers_url %>" method="post">
 										<div class="singup-textarea">

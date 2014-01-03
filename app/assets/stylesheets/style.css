@@ -31,6 +31,38 @@ body {
 	font-family: Arial, Helvetica, sans-serif;
 	background: #f5f5f5
 }
+
+.error {
+	position:absolute;
+	margin-top: -3%;
+	margin-left: 22%;
+	color: red;
+	background: #FCFFB2;
+	font-size: 13px;
+	font-weight: bold;
+	border: 1px solid #e7e7e7;
+	padding: 9px;
+	border-radius: 5px;
+	text-align: center;
+	width: auto;
+	height: 20px;
+}
+.success {
+	position:absolute;
+	margin-top: -3%;
+	margin-left: 22%;
+	color: green;
+	background: #FCFFB2;
+	font-size: 13px;
+	font-weight: bold;
+	border: 1px solid #e7e7e7;
+	padding: 9px;
+	border-radius: 5px;
+	text-align: center;
+	width: auto;
+	height: 20px;
+}
+
 a {
 	text-decoration: none
 }
@@ -1168,16 +1200,6 @@ input[type=button], input[type=submit], button {
 	font-size: 14px;
 	display: block
 }
-
-#Error {
-	color: red;
-	font-size: 14px;
-}
-#Success {
-	color: green;
-	font-size: 14px;
-}
-
 #Term-Condition-area {
 	width: 935px;
 	height: 500px;
@@ -1432,4 +1454,9 @@ span.jPag-snext-img {
 	width: 884px;
 	float: left;
 	margin: 0 5px 5px 0
+}
+
+/*To hide the p word from status bar of tinymce*/
+.mce-path {
+    visibility: hidden
 }

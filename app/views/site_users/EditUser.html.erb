@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NicksList - User Registration</title>
 		<script>
 			function confirm_activation(isactive){
 				var result;
@@ -90,11 +89,16 @@
 							</div>
 							<div style="float:left; height: 20px;">&nbsp;</div>
 							<div class="singup-form-heading">
-								<h1>Change Admin's Password</h1>
-							</div>
-							<div style="float: left" id="Success">
+								<h1>
+									<div>Change Admin's Password</div>
+									<% if(@messageString != nil) %>
+									<div id="messageDiv" class="success">
 									<%= @messageString %>
-								</div>
+									</div>
+									<% end %>
+										
+								</h1>
+							</div>
 							<div class="singup-form">
 								<div id="SignupForm">
 									<form action="<%= site_users_ChangePassword_url %>" method="post">

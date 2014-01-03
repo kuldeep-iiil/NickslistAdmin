@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NicksList - Manage Site Content</title>
 		<script type="text/javascript">
 			tinyMCE.init({
 				selector : "textarea",
@@ -34,10 +33,14 @@
 						
 						<div id="singup-form-area">
 							<div class="singup-form-heading">
-								<h1>Edit Privacy Policy</h1>
-								<div id="Success">
+								<h1>
+									<div>Edit Privacy Policy</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
 									<%= flash[:notice] %>
-								</div>
+									</div>
+									<% end %>
+								</h1>
 							</div>
 
 							<div class="singup-form">
@@ -59,7 +62,7 @@
 													
 										<div class="singup-textarea">
 											<input type="hidden" name="hidContentID" id="hidContentID" value="<%= @contentID %>" />
-											<input type="hidden" name="hidEditPageUrl" id="hidEditPageUrl" value="<%= sitecontent_EditHowItWorksPage_url %>" />
+											<input type="hidden" name="hidEditPageUrl" id="hidEditPageUrl" value="<%= sitecontent_EditPrivacyPolicy_url %>" />
 											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
 										</div>
 									</form>

@@ -25,6 +25,22 @@
     			});
 			});
 		</script>
+		<script>
+			function confirm_publish(){
+				var result;
+				var isApproved = $('#hidIsApproved').val();
+				if(isApproved == 1)
+				{
+					
+					result = window.confirm("Review is not Approved. Do you also want to approve this review.");									
+					if(result)
+					{
+						$('#hidIsPublish').val("2");	
+					}
+				}
+				return true;
+			}
+		</script>
 	</head>
 	<body>
 		<div id="wrapper">
@@ -33,7 +49,7 @@
 			<div id="main-content-wrapper">
 				<div class="browser-center">
 
-					<!--<div id="review-header">
+					<div id="review-header">
 						<div id="review-header-left">
 							<h1><%= @revfirstName %>  <%= @revlastName %></h1>
 						</div>
@@ -42,10 +58,10 @@
 								<%= @revstreetAddress %>,	<%= @revcitystateVal %> <%= @revzipCode %>
 							</div>
 							<div class="address-phone">
-								<%= @phoneNumber %>
+								<%= @revphoneNumber %>
 							</div>
 						</div>
-					</div>-->
+					</div>
 
 					<div class="review-block-wrapper">
 						<div class="page-heading">
@@ -210,7 +226,7 @@
 								<% else %>
 									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
 									<input type="hidden" id="hidIsPublish" name="hidIsPublish" value="1" />
-									<input type="submit" name="Submit" id="Submit" value="Publish" class="org-bt" />
+									<input type="submit" name="Submit" id="Submit" value="Publish" onclick="return confirm_publish();" class="org-bt" />
 								<% end %>
 							</form>
 						</div>

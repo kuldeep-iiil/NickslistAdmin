@@ -64,7 +64,8 @@
 }
 
 .dataTables_info {
-	width: 60%;
+	padding-top: 10px;
+	/*width: 60%;*/
 	float: left;
 }
 
@@ -314,6 +315,7 @@ td.details {
 }
 
 .paging_full_numbers {
+	padding-top: 10px;
 	width: 400px;
 	height: 22px;
 	line-height: 22px;

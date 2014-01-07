@@ -71,6 +71,22 @@ class ReviewsController < ApplicationController
       redirect_to nicks_admin_Index_url
     end
     @reviewID = params[:hidReviewID]
+    
+    if(!@reviewID.blank?)
+      @reviewDetails = CustomerSearch.find_by_sql("select cust.FirstName, cust.LastName, custadd.*, custphone.ContactNumber 
+                      from customer_addresses custadd join customer_searches cust on cust.AddressID = custadd.id 
+                      join customer_phones custphone on cust.id = custphone.CustomerSearchID 
+                      join reviews rev on cust.ID  = rev.CustomerSearchID 
+                      where rev.id = '" + @reviewID.to_s + "'") 
+      
+      @revfirstName = @reviewDetails[0].FirstName
+      @revlastName = @reviewDetails[0].LastName
+      @revstreetAddress = @reviewDetails[0].StreetAddress
+      @revcitystateVal = @reviewDetails[0].City + ', ' + @reviewDetails[0].State
+      @revzipCode = @reviewDetails[0].ZipCode
+      @revphoneNumber = @reviewDetails[0].ContactNumber
+    end
+    
     @reviewQuestion = ReviewQuestion.all
     @reviews = Review.find_by(ID: @reviewID)
     @reviewAnswers = ReviewAnswer.where("ReviewID = (?)", @reviewID)
@@ -376,8 +392,14 @@ class ReviewsController < ApplicationController
     time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
     
     @reviews = Review.find_by(id: @reviewID)
-    @reviews.IsPublished = @isPublish.to_i
-    @reviews.DateUpdated = time
+    if(@isPublish.to_i == 2)
+      @reviews.IsApproved = 1
+      @reviews.IsPublished = 1
+      @reviews.DateUpdated = time
+    else
+      @reviews.IsPublished = @isPublish.to_i
+      @reviews.DateUpdated = time
+    end
     @reviews.save
     
     if(@isPublish.to_i == 1)

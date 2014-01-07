@@ -7,7 +7,10 @@
 					"sPaginationType" : "full_numbers",
 					"iDisplayLength" : 25,
 					"aLengthMenu" : [25, 50, 100, 200],
-					"aaSorting" : [[2,'desc']]
+					"aaSorting" : [[2,'desc']],
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
 					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
 				});
 			});
@@ -74,7 +77,7 @@
 												<% else %>
 												No
 												<% end %> </td>
-												<td align="center"><%= new.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center"><%= new.DateCreated.strftime('%B, %e %Y') %></td>
 												<td align="center">
 												<div style="float: left">
 												<form id="frmNewsUpdates<%= new.id %>" action="<%= sitecontent_EditNewsUpdatePage_url %>" method="post">

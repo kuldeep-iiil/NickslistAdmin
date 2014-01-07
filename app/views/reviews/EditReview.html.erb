@@ -79,7 +79,7 @@
 							
 						
 						
-						<% if(!@reviewQuestion.blank?) %>
+						<% if(!@reviewQuestion.blank? && !@reviewAnswers.blank?) %>
 						<form action="<%= reviews_UpdateReview_url %>" method="post">
 								<% i = 1 %>
 								<% @reviewQuestion.each do |quset| %>

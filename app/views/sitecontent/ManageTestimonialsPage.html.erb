@@ -7,7 +7,10 @@
 					"sPaginationType" : "full_numbers",
 					"iDisplayLength" : 25,
 					"aLengthMenu" : [25, 50, 100, 200],
-					"aaSorting" : [[4,'desc']]
+					"aaSorting" : [[4,'desc']],
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
 					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
 				});
 			});
@@ -80,7 +83,7 @@
 												<% else %>
 												No
 												<% end %> </td>
-												<td align="center"><%= test.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center"><%= test.DateCreated.strftime('%B, %e %Y') %></td>
 												<td align="center">
 												<div style="float: left">
 												<form id="frmTestimonial<%= test.id %>" action="<%= sitecontent_EditTestimonialsPage_url %>" method="post">

@@ -7,7 +7,10 @@
 					"sPaginationType" : "full_numbers",
 					"iDisplayLength" : 25,
 					"aLengthMenu" : [25, 50, 100, 200],
-					"aaSorting" : [[2,'desc']]
+					"aaSorting" : [[2,'desc']],
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
 					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
 				});
 			});
@@ -58,10 +61,10 @@
 									<table id="tbSubUser" style="width: 100%">
 										<thead>
 											<tr>
-												<th align="center" style="width: 64%">Questions</th>
-												<th align="center" style="width: 10%">Enabled</th>
+												<th align="center" style="width: 59%">Questions</th>
+												<th align="center" style="width: 11%">Enabled</th>
 												<th align="center" style="width: 18%">Date Created</th>
-												<th align="center" style="width: 10%">Action</th>
+												<th align="center" style="width: 12%">Action</th>
 											</tr>
 										</thead>
 
@@ -75,7 +78,7 @@
 												<% else %>
 												No
 												<% end %> </td>
-												<td align="center"><%= faq.DateCreated.strftime('%e %B, %Y') %></td>
+												<td align="center"><%= faq.DateCreated.strftime('%B, %e %Y') %></td>
 												<td align="center">
 												<div style="float: left">
 												<form id="frmFAQ<%= faq.id %>" action="<%= sitecontent_EditFAQPage_url %>" method="post">

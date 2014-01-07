@@ -191,6 +191,7 @@ class UsersController < ApplicationController
     end
     
     @userID = params[:hidUserID]
+    @messageString = params[:hidMessage]
     if(!@userID.blank?)
       @subUser = SubscribedUser.find_by(ID: @userID)
       @subAddress1 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
@@ -308,6 +309,37 @@ class UsersController < ApplicationController
       @subAddress2.save
       
       redirect_to users_ManageUsers_url, :notice => "User updated successfuly!"
+  end
+  
+  def ChangePassword
+    @moduleID = SiteModule.find_by(Module: 'Manage Users')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+    
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    end
+    
+      currentTime = Time.new
+      time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
+      @userID = params[:hidUserID]
+      password = params[:textPassword]
+      if(!password.blank?)
+          #salt = BCrypt::Engine.generate_salt
+          #password = BCrypt::Engine.hash_secret(password, salt)
+          salt = currentTime.strftime("%Y%m%d").to_str
+          encryptedpassword = AuthenticationController.new()
+          password = encryptedpassword.password_encryption(password, salt)
+        end
+      
+      
+      @subUser = SubscribedUser.find_by(ID: @userID)
+      @subUser.Password = password
+      @subUser.Salt = salt
+      @subUser.DateUpdated = time      
+      @subUser.save
+      
   end
   
   def UserActivation

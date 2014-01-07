@@ -89,6 +89,8 @@ NicksListAdminProj::Application.routes.draw do
   post "/site_users/UserActivation"
   get "/site_users/UserActivation"
   
+  post "/users/ChangePassword"
+  get "/users/ChangePassword"
   post "/users/AddUser"
   get "/users/AddUser"
   post "/users/ManageUsers"

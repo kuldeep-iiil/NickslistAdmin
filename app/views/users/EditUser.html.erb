@@ -196,6 +196,46 @@
 									</div>
 								</div>
 							</div>
+						
+							<div style="float:left; height: 20px;">&nbsp;</div>
+							<div class="singup-form-heading">
+								<h1>
+									<div>Change User's Password</div>
+									<% if(@messageString != nil) %>
+									<div id="messageDiv" class="success">
+									<%= @messageString %>
+									</div>
+									<% end %>
+										
+								</h1>
+							</div>
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= users_ChangePassword_url %>" method="post">
+
+										<div class="singup-textarea">
+											<div class="label">
+												Password
+											</div>
+											<input type="password" name="textPassword" id="textPassword" required="true" onchange="form.textConfirmPassword.pattern = this.value;" class="singup-textbox-small"  placeholder="Password" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Confirm Password
+											</div>
+											<input type="password"  name="textConfirmPassword" id="textConfirmPassword" required="true" class="singup-textbox-small"  placeholder="Confirm Password" />
+										</div>
+										<div style="width: 300px;">&nbsp;</div>
+
+										<div class="singup-textarea">
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="submit" name="Submit" id="Submit" value="Save New Password" class="org-bt" />
+										</div>
+									</form>
+									
+								</div>
+							</div>
+						
 						</div>
 
 					</div>

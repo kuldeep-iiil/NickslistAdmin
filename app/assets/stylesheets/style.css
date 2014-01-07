@@ -1296,7 +1296,7 @@ input[type=button], input[type=submit], button {
 }
 .question-comment {
 	width: 750px;
-	float: right
+	float: left;
 }
 .comment-area {
 	width: 750px;

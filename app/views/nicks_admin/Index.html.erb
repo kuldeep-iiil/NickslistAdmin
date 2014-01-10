@@ -35,20 +35,23 @@
 						<div id="navigation">
 							<div id="nav">
 								<ul>
-									<li class="first">
-										<a href="<%= nicks_admin_Index_path %>" class="active">Home</a>
-									</li>
 									<li>
-										<a href="<%= site_users_ManageUsers_url %>">Manage Admins</a>
-									</li>
-									<li>
-										<a href="<%= users_ManageUsers_url %>">Manage Users</a>
-									</li>
-									<li>
-										<a href="<%= reviews_ManageReviews_url %>">Manage Reviews</a>
-									</li>
-									<li>
-										<a href="javascript:void(0)">Manage Site Content</a>
+								<a href="<%= nicks_admin_Index_path %>">Home</a>
+							</li>
+							<li>
+								<a href="<%= site_users_ManageUsers_url %>">Admins</a>
+							</li>
+							<li>
+								<a href="<%= users_ManageUsers_url %>">Users</a>
+							</li>
+							<li>
+								<a href="<%= reviews_ManageReviews_url %>">Reviews</a>
+							</li>
+							<li>
+								<a href="<%= public_records_ManagePublicRecords_url %>">Public Records</a>
+							</li>
+							<li>
+									<a href="javascript:void(0)">Site Content</a>
 								
 									<ul>
 										<li>
@@ -64,7 +67,7 @@
 											<a href="<%= sitecontent_EditPrivacyPolicy_url %>">Privacy Policy</a>
 										</li>
 										<li>
-											<a href="<%= sitecontent_EditTermsConditions_url %>">Terms & Conditions</a>
+											<a href="<%= sitecontent_EditTermsConditions_url %>">Terms/Conditions</a>
 										</li>
 										<li>
 											<a href="<%= sitecontent_ManageFAQPage_url %>">FAQ's</a>
@@ -73,11 +76,12 @@
 											<a href="<%= sitecontent_ManageTestimonialsPage_url %>">Testimonials</a>
 										</li>
 										<li>
-											<a href="<%= sitecontent_ManageNewsUpdatePage_url %>">News & updates</a>
+											<a href="<%= sitecontent_ManageNewsUpdatePage_url %>">News/Updates</a>
 										</li>
 										
 									</ul>
-									</li>
+									
+							</li>
 
 								</ul>
 							</div>

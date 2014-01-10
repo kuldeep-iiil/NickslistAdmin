@@ -18,16 +18,20 @@
 				});
 				$("#textDateFrom").datepicker({
 					maxDate : new Date(),
-					dateFormat : 'yy/mm/dd'
+					dateFormat : 'mm/dd/yy'
 				});
-
+				$("#textDateTo").datepicker({
+						minDate : new Date($("#textDateFrom").val()),
+						maxDate : new Date(),
+						dateFormat : 'mm/dd/yy'
+					});
 				$("#textDateFrom").change(function() {
 					$("#textDateTo").val("");
 					$("#textDateTo").datepicker("destroy");
 					$("#textDateTo").datepicker({
 						minDate : new Date($("#textDateFrom").val()),
 						maxDate : new Date(),
-						dateFormat : 'yy/mm/dd'
+						dateFormat : 'mm/dd/yy'
 					});
 				});
 

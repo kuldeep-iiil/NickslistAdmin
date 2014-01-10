@@ -20,15 +20,20 @@
 
 				$("#textDateFrom").datepicker({
 					maxDate : new Date(),
-					dateFormat : 'yy/mm/dd'
+					dateFormat : 'mm/dd/yy'
 				});
+				$("#textDateTo").datepicker({
+						minDate : new Date($("#textDateFrom").val()),
+						maxDate : new Date(),
+						dateFormat : 'mm/dd/yy'
+					});
 				$("#textDateFrom").change(function() {
 					$("#textDateTo").val("");
 					$("#textDateTo").datepicker("destroy");
 					$("#textDateTo").datepicker({
 						minDate : new Date($("#textDateFrom").val()),
 						maxDate : new Date(),
-						dateFormat : 'yy/mm/dd'
+						dateFormat : 'mm/dd/yy'
 					});
 				});
 
@@ -65,42 +70,66 @@
 									</div>
 									<% end %>
 								</h1>
-								<div style="float: right; margin-top: -20px">
-									<a href="<%= public_records_ManagePublicRecords_url %>" style="text-decoration: underline">Manage Public Records</a>
-								</div>
+								
 								<div style="margin-top: 20px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= reviews_ManageReviews_url %>" method="post">
+										
 										<div class="singup-textarea">
-
-											<label for="selectStatus">Sort review list by status: </label>
-											<select id="selectStatus" name="selectStatus" class="singup-select-small" onchange="GetReviewsFilter();">
-												<% if(@filterString == '0') %>
-												<option selected="selected" value="0">All</option>
+											<select id="selectQuestion" name="selectQuestion" class="singup-select-large">
+												<option value="0">--Review Questions--</option>
+												<% if(!@reviewQuestion.blank?) %>
+												<% @reviewQuestion.each do |revQuest| %>
+												<% if(@questionID.to_i == revQuest.id) %>
+												<option value="<%= revQuest.id %>" selected = "selected"><%= revQuest.Description %></option>
 												<% else %>
-												<option value="0">All</option>
+												<option value="<%= revQuest.id %>"><%= revQuest.Description %></option>
 												<% end %>
-												<% if(@filterString == '1') %>
-												<option selected="selected" value="1">Approve</option>
-												<% else %>
-												<option value="1">Approve</option>
 												<% end %>
-												<% if(@filterString == '2') %>
-												<option selected="selected" value="2">DisApprove</option>
-												<% else %>
-												<option value="2">DisApprove</option>
 												<% end %>
-												<% if(@filterString == '3') %>
-												<option selected="selected" value="3">Published</option>
-												<% else %>
-												<option value="3">Published</option>
-												<% end %>
-												<% if(@filterString == '4') %>
-												<option selected="selected" value="4">UnPublished</option>
-												<% else %>
-												<option value="4">UnPublished</option>
-												<% end %>
-
 											</select>
+										</div>
+										<div class="singup-textarea">
+											<select id="selectAnswer" name="selectAnswer" class="singup-select-small">
+												<% if(@answerID == '0') %>
+												<option selected="selected" value="0">--Review Answers--</option>
+												<% else %>
+												<option value="0">--Review Answers--</option>
+												<% end %>
+												<% if(@answerID == '1') %>
+												<option selected="selected" value="1">No Answer</option>
+												<% else %>
+												<option value="1">No Answer</option>
+												<% end %>
+												<% if(@answerID == '2') %>
+												<option selected="selected" value="2">Yes</option>
+												<% else %>
+												<option value="2">Yes</option>
+												<% end %>
+												<% if(@answerID == '3') %>
+												<option selected="selected" value="3">No</option>
+												<% else %>
+												<option value="3">No</option>
+												<% end %>
+											</select>
+										</div>
+										
+										<div class="singup-textarea">
+											<input name="txtFirstName" type="text" class="singup-textbox-small" id="txtFirstName" placeholder="First Name" value="<%= @firstName %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="txtLastName" type="text" class="singup-textbox-small" id="txtLastName" placeholder="Last Name" value="<%= @lastName %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="txtStreetAddress" type="text" class="singup-textbox-small" id="txtStreetAddress" placeholder="Street Address" value="<%= @streetAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" id="selectCity" placeholder="City, State" value="<%= @cityState %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" placeholder="Zipcode" value="<%= @zipCode %>" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="txtPhoneNumber" type="text" class="singup-textbox-small" id="txtPhoneNumber" placeholder="Phone Number" value="<%= @phoneNumber %>" pattern="^[0-9]{3,3}[-]?[0-9]{3,3}[-]?[0-9]{4,4}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [1234567890 or 123-456-7890] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<input type="text" name="textDateFrom" id="textDateFrom" autocomplete="off" class="singup-textbox-small"  placeholder="Review Date From" value="<%= @DateFrom %>" />
@@ -109,13 +138,54 @@
 											<input type="text" name="textDateTo" id="textDateTo" autocomplete="off" class="singup-textbox-small"  placeholder="Review Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="submit" name="Submit" id="Submit" style="margin-top: -4px" value="GO" class="org-bt" />
+											<input type="submit" name="Submit" id="Submit" value="FILTER REVIEW LIST" class="org-bt-small" />
+										</div>
+										<div style="float: right; padding-right: 40px; ">
+											<select id="selectStatus" name="selectStatus" class="singup-select-small" onchange="GetReviewsFilter();">
+												<% if(@statusID == '0') %>
+												<option selected="selected" value="0">All Status</option>
+												<% else %>
+												<option value="0">All</option>
+												<% end %>
+												<% if(@statusID == '1') %>
+												<option selected="selected" value="1">Approved</option>
+												<% else %>
+												<option value="1">Approve</option>
+												<% end %>
+												<% if(@statusID == '2') %>
+												<option selected="selected" value="2">Disapproved</option>
+												<% else %>
+												<option value="2">DisApprove</option>
+												<% end %>
+												<% if(@statusID == '3') %>
+												<option selected="selected" value="3">Published</option>
+												<% else %>
+												<option value="3">Published</option>
+												<% end %>
+												<% if(@statusID == '4') %>
+												<option selected="selected" value="4">Un-Published</option>
+												<% else %>
+												<option value="4">UnPublished</option>
+												<% end %>
+
+											</select>
+										</div>
+									</form>
+								</div>
+								
+								<div style="margin-top: -34px; margin-left: 155px; float: left;">
+									<form id="frmGetReviewsFilter" action="<%= reviews_ManageReviews_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<input type="hidden" id="hidSetFilter" name="hidSetFilter" value="1" />
+											<input type="submit" name="Submit" id="Submit" style="margin-top: -3px" value="RESET FILTER" class="org-bt-small" />
 										</div>
 									</form>
 								</div>
 
 							</div>
-
+							
+							
 							<div class="singup-form">
 								<div id="SignupForm">
 									<% if(!@reviews.blank?) %>
@@ -133,7 +203,7 @@
 										</thead>
 
 										<tbody>
-											<% !@reviews.each do |rev| %>
+											<% @reviews.each do |rev| %>
 											<tr>
 												<td><%= rev.cFirstName %> <%= rev.cLastName %></td>
 												<td><%= rev.sFirstName %> <%= rev.sLastName %></td>

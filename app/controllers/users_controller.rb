@@ -15,21 +15,29 @@ class UsersController < ApplicationController
     end
     
     @queryDate = ""
-    @DateFrom = ""
-    @DateTo = ""
+    @dateFrom = ""
+    @dateTo = ""
+
     if(params[:textDateFrom] != nil)
-      @DateFrom = params[:textDateFrom]
+      if(params[:textDateFrom].strip() != '')
+        @DateFrom = params[:textDateFrom]
+        @dateFrom = Date.strptime(@DateFrom, "%m/%d/%Y").to_s
+      end
     end
-    
+
     if(params[:textDateTo] != nil)
-      @DateTo = params[:textDateTo]
+      if(params[:textDateTo].strip() != '')
+        @DateTo = params[:textDateTo]
+        @dateTo = (Date.strptime(@DateTo, "%m/%d/%Y") + 1.day).to_s
+      end
     end
-    if(@DateFrom != "" && @DateTo != "")
-      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateFrom + "' AND '" + @DateTo + "'"
-    elsif(@DateFrom != "" && @DateTo == "")
-      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateFrom + "' AND '" + @DateFrom + "'"
-    elsif(@DateFrom == "" && @DateTo != "")
-      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @DateTo + "' AND '" + @DateTo + "'"
+      
+    if(@dateFrom != "" && @dateTo != "")
+      @queryDate = "userPay.ResponseDateTime BETWEEN '" + @dateFrom + "' AND '" + @dateTo + "'"
+    elsif(@dateFrom != "" && @dateTo == "")
+      @queryDate = "userPay.ResponseDateTime >= '" + @dateFrom + "'"
+    elsif(@dateFrom == "" && @dateTo != "")
+      @queryDate = "userPay.ResponseDateTime <= '" + @dateTo + "'"
     else
       @queryDate = ""
     end

@@ -40,7 +40,7 @@ CREATE TABLE `site_modules` (
 
 LOCK TABLES `site_modules` WRITE;
 /*!40000 ALTER TABLE `site_modules` DISABLE KEYS */;
-INSERT INTO `site_modules` (`id`, `Module`, `Description`, `DateCreated`, `DateUpdated`) VALUES (1,'Manage Users','Authorized user can manage the subscribed user of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(2,'Manage Admin','Authorized user can manage the admin users of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(3,'Manage Reviews','Authorized user can manage the users reviews of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(4,'Manage Site Content','Authorized user can manage the content of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54');
+INSERT INTO `site_modules` (`id`, `Module`, `Description`, `DateCreated`, `DateUpdated`) VALUES (1,'Manage Users','Authorized user can manage the subscribed user of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(2,'Manage Admin','Authorized user can manage the admin users of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(3,'Manage Reviews','Authorized user can manage the users reviews of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(4,'Manage Site Content','Authorized user can manage the content of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(5,'Public Records','Authorized user can manage the Public Records.','2013-12-02 16:59:54','2013-12-02 16:59:54');
 /*!40000 ALTER TABLE `site_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

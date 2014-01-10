@@ -219,14 +219,14 @@ input[type=button], input[type=submit], button {
 
 #nav li ul {
 	display: none;
-	width: 183px;
+	width: 123px;
 	position: absolute;
 	top: 39px;
 	background: #174986;
 	padding-top: 3px
 }
 #nav ul ul li {
-	width: 183px;
+	width: 123px;
 	float: left;
 	text-transform: none;
 	height: 30px;
@@ -237,7 +237,7 @@ input[type=button], input[type=submit], button {
 	border-bottom: none;
 }
 #nav ul ul li a {
-	width: 163px;
+	width: 103px;
 	float: left;
 	padding: 0 10px;
 }
@@ -346,11 +346,20 @@ input[type=button], input[type=submit], button {
 }
 .org-bt {
 	background: url(/assets/org-bt-bg.jpg) repeat-x;
-	padding: 11px 20px;
+	padding: 10px 15px;
 	color: #ffffff;
 	border-radius: 5px;
 	float: left
 }
+
+.org-bt-small {
+	background: url(/assets/org-bt-bg.jpg) repeat-x;
+	padding: 5px 10px;
+	color: #ffffff;
+	border-radius: 5px;
+	float: left
+}
+
 .form-dropdown {
 	width: 120px;
 	float: left;
@@ -992,6 +1001,17 @@ input[type=button], input[type=submit], button {
 	background: #ffffff;
 	padding: 0 5px
 }
+.singup-textbox-tiny {
+	width: 130px;
+	height: 34px;
+	border: 1px solid #d7d7d7;
+	line-height: 34px;
+	font-size: 13px;
+	color: #666666;
+	border-radius: 5px;
+	background: #ffffff;
+	padding: 0 5px
+}
 .singup-textbox-large {
 	width: 840px;
 	height: 34px;
@@ -1004,6 +1024,8 @@ input[type=button], input[type=submit], button {
 	padding: 0 5px
 }
 
+
+
 .singup-textarea-large {
 	width: 840px;
 	border: 1px solid #d7d7d7;
@@ -1013,8 +1035,31 @@ input[type=button], input[type=submit], button {
 	background: #ffffff;
 	padding: 0 5px
 }
+
 .singup-select-small {
-	width: 197px;
+	width: 208px;
+	height: 34px;
+	border: 1px solid #d7d7d7;
+	line-height: 34px;
+	color: #666666;
+	border-radius: 5px;
+	background: #ffffff;
+	padding: 6px 5px
+}
+
+.singup-select-large {
+	width: 636px;
+	height: 34px;
+	border: 1px solid #d7d7d7;
+	line-height: 34px;
+	color: #666666;
+	border-radius: 5px;
+	background: #ffffff;
+	padding: 6px 5px
+}
+
+.singup-select-tiny {
+	width: 68px;
 	height: 34px;
 	border: 1px solid #d7d7d7;
 	line-height: 34px;

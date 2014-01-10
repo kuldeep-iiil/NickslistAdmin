@@ -1,7 +1,7 @@
 class PublicRecordsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def ManagePublicRecords
-    @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
+    @moduleID = SiteModule.find_by(Module: 'Public Records')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
 
     if(!session[:user_id])
@@ -15,7 +15,7 @@ class PublicRecordsController < ApplicationController
   end
 
   def EditMLJudgements
-    @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
+    @moduleID = SiteModule.find_by(Module: 'Public Records')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
 
     if(!session[:user_id])
@@ -39,7 +39,7 @@ class PublicRecordsController < ApplicationController
   end
 
   def UpdateMLJudgements
-    @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
+    @moduleID = SiteModule.find_by(Module: 'Public Records')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
 
     if(!session[:user_id])
@@ -63,7 +63,7 @@ class PublicRecordsController < ApplicationController
   end
 
   def EditCourtProceedings
-    @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
+    @moduleID = SiteModule.find_by(Module: 'Public Records')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
 
     if(!session[:user_id])
@@ -84,8 +84,8 @@ class PublicRecordsController < ApplicationController
     @courtProceeding = CourtProceedings.find_by(AddressID: @addressID)
     if(!@courtProceeding.blank?)
       @caseType = @courtProceeding.CaseType
-      @hearingDate = @courtProceeding.CourtHearingDate.strftime('%Y/%m/%d')
-      @caseFiledDate = @courtProceeding.DateFiled.strftime('%Y/%m/%d')
+      @hearingDate = @courtProceeding.CourtHearingDate.strftime('%m/%d/%Y')
+      @caseFiledDate = @courtProceeding.DateFiled.strftime('%m/%d/%Y')
       @amountAwarded = @courtProceeding.AmountAwarded
       @defendant = Defendants.find_by(id: @courtProceeding.DefendantID)
       if(!@defendant.blank?)
@@ -107,7 +107,7 @@ class PublicRecordsController < ApplicationController
 
     @lien = Liens.find_by(AddressID: @addressID)
     if(!@lien.blank?)
-      @dateIssued = @lien.DateIssued.strftime('%Y/%m/%d')
+      @dateIssued = @lien.DateIssued.strftime('%m/%d/%Y')
       @amount = @lien.Amount
       @grantor = Grantors.find_by(id: @lien.GrantorID)
       if(!@grantor.blank?)
@@ -121,7 +121,7 @@ class PublicRecordsController < ApplicationController
   end
 
   def UpdateCourtProceedings
-    @moduleID = SiteModule.find_by(Module: 'Manage Reviews')
+    @moduleID = SiteModule.find_by(Module: 'Public Records')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
 
     if(!session[:user_id])
@@ -165,8 +165,8 @@ class PublicRecordsController < ApplicationController
     @courtProceeding = CourtProceedings.find_by(AddressID: @addressID)
     if(!@courtProceeding.blank?)
       @courtProceeding.CaseType = params[:textCaseType]
-      @courtProceeding.CourtHearingDate = params[:textHearingDate]
-      @courtProceeding.DateFiled = params[:textCaseFiledDate]
+      @courtProceeding.CourtHearingDate = Date.strptime(params[:textHearingDate], "%m/%d/%Y")
+      @courtProceeding.DateFiled = Date.strptime(params[:textCaseFiledDate], "%m/%d/%Y")
       @courtProceeding.AmountAwarded = params[:textAmountAwarded]
       @courtProceeding.DateUpdated = time
       @courtProceeding.save 
@@ -211,7 +211,7 @@ class PublicRecordsController < ApplicationController
 
     @lien = Liens.find_by(AddressID: @addressID)
     if(!@lien.blank?)
-      @lien.DateIssued = params[:textDateIssued]
+      @lien.DateIssued = Date.strptime(params[:textDateIssued], "%m/%d/%Y")
       @lien.Amount = params[:textAmount]
       @lien.DateUpdated = time 
       @lien.save

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
+				});
+
+				$('#linkEdit').click(function() {
+
+				});
+				$("#textDateFrom").datepicker({
+					maxDate : new Date(),
+					dateFormat : 'mm/dd/yy'
+				});
+				$("#textDateTo").datepicker({
+						minDate : new Date($("#textDateFrom").val()),
+						maxDate : new Date(),
+						dateFormat : 'mm/dd/yy'
+					});
+				$("#textDateFrom").change(function() {
+					$("#textDateTo").val("");
+					$("#textDateTo").datepicker("destroy");
+					$("#textDateTo").datepicker({
+						minDate : new Date($("#textDateFrom").val()),
+						maxDate : new Date(),
+						dateFormat : 'mm/dd/yy'
+					});
+				});
+
+			});
+			function ViewHistory(userID) {
+				var eID = '#frmViewHistory' + userID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">Reports</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>
+									<div>User Login Report</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+									</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@userLoginDetails.blank?) %>
+
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">First Name</th>
+												<th align="center">Last Name</th>
+												<th align="center">Username</th>
+												<th align="center">Last Login at</th>
+												<th align="center">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% @userLoginDetails.each do |sUser| %>
+											<tr>
+												<td><%= sUser.FirstName %></td>
+												<td><%= sUser.LastName %></td>
+												<td><%= sUser.UserName %></td>
+												<td><%= sUser.LoginDateTime %></td>
+												<td align="center">
+													<diV style="float: left; margin-left: 20px">
+														<form id="frmViewHistory<%= sUser.id %>" action="<%= reports_ViewUserLoginHistory_url %>" method="post">
+															<input type="hidden" name="hidUserID" id="hidUserID" value="<%= sUser.id %>" />
+															</form>
+														<a id="linkManageRoles" href="#" onclick="ViewHistory(<%= sUser.id %>);">View History</a>
+													</diV>
+												</td>
+												</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% else %>
+									No Records found.
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

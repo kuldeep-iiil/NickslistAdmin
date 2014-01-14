@@ -1,5 +1,6 @@
 class NicksAdminController < ApplicationController
-    def Index
+  skip_before_action :verify_authenticity_token
+  def Index
     @openLogin = ''
     if(!flash[:userName].blank? && !flash[:error].blank?)
       @openLogin = 1

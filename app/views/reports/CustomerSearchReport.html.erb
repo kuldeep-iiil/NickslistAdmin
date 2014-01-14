@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
+				});
+			});
+			function ViewSearchBy(custID) {
+				var eID = '#frmSearchBy' + custID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">Reports</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>
+									<div>Customer Search Report</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+									</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@custSearchDetails.blank?) %>
+
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="left" width = "11%">First Name</th>
+												<th align="left" width = "11%">Last Name</th>
+												<th align="left" width = "22%">Address</th>
+												<th align="left" width = "10%">City</th>
+												<th align="left" width = "6%">State</th>
+												<th align="left" width = "9%">ZipCode</th>
+												<th align="left" width = "15%">Contact Number</th>
+												<th align="left" width = "8%">Search Count</th>
+												<th align="left" width = "8%">Details</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% @custSearchDetails.each do |cust| %>
+											<tr>
+												<td><%= cust.FirstName %></td>
+												<td><%= cust.LastName %></td>
+												<td><%= cust.StreetAddress %></td>
+												<td><%= cust.City %></td>
+												<td><%= cust.State %></td>
+												<td><%= cust.ZipCode %></td>
+												<td><%= cust.ContactNumber %></td>
+												<td><%= cust.count %></td>
+												<td align="center">
+													<diV style="float: left; margin-left: 20px">
+														<form id="frmSearchBy<%= cust.id %>" action="<%= reports_ViewCustomerSearchBy_url %>" method="post">
+															<input type="hidden" name="hidCustID" id="hidCustID" value="<%= cust.id %>" />
+															</form>
+														<a id="linkVewHistory" href="#" onclick="ViewSearchBy(<%= cust.id %>);">View</a>
+													</diV>
+												</td>
+												</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% else %>
+									No Records found.
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

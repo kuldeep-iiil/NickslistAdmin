@@ -12,6 +12,20 @@ class AuthenticationController < ApplicationController
       session[:user_id] = user.id
       #session[:user_name] = user.FirstName + " " + user.LastName
       session[:user_name] = "Hi, " + user.FirstName
+      
+      @adminLogin = AdminLoginReport.find_by(UserID: user.id)
+      if(@adminLogin.blank?)
+        @adminLogin = AdminLoginReport.new(UserID: user.id, LoginDateTime: Time.now)
+        @adminLogin.save
+      else
+        @adminLogin.LoginDateTime = Time.now
+        @adminLogin.LogOutDateTime = 'NULL'
+        @adminLogin.save
+      end
+      
+      @adminLoginHistory = AdminLoginReportHistory.new(UserID: user.id, LoginDateTime: Time.now)
+      @adminLoginHistory.save
+      
       if(@redirectUrl.blank?)
         redirect_to root_url
       else
@@ -23,6 +37,18 @@ class AuthenticationController < ApplicationController
   end
   
   def logout
+    userID = session[:user_id]   
+    @adminLogin = AdminLoginReport.find_by(UserID: userID)
+    if(!@adminLogin.blank?)
+      @adminLogin.LogOutDateTime = Time.now
+      @adminLogin.save
+      @adminLoginHistory = AdminLoginReportHistory.find_by(UserID: userID, LoginDateTime: @adminLogin.LoginDateTime)
+      if(!@adminLoginHistory.blank?)
+        @adminLoginHistory.LogOutDateTime = Time.now
+        @adminLoginHistory.save
+      end    
+    end
+    
     session[:user_id] = nil
     session[:user_name] = nil
     redirect_to root_url

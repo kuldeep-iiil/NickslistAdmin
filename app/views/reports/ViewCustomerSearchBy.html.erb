@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
+				});
+
+				$('#linkEdit').click(function() {
+
+				});
+
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Reports
+							<div style="float:right;">
+								<form id="goback" action="<%= reports_CustomerSearchReport_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO CUSTOMER SEARCH REPORT" class="org-bt" />
+								</form>
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>
+									<div>Customer Search History</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
+							</div>
+							
+							<div id="review-header-bottom">
+								<div id="review-header-bottom-left">
+									<h1><%= @revfirstName %>  <%= @revlastName %></h1>
+								</div>
+								<div id="review-header-bottom-right">
+									<div class="address-desc">
+										<%= @revstreetAddress %>,	<%= @revcitystateVal %> <%= @revzipCode %>
+									</div>
+									<div class="address-phone">
+										<%= @revphoneNumber %>
+									</div>
+								</div>
+							</div>
+							
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@custReviewDetails.blank?) %>
+									
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="left" width = "20%">First Name</th>
+												<th align="left" width = "20%">Last Name</th>
+												<th align="left" width = "20%">Reviewed</th>
+												<th align="left" width = "20%">Request Sent</th>
+												<th align="left" width = "20%">Searched Date</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% @custReviewDetails.each do |cust| %>
+											<tr>
+												<td><%= cust.FirstName %></td>
+												<td><%= cust.LastName %></td>
+												<td align="center"> <% if(cust.IsReviewGiven) %>
+												Yes
+												<% else %>
+												No
+												<% end %> 
+												</td>
+												<td align="center"> <% if(cust.IsRequestSent) %>
+												Yes
+												<% else %>
+												No
+												<% end %> 
+												</td>
+												<td><%= cust.DateCreated.strftime('%B, %e %Y') %></td>
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% else %>
+									No Records found.
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

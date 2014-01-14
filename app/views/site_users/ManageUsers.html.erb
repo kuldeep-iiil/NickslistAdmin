@@ -73,7 +73,7 @@
 										</thead>
 
 										<tbody>
-											<% !@siteUser.each do |sUser| %>
+											<% @siteUser.each do |sUser| %>
 											<% if(sUser.IsSuperAdmin == false) %>
 											<tr>
 												<td><%= sUser.FirstName %></td>

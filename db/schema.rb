@@ -11,7 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131231045308) do
+ActiveRecord::Schema.define(version: 20140113082022) do
+
+  create_table "admin_login_report_histories", force: true do |t|
+    t.integer  "UserID",         null: false
+    t.datetime "LoginDateTime",  null: false
+    t.datetime "LogOutDateTime"
+  end
+
+  create_table "admin_login_reports", force: true do |t|
+    t.integer  "UserID",         null: false
+    t.datetime "LoginDateTime",  null: false
+    t.datetime "LogOutDateTime"
+  end
 
   create_table "court_proceedings", force: true do |t|
     t.integer  "AddressID",                   null: false
@@ -167,12 +179,12 @@ ActiveRecord::Schema.define(version: 20131231045308) do
   end
 
   create_table "site_contents", force: true do |t|
-    t.integer  "PageCode",               null: false
-    t.string   "Title",       limit: 20, null: false
-    t.text     "Content",                null: false
-    t.integer  "IsEnabled",              null: false
-    t.datetime "DateCreated",            null: false
-    t.datetime "DateUpdated",            null: false
+    t.integer  "PageCode",                null: false
+    t.string   "Title",       limit: 100, null: false
+    t.text     "Content",                 null: false
+    t.integer  "IsEnabled",               null: false
+    t.datetime "DateCreated",             null: false
+    t.datetime "DateUpdated",             null: false
   end
 
   create_table "site_module_user_joins", force: true do |t|
@@ -240,6 +252,18 @@ ActiveRecord::Schema.define(version: 20131231045308) do
     t.string   "ZipCode",     limit: 10,  null: false
     t.datetime "DateCreated",             null: false
     t.datetime "DateUpdated",             null: false
+  end
+
+  create_table "user_login_report_histories", force: true do |t|
+    t.integer  "UserID",         null: false
+    t.datetime "LoginDateTime",  null: false
+    t.datetime "LogOutDateTime"
+  end
+
+  create_table "user_login_reports", force: true do |t|
+    t.integer  "UserID",         null: false
+    t.datetime "LoginDateTime",  null: false
+    t.datetime "LogOutDateTime"
   end
 
   create_table "user_payment_details", force: true do |t|

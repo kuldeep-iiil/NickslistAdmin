@@ -1,4 +1,18 @@
 NicksListAdminProj::Application.routes.draw do
+  
+  post "/reports/ViewCustomerSearchBy"
+  get"/reports/ViewCustomerSearchBy"
+  post "/reports/CustomerSearchReport"
+  get "/reports/CustomerSearchReport"
+  post "/reports/UserLoginReport"
+  get "/reports/UserLoginReport"
+  post "/reports/AdminLoginReport"
+  get "/reports/AdminLoginReport"
+  post "/reports/ViewUserLoginHistory"
+  get "/reports/ViewUserLoginHistory"
+  post "/reports/ViewAdminLoginHistory"
+  get "/reports/ViewAdminLoginHistory"
+  
   post "/sitecontent/EnableDisableFAQ"
   get "/sitecontent/EnableDisableFAQ"
   post "/sitecontent/AddFAQPage"

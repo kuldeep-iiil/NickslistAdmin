@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
+				});
+
+				$('#linkEdit').click(function() {
+
+				});
+
+			});
+			function ViewHistory(userID) {
+				var eID = '#frmViewHistory' + userID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Reports
+							<div style="float:right;">
+								<form id="goback" action="<%= reports_AdminLoginReport_url %>" method="post">
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN LOGIN REPORT" class="org-bt" />
+								</form>
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>
+									<div>Admin Login History</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@adminLoginDetails.blank?) %>
+									
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">Login at</th>
+												<th align="center">Logout at</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% @adminLoginDetails.each do |sUser| %>
+											<tr>
+												<td><%= sUser.LoginDateTime %></td>
+												<td><%= sUser.LogOutDateTime %></td>
+											</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% else %>
+									No Records found.
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

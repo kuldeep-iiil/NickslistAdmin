@@ -55,22 +55,22 @@ class ReportsController < ApplicationController
   def CustomerSearchReport
     @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
     if(!session[:user_id])
-      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminLoginReport_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_CustomerSearchReport_url}
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
 
-      @custSearchDetails = CustomerSearch.find_by_sql("select cust.ID, cust.FirstName, cust.LastName, custadd.*, custPhone.ContactNumber, COUNT(*) as count
+      @custSearchDetails = CustomerSearch.find_by_sql("select cust.id, cust.FirstName, cust.LastName, custadd.StreetAddress, custadd.City, custadd.State, custadd.ZipCode, custPhone.ContactNumber, COUNT(*) as count
                       from customer_addresses custadd join customer_searches cust on cust.AddressID = custadd.id
                       join customer_phones custPhone on cust.id = custPhone.CustomerSearchID join customer_search_logs custLogs on cust.id = custLogs.CustomerSearchID
-                      group by cust.FirstName, cust.LastName, custadd.StreetAddress, custadd.City, custadd.State, custadd.ZipCode, custPhone.ContactNumber")
+                      group by cust.id, cust.FirstName, cust.LastName, custadd.StreetAddress, custadd.City, custadd.State, custadd.ZipCode, custPhone.ContactNumber")
     end
   end
 
   def ViewCustomerSearchBy
     @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
     if(!session[:user_id])
-      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminLoginReport_url}
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_CustomerSearchReport_url}
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else

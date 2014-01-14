@@ -62,15 +62,15 @@
 										<tbody>
 											<% @custSearchDetails.each do |cust| %>
 											<tr>
-												<td><%= cust.FirstName %></td>
-												<td><%= cust.LastName %></td>
-												<td><%= cust.StreetAddress %></td>
-												<td><%= cust.City %></td>
-												<td><%= cust.State %></td>
-												<td><%= cust.ZipCode %></td>
-												<td><%= cust.ContactNumber %></td>
-												<td><%= cust.count %></td>
-												<td align="center">
+												<td width = "11%"><%= cust.FirstName %></td>
+												<td width = "11%"><%= cust.LastName %></td>
+												<td width = "22%"><%= cust.StreetAddress %></td>
+												<td width = "10%"><%= cust.City %></td>
+												<td width = "6%"><%= cust.State %></td>
+												<td width = "9%"><%= cust.ZipCode %></td>
+												<td width = "15%"><%= cust.ContactNumber %></td>
+												<td width = "8%"><%= cust.count %></td>
+												<td width = "8%" align="center">
 													<diV style="float: left; margin-left: 20px">
 														<form id="frmSearchBy<%= cust.id %>" action="<%= reports_ViewCustomerSearchBy_url %>" method="post">
 															<input type="hidden" name="hidCustID" id="hidCustID" value="<%= cust.id %>" />

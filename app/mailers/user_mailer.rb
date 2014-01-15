@@ -25,4 +25,20 @@ class UserMailer < ActionMailer::Base
       email_subject = "Review Notification"
       mail(to: email_to, subject: email_subject)  
   end
+  
+  def ReviewRequest(userfirstName, userlastName, userEmail, firstName, lastName, phoneNumber, streetAddress, zipCode, cityState, searchDate)
+      @userfirstName = userfirstName
+      @userlastName = userlastName
+      @userEmail = userEmail
+      @firstName = firstName
+      @lastName = lastName
+      @phoneNumber = phoneNumber
+      @streetAddress = streetAddress
+      @zipCode = zipCode
+      @cityState = cityState
+      @searchDate = reviewDate
+      email_to = userEmail    
+      email_subject = "Review Notification"
+      mail(to: email_to, subject: email_subject)  
+  end
 end

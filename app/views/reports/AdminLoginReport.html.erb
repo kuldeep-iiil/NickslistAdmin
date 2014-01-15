@@ -7,6 +7,7 @@
 					"sPaginationType" : "full_numbers",
 					"iDisplayLength" : 25,
 					"aLengthMenu" : [25, 50, 100, 200],
+					"aaSorting" : [[4,'desc']],
 					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
 					"oLanguage": {
         				"sEmptyTable" : "No Records found."
@@ -62,7 +63,7 @@
 												<td><%= sUser.FirstName %></td>
 												<td><%= sUser.LastName %></td>
 												<td><%= sUser.UserName %></td>
-												<td><%= sUser.LoginDateTime %></td>
+												<td><% if(sUser.LoginDateTime != nil) %><%= sUser.LoginDateTime.strftime("%B, %e %Y %H:%M:%S") %><% end %></td>
 												<td align="center">
 													<diV style="float: left; margin-left: 20px">
 														<form id="frmViewHistory<%= sUser.id %>" action="<%= reports_ViewAdminLoginHistory_url %>" method="post">

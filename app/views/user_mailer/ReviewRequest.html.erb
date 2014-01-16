@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+  	<h1>Review Request Notification mail.</h1>
+    <p>Hi <%= @userfirstName %> <%= @userlastName %>. You have searched for below customer on <%= @searchDate %>, but not given review. Please provide your reviews for this customer.</p>
+      	<b>Customer Details:</b><br />
+      	First Name: <%= @firstName %> <br />
+      	Last Name: <%= @lastName %><br />
+      	Address: <%= @streetAddress %><br />
+      	City, State: <%= @cityState %> <br />
+      	ZipCode: <%= @zipCode %> <br />
+      	Contact Number : <%= @phoneNumber %>
+      
+    
+    <H4>Thanks for being with us. Have a great day!</H4>
+  </body>
+</html>

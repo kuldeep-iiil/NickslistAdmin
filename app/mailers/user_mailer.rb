@@ -36,7 +36,7 @@ class UserMailer < ActionMailer::Base
       @streetAddress = streetAddress
       @zipCode = zipCode
       @cityState = cityState
-      @searchDate = reviewDate
+      @searchDate = searchDate
       email_to = userEmail    
       email_subject = "Review Notification"
       mail(to: email_to, subject: email_subject)  

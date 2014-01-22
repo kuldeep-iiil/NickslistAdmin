@@ -288,7 +288,7 @@ class ReviewsController < ApplicationController
         
       end
 
-      if(@isPublish.to_i == 1)
+      if(@isPublish.to_i == 1 || @isPublish.to_i == 2)
         @searchID = @reviews.CustomerSearchID
         @search = CustomerSearch.find_by_sql("select cs.FirstName, cs.LastName, ca.StreetAddress, ca.City, ca.State, ca.ZipCode, cp.ContactNumber
                 from customer_searches cs join customer_addresses ca on cs.AddressID = ca.id

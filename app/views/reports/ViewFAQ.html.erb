@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Reports
+						<div style="float:right;">
+								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>FAQ Details</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= sitecontent_AddUpdateFAQPage_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<div class="label">Question</div>
+											<input type="text" name="textQuestion" id="textQuestion" readonly="readonly" class="singup-textbox-large" value="<%= @question %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Answer</div>
+											<textarea id="textAnswer" name="textAnswer" rows="10" cols="103" readonly="readonly"><%= @answer %></textarea>
+										</div>		
+										
+									</form>
+									
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

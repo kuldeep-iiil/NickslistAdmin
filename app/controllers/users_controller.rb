@@ -85,6 +85,7 @@ class UsersController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      currentUserID = session[:user_id]
 
       @usercompanyName = params[:textCompany]
       @userfirstName = params[:textFirstName]
@@ -181,6 +182,9 @@ class UsersController < ApplicationController
           @userMailAddressDetail = UserAddressDetail.new(UserID: user.id, AddressType: 'Mailing' , Address: @usermailStreetAddress, City: @usermailCity, State: @usermailState, ZipCode: @usermailZipCode, DateCreated: time, DateUpdated: time)
           @userMailAddressDetail.save
 
+          @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '107', TaskID: @subscribedUser.id, DateCreated: time)
+          @adminActivity.save
+          
           redirect_to users_ManageUsers_url, :notice => "User added successfuly!"
         end
 
@@ -197,6 +201,7 @@ class UsersController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      currentUserID = session[:user_id]
 
       @userID = params[:hidUserID]
       @messageString = params[:hidMessage]
@@ -243,6 +248,7 @@ class UsersController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      currentUserID = session[:user_id]
 
       currentTime = Time.new
       time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
@@ -316,7 +322,23 @@ class UsersController < ApplicationController
       @subAddress2.ZipCode = @usermailZipCode
       @subAddress2.DateUpdated = time
       @subAddress2.save
-
+      
+      @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '108', TaskID: @subUser.id, DateCreated: time)
+      @adminActivity.save
+      
+      @subscribedUser = SubscribedUserHistory.new(ReportID: @adminActivity.id, UserID: @subUser.id, UserName: @subUser.UserName, Password: @subUser.Password, Salt: @subUser.Salt, FirstName: @subUser.FirstName,
+          LastName: @subUser.LastName, EmailID: @subUser.EmailID, CompanyName: @subUser.CompanyName, IncorporationType: @subUser.IncorporationType,
+          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, 
+          DateCreated: time, DateUpdated: time)        
+          @subscribedUser.save
+          
+      #Save Address Details
+      @userBussAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress1.UserID, AddressType: @subAddress1.AddressType, Address: @subAddress1.Address, City: @subAddress1.City, State: @subAddress1.State, ZipCode: @subAddress1.ZipCode, DateCreated: time, DateUpdated: time)
+      @userBussAddressDetail.save
+        
+      @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
+      @userMailAddressDetail.save
+      
       redirect_to users_ManageUsers_url, :notice => "User updated successfuly!"
     end
   end
@@ -330,6 +352,7 @@ class UsersController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      currentUserID = session[:user_id]
 
       currentTime = Time.new
       time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
@@ -344,10 +367,13 @@ class UsersController < ApplicationController
       end
 
       @subUser = SubscribedUser.find_by(ID: @userID)
-    @subUser.Password = password
-    @subUser.Salt = salt
-    @subUser.DateUpdated = time
-    @subUser.save
+      @subUser.Password = password
+      @subUser.Salt = salt
+      @subUser.DateUpdated = time
+      @subUser.save
+      
+      @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '109', TaskID: @subUser.id, DateCreated: time)
+      @adminActivity.save
     end
   end
 
@@ -360,6 +386,7 @@ class UsersController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      currentUserID = session[:user_id]
 
       currentTime = Time.new
       time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
@@ -374,8 +401,15 @@ class UsersController < ApplicationController
         @userfirstName = @subUser.FirstName
         @userlastName = @subUser.LastName
         @useremail = @subUser.EmailID
+        
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '105', TaskID: @subUser.id, DateCreated: time)
+        @adminActivity.save
+        
         mail_to_user = UserMailer.UserActivation(@userfirstName, @userlastName, @useremail)
-      mail_to_user.deliver
+        mail_to_user.deliver
+      else
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '106', TaskID: @subUser.id, DateCreated: time)
+        @adminActivity.save
       end
     end
   end

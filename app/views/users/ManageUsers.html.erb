@@ -76,10 +76,9 @@
 								<div style="margin-top: 20px; float: left;">
 									<form id="frmGetUsersFilter" action="<%= users_ManageUsers_url %>" method="post">
 										<div class="singup-textarea">
-											<label for="selectStatus">Sort user list by status: </label>
 											<select id="selectStatus" name="selectStatus" class="singup-select-small" onchange="GetUsersFilter();">
 												<% if(@filterString == '0') %>
-												<option selected="selected" value="0">All</option>
+												<option selected="selected" value="0">--Select User Status--</option>
 												<% else %>
 												<option value="0">All</option>
 												<% end %>

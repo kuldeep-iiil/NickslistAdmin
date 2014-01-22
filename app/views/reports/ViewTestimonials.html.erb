@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Reports
+						<div style="float:right;">
+								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Testimonial Details</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= sitecontent_AddUpdateTestimonialsPage_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<div class="label">First Name</div>
+											<input type="text" name="textFirstName" id="textFirstName" readonly="readonly" class="singup-textbox-small" value="<%= @firstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Last Name</div>
+											<input type="text" name="textLastName" id="textLastName" readonly="readonly" class="singup-textbox-small" value="<%= @lastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Occupation</div>
+											<input type="text" name="textOccupation" id="textOccupation" readonly="readonly" class="singup-textbox" value="<%= @occupation %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Comments</div>
+											<textarea id="textComment" name="textComment" readonly="readonly" rows="10" cols="103"><%= @comments %></textarea>
+										</div>
+									</form>
+									
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+		<script>
+			
+			function check_chkAddress(chk) {
+				var idSignupCode = document.getElementById('SignupCode');
+				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
+				var idSignupForm = document.getElementById('SignupForm');
+				if (chk.checked) {
+					document.getElementById('textMailStreetAddress').value = document.getElementById('textBussStreetAddress').value;
+					document.getElementById('textMailStreetAddress').readOnly = true;
+					document.getElementById('textMailCity').value = document.getElementById('textBussCity').value;
+					document.getElementById('textMailCity').readOnly = true;
+					//document.getElementById('textMailState').value= document.getElementById('textBussState').value;
+					//document.getElementById('textMailState').readOnly= true;
+					document.getElementById('textMailZipCode').value = document.getElementById('textBussZipCode').value;
+					document.getElementById('textMailZipCode').readOnly = true;
+				} else {
+					document.getElementById('textMailStreetAddress').value = '';
+					document.getElementById('textMailStreetAddress').readOnly = false;
+					document.getElementById('textMailCity').value = '';
+					document.getElementById('textMailCity').readOnly = false;
+					//document.getElementById('textMailState').value= '';
+					//document.getElementById('textMailState').readOnly= false;
+					document.getElementById('textMailZipCode').value = '';
+					document.getElementById('textMailZipCode').readOnly = false;
+				}
+			}
+		</script>			
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Reports
+						<div style="float:right;">
+								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>User Details</h1>
+							</div>
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= users_UpdateUser_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<div class="label">Company Name</div>
+											<input type="text" name="textCompany" id="textCompany" readonly="true" class="singup-textbox-small"  placeholder="Name of Company" value="<%= @usercompanyName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">First Name</div>
+											<input type="text" name="textFirstName" id="textFirstName" readonly="true" class="singup-textbox-small"  placeholder="First Name" value="<%= @userfirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Last Name</div>
+											<input type="text" name="textLastName" id="textLastName" readonly="true" class="singup-textbox-small"  placeholder="Last Name" value="<%= @userlastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Incorporation Type</div>
+											<input type="text" name="textIncorporationType" id="textIncorporationType" readonly="true" class="singup-textbox-small"  placeholder="Type of Incorporation" value="<%= @userincorporationType  %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Street Address</div>
+											<input type="text" name="textBussStreetAddress" readonly="true" id="textBussStreetAddress" class="singup-textbox"  placeholder="Business Street Address" value="<%= @userbussStreetAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Zip Code</div>
+											<input type="text" name="textBussZipCode" id="textBussZipCode" readonly="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= @userbussZipCode %>" />
+										</div>
+										<div class="singup-textarea">
+										<div class="label">City, State</div>
+											<input type="text" name="textBussCity" id="textBussCity" readonly="true" class="singup-textbox-small"  placeholder="City, State" value="<%= @userbusscitystateVal %>" />
+										</div>
+										<div class="singup-textarea">
+											<% if(@addressCheck) %>
+												<input type="checkbox" checked="checked" id="chkAddress" disabled="disabled" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
+											<% else %>
+												<input type="checkbox" id="chkAddress" name="chkAddress" disabled="disabled" value="1" onclick="check_chkAddress(this);" />
+											<% end %>
+											<label for="chkAddress" class="label">Use Business Address as Mailing Address.</label>
+										</div>
+										<div style="width:300px">&nbsp;</div>
+										<div class="singup-textarea">
+											<div class="label">Street Address</div>
+											<input type="text" name="textMailStreetAddress" id="textMailStreetAddress" readonly="true" class="singup-textbox"  placeholder="Mailing Street Address" value="<%= @usermailStreetAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Zip Code</div>
+											<input type="text" name="textMailZipCode" id="textMailZipCode" readonly="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= @usermailZipCode %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">City, State</div>
+											<input type="text" name="textMailCity" id="textMailCity" readonly="true" class="singup-textbox-small"  placeholder="City, State" value="<%= @usermailcitystateVal %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Contact Number</div>
+											<input type="text" name="textPhoneNumber" id="textPhoneNumber" readonly="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= @userphoneNumber %>" />
+										</div>
+										<div class="singup-textarea">
+											<div  class="label">Email ID</div>
+											<input type="email" name="textEmail" id="textEmail" readonly="true" class="singup-textbox-small"  placeholder="Email Address" value="<%= @useremail %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">License No.</div>
+											<input type="text" name="textLicense" id="textLicense" readonly="true" class="singup-textbox-small"  placeholder="Contractor License Number" value="<%= @userlicense %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">Username</div>
+											<input type="text" readonly="readonly" name="textUserName" id="textUserName" readonly="true" class="singup-textbox-small"  placeholder="User Name" value="<%= @userName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label for="chkSubscribed">Subscribed</label>
+											<% if(@subUser.IsSubscribed) %>
+												<input type="checkbox" checked="checked" id="chkSubscribed" name="chkSubscribed" value="1" disabled="disabled" />
+											<% else %>
+												<input type="checkbox" id="chkSubscribed" name="chkSubscribed" value="1" disabled="disabled" />
+											<% end %>
+											</div>
+										</div>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label for="chkOwner">Company Owner</label>
+											<% if(@subUser.AuthCodeUsed) %>
+												<input type="checkbox" checked="checked" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
+											<% else %>
+												<input type="checkbox" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
+											<% end %>
+											</div>
+										</div>
+										
+										<% if(!@subPrice.blank?) %>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label>Subscription Price: </label>
+												<%= @subPrice.TransactionAmount %>
+											</div>
+										</div>
+										<% end %>
+										<% if(!@subAuthKey.blank?) %>
+										<div class="singup-textarea">
+											<div style="width:210px; margin-top: 10px">
+											<label>Authorization Key: </label>
+												<%= @subAuthKey.Key %>
+											</div>
+										</div>
+										<% end %>
+									</form>
+									
+								</div>
+							</div>
+						
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

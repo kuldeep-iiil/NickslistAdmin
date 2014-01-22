@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$('#tbSubUser').dataTable({
+					"sPaginationType" : "full_numbers",
+					"iDisplayLength" : 25,
+					"aLengthMenu" : [25, 50, 100, 200],
+					"aaSorting" : [[3,'desc']],
+					//"sDom": '<"top"lf>rt<"bottom"ip><"clear">'
+					"oLanguage": {
+        				"sEmptyTable" : "No Records found."
+    				}
+				});
+				
+				$("#textDateFrom").datepicker({
+					maxDate : new Date(),
+					dateFormat : 'mm/dd/yy'
+				});
+				$("#textDateTo").datepicker({
+						minDate : new Date($("#textDateFrom").val()),
+						maxDate : new Date(),
+						dateFormat : 'mm/dd/yy'
+					});
+				$("#textDateFrom").change(function() {
+					$("#textDateTo").val("");
+					$("#textDateTo").datepicker("destroy");
+					$("#textDateTo").datepicker({
+						minDate : new Date($("#textDateFrom").val()),
+						maxDate : new Date(),
+						dateFormat : 'mm/dd/yy'
+					});
+				});
+
+			});
+			function ViewDetails(TaskID) {
+				var eID = '#frmViewDetails' + TaskID
+				$(eID).submit();
+			}
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">Reports</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>
+									<div>Admin Activity Report</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %>
+								</h1>
+								
+								<div style="margin-top: 20px; float: left;">
+									<form id="frmGetUsersFilter" action="<%= reports_AdminActivityReport_url %>" method="post">
+										<div class="singup-textarea">
+											<select id="selectAdmin" name="selectAdmin" class="singup-select-small">
+												<option value="0">--Select Admin--</option>
+												<% if(!@siteUser.blank?) %>
+													<% @siteUser.each do |sUser| %>
+														<% if(@sUserID.to_i == sUser.id) %>
+															<option value="<%= sUser.id %>" selected = "selected"><%= sUser.FirstName %> <%= sUser.LastName %></option>
+														<% else %>
+															<option value="<%= sUser.id %>"><%= sUser.FirstName %> <%= sUser.LastName %></option>
+														<% end %>
+													<% end %>
+												<% end %>
+											</select>
+										</div>
+										<div class="singup-textarea">
+											<input type="text" name="textDateFrom" id="textDateFrom" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date From" value="<%= @DateFrom %>" />
+										</div>
+										<div class="singup-textarea">
+											<input type="text" name="textDateTo" id="textDateTo" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date To" value="<%= @DateTo %>" />
+										</div>
+										<div class="singup-textarea">
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="submit" name="Submit" id="Submit" value="GO" style="margin-top: -4px" class="org-bt" />
+										</div>
+									</form>
+								</div>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<% if(!@adminActivity.blank?) %>
+									
+									<table id="tbSubUser" style="width: 100%">
+										<thead>
+											<tr>
+												<th align="center">First Name</th>
+												<th align="center">Last Name</th>
+												<th align="center">Operation Performed</th>
+												<th align="center">Date/Time</th>
+												<th align="center">Action</th>
+											</tr>
+										</thead>
+
+										<tbody>
+											<% @adminActivity.each do |aActivity| %>
+											<tr>
+												<td><%= aActivity.FirstName %></td>
+												<td><%= aActivity.LastName %></td>
+												<td><%= aActivity.Operation %></td>
+												<td><% if(aActivity.DateCreated != nil) %><%= aActivity.DateCreated.strftime("%B, %e %Y %H:%M:%S") %><% end %></td>
+												<td align="center">
+													<diV style="float: left; margin-left: 20px">
+														<% if(aActivity.OPCode.to_i == 101 || aActivity.OPCode.to_i == 102 || aActivity.OPCode.to_i == 103 || aActivity.OPCode.to_i == 104 || aActivity.OPCode.to_i == 132 || aActivity.OPCode.to_i == 133) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewAdmin_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 105 || aActivity.OPCode.to_i == 106 || aActivity.OPCode.to_i == 107 || aActivity.OPCode.to_i == 108 || aActivity.OPCode.to_i == 109) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewUser_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 110 || aActivity.OPCode.to_i == 111 || aActivity.OPCode.to_i == 112 || aActivity.OPCode.to_i == 113) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewReview_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 114) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewMLJudgements_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 115) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewCourtProceedings_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 117 || aActivity.OPCode.to_i == 118 || aActivity.OPCode.to_i == 119 || aActivity.OPCode.to_i == 120 || aActivity.OPCode.to_i == 121) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewFAQ_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 122 || aActivity.OPCode.to_i == 123 || aActivity.OPCode.to_i == 124 || aActivity.OPCode.to_i == 125 || aActivity.OPCode.to_i == 126) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewTestimonials_url %>" method="post">
+														<% elsif(aActivity.OPCode.to_i == 127 || aActivity.OPCode.to_i == 128 || aActivity.OPCode.to_i == 129 || aActivity.OPCode.to_i == 130 || aActivity.OPCode.to_i == 131) %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewNewsUpdate_url %>" method="post">
+														<% else %>
+															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewSiteContent_url %>" method="post">
+														<% end %>
+															<input type="hidden" name="hidOPCode" id="hidOPCode" value="<%= aActivity.TaskID %>" />
+															<input type="hidden" name="hidReportID" id="hidReportID" value="<%= aActivity.id %>" />
+															</form>
+														<a id="linkVewDetails" href="#" onclick="ViewDetails(<%= aActivity.id %>);">View Details</a>
+													</diV>
+												</td>
+												</tr>
+											<% end %>
+										</tbody>
+
+									</table>
+
+									<% else %>
+									No Records found.
+									<% end %>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

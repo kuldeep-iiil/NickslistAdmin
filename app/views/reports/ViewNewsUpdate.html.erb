@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+					<div class="page-heading">
+						Reports
+						<div style="float:right;">
+								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+								</form>	
+							</div>
+					</div>
+						
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>News & Update Details</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= sitecontent_AddUpdateNewsUpdatePage_url %>" method="post">
+										<div class="singup-textarea">
+											<div class="label">Comments</div>
+											<textarea id="textComment" name="textComment" rows="10" cols="103" readonly="readonly"><%= @comments %></textarea>
+										</div>
+										
+									</form>
+									
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

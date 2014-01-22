@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#textHearingDate").datepicker({
+					dateFormat : 'mm/dd/yy'
+				});
+				$("#textCaseFiledDate").datepicker({
+					dateFormat : 'mm/dd/yy'
+				});
+				$("#textDateIssued").datepicker({
+					dateFormat : 'mm/dd/yy'
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Reports
+							<div style="float:right; margin-bottom: 20px">
+								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
+								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+								</form>	
+							</div>
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>Court Proceeding Details</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= public_records_UpdateCourtProceedings_url %>" method="post">
+										<div id="public-records-header">
+
+											<div id="review-header-right">
+												<div class="address-desc">
+													<%= @textStreetAddress %>
+													<br />
+													<%= @textCity %>, <%= @textState %> <%= @textZipCode  %>
+												</div>
+
+											</div>
+										</div>
+
+										<div class="subscription-Title">
+											Court Proceeding
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Type of Case
+											</div>
+											<input type="text" name="textCaseType" id="textCaseType" readonly="readonly" class="singup-textbox-small" value="<%= @caseType %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Court Hearing Date
+											</div>
+											<input type="text" name="textHearingDate" id="textHearingDate" readonly="readonly" class="singup-textbox-small" value="<%= @hearingDate %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Case Filed On
+											</div>
+											<input type="text" name="textCaseFiledDate" id="textCaseFiledDate" readonly="readonly" class="singup-textbox-small" value="<%= @caseFiledDate %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Amount Awarded($)
+											</div>
+											<input type="text" name="textAmountAwarded" id="textAmountAwarded" readonly="readonly" class="singup-textbox-small" value="<%= @amountAwarded %>" />
+										</div>
+
+										<div class="subscription-sub-Title">
+											Defendant Details
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												First Name
+											</div>
+											<input type="text" name="textDefFirstName" id="textDefFirstName" readonly="readonly" class="singup-textbox-small" value="<%= @defFirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Last Name
+											</div>
+											<input type="text" name="textDefLastName" id="textDefLastName" readonly="readonly" class="singup-textbox-small" value="<%= @defLastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Address
+											</div>
+											<input type="text" name="textDefAddress" id="textDefAddress" readonly="readonly" class="singup-textbox" value="<%= @defAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												City, State
+											</div>
+											<input type="text" name="textDefCity" id="textDefCity" readonly="readonly" class="singup-textbox-small" value="<%= @defCityState %>" />
+										</div>
+
+										<div class="singup-textarea">
+											<div class="label">
+												ZipCode
+											</div>
+											<input type="text" name="textDefZipCode" id="textDefZipCode" readonly="readonly" class="singup-textbox-small" value="<%= @defZipcode  %>" />
+										</div>
+
+										<div class="subscription-sub-Title">
+											Plaintiff Details
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												First Name
+											</div>
+											<input type="text" name="textPlainFirstName" id="textPlainFirstName" readonly="readonly" class="singup-textbox-small" value="<%= @plainFirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Last Name
+											</div>
+											<input type="text" name="textPlainLastName" id="textPlainLastName" readonly="readonly" class="singup-textbox-small" value="<%= @plainLastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Address
+											</div>
+											<input type="text" name="textPlainAddress" id="textPlainAddress" readonly="readonly" class="singup-textbox" value="<%= @plainAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												City, State
+											</div>
+											<input type="text" name="textPlainCity" id="textPlainCity" readonly="readonly" class="singup-textbox-small" value="<%= @plainCityState %>" />
+										</div>
+
+										<div class="singup-textarea">
+											<div class="label">
+												ZipCode
+											</div>
+											<input type="text" name="textPlainZipCode" id="textPlainZipCode" readonly="readonly" class="singup-textbox-small" value="<%= @plainZipcode  %>" />
+										</div>
+
+										<div class="subscription-Title">
+											<br />
+											Lien
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Date Issued
+											</div>
+											<input type="text" name="textDateIssued" id="textDateIssued" readonly="readonly" class="singup-textbox-small" value="<%= @dateIssued %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Amount($)
+											</div>
+											<input type="text" name="textAmount" id="textAmount" readonly="readonly" class="singup-textbox-small" value="<%= @amount %>" />
+										</div>
+
+										<div class="subscription-sub-Title">
+											Grantor Details
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												First Name
+											</div>
+											<input type="text" name="textGrantFirstName" id="textGrantFirstName" readonly="readonly" class="singup-textbox-small" value="<%= @grantFirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Last Name
+											</div>
+											<input type="text" name="textGrantLastName" id="textGrantLastName" readonly="readonly" class="singup-textbox-small" value="<%= @grantLastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Address
+											</div>
+											<input type="text" name="textGrantAddress" id="textGrantAddress" readonly="readonly" class="singup-textbox" value="<%= @grantAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												City, State
+											</div>
+											<input type="text" name="textGrantCity" id="textGrantCity" readonly="readonly" class="singup-textbox-small" value="<%= @grantCityState %>" />
+										</div>
+
+										<div class="singup-textarea">
+											<div class="label">
+												ZipCode
+											</div>
+											<input type="text" name="textGrantZipCode" id="textGrantZipCode" readonly="readonly" class="singup-textbox-small" value="<%= @grantZipcode  %>" />
+										</div>
+
+										
+									</form>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

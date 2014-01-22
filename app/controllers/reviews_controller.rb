@@ -300,7 +300,7 @@ class ReviewsController < ApplicationController
         @zipCode = @search[0].ZipCode
         @cityState = @search[0].City + ", " + @search[0].State
 
-        @subscribedUser = SubscribedUser.find_by(ID: @userID)
+        @subscribedUser = SubscribedUser.find_by(id: @userID)
         @userfirstName = @subscribedUser.FirstName
         @userlastName = @subscribedUser.LastName
         @userEmail = @subscribedUser.EmailID

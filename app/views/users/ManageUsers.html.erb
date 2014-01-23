@@ -13,9 +13,7 @@
     				}
 				});
 
-				$('#linkEdit').click(function() {
-
-				});
+				
 				$("#textDateFrom").datepicker({
 					maxDate : new Date(),
 					dateFormat : 'mm/dd/yy'
@@ -106,14 +104,24 @@
 											</select>
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateFrom" id="textDateFrom" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date From" value="<%= @DateFrom %>" />
+											<input type="text" name="textDateFrom" id="textDateFrom" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date From" value="<%= @DateFrom %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateTo" id="textDateTo" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date To" value="<%= @DateTo %>" />
+											<input type="text" name="textDateTo" id="textDateTo" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
-											<input type="submit" name="Submit" id="Submit" value="GO" style="margin-top: -4px" class="org-bt" />
+											<input type="submit" name="Submit" id="Submit" value="FILTER SEARCH" style="margin-top: -4px" class="org-bt" />
+										</div>
+									</form>
+								</div>
+								
+								<div style="margin-top: -49px; margin-left: 785px; float: left;">
+									<form id="frmGetReviewsFilter" action="<%= users_ManageUsers_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<input type="hidden" id="hidSetFilter" name="hidSetFilter" value="1" />
+											<input type="submit" name="Submit" id="Submit" value="RESET FILTER" class="org-bt" />
 										</div>
 									</form>
 								</div>

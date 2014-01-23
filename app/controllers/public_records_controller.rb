@@ -27,7 +27,7 @@ class PublicRecordsController < ApplicationController
           @cityState = params[:selectCity].strip()
           if(@cityState != "")
             @citystateValSplit = @cityState.split(',')
-            @queryCityState = "City = '" + @citystateValSplit.at(0).strip() + "' and custAdd.State = '" + @citystateValSplit.at(1).strip() + "'"
+            @queryCityState = "City = '" + @citystateValSplit.at(0).strip() + "' and State = '" + @citystateValSplit.at(1).strip() + "'"
             @query = @query + " and " + @queryCityState
           end
         end
@@ -117,6 +117,7 @@ class PublicRecordsController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      currentUserID = session[:user_id]
       
       @addressID = params[:hidAddressID]
       @mljudgement = MlJudgements.find_by(AddressID: @addressID)
@@ -165,7 +166,7 @@ class PublicRecordsController < ApplicationController
         @caseType = @courtProceeding.CaseType
         @hearingDate = @courtProceeding.CourtHearingDate.strftime('%m/%d/%Y')
         @caseFiledDate = @courtProceeding.DateFiled.strftime('%m/%d/%Y')
-        @amountAwarded = @courtProceeding.AmountAwarded
+        @amountAwarded = @courtProceeding.AmountAwarded.to_i
         @defendant = Defendants.find_by(id: @courtProceeding.DefendantID)
         if(!@defendant.blank?)
           @defFirstName = @defendant.FirstName
@@ -187,7 +188,7 @@ class PublicRecordsController < ApplicationController
       @lien = Liens.find_by(AddressID: @addressID)
       if(!@lien.blank?)
         @dateIssued = @lien.DateIssued.strftime('%m/%d/%Y')
-        @amount = @lien.Amount
+        @amount = @lien.Amount.to_i
         @grantor = Grantors.find_by(id: @lien.GrantorID)
         if(!@grantor.blank?)
           @grantFirstName = @grantor.FirstName

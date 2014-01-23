@@ -58,25 +58,25 @@
 											<div class="label">
 												Type of Case
 											</div>
-											<input type="text" name="textCaseType" id="textCaseType" required="true" class="singup-textbox-small" value="<%= @caseType %>" />
+											<input type="text" name="textCaseType" id="textCaseType" maxlength="30" required="true" class="singup-textbox-small" value="<%= @caseType %>" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Court Hearing Date
 											</div>
-											<input type="text" name="textHearingDate" id="textHearingDate" required="true" class="singup-textbox-small" value="<%= @hearingDate %>" />
+											<input type="text" name="textHearingDate" readonly="readonly" id="textHearingDate" required="true" class="singup-textbox-small" value="<%= @hearingDate %>" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Case Filed On
 											</div>
-											<input type="text" name="textCaseFiledDate" id="textCaseFiledDate" required="true" class="singup-textbox-small" value="<%= @caseFiledDate %>" />
+											<input type="text" name="textCaseFiledDate" readonly="readonly" id="textCaseFiledDate" required="true" class="singup-textbox-small" value="<%= @caseFiledDate %>" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Amount Awarded($)
 											</div>
-											<input type="text" name="textAmountAwarded" id="textAmountAwarded" required="true" class="singup-textbox-small" value="<%= @amountAwarded %>" />
+											<input type="text" name="textAmountAwarded" id="textAmountAwarded" required="true" class="singup-textbox-small" value="<%= @amountAwarded %>" pattern="\d+(\.\d{2})?" />
 										</div>
 
 										<div class="subscription-sub-Title">
@@ -86,32 +86,32 @@
 											<div class="label">
 												First Name
 											</div>
-											<input type="text" name="textDefFirstName" id="textDefFirstName" required="true" class="singup-textbox-small" value="<%= @defFirstName %>" />
+											<input type="text" name="textDefFirstName" id="textDefFirstName" required="true" class="singup-textbox-small" value="<%= @defFirstName %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Last Name
 											</div>
-											<input type="text" name="textDefLastName" id="textDefLastName" required="true" class="singup-textbox-small" value="<%= @defLastName %>" />
+											<input type="text" name="textDefLastName" id="textDefLastName" required="true" class="singup-textbox-small" value="<%= @defLastName %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Address
 											</div>
-											<input type="text" name="textDefAddress" id="textDefAddress" required="true" class="singup-textbox" value="<%= @defAddress %>" />
+											<input type="text" name="textDefAddress" id="textDefAddress" required="true" class="singup-textbox" value="<%= @defAddress %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												City, State
 											</div>
-											<input type="text" name="textDefCity" id="textDefCity" required="true" class="singup-textbox-small" value="<%= @defCityState %>" />
+											<input type="text" name="textDefCity" id="textDefCity" required="true" class="singup-textbox-small" value="<%= @defCityState %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 
 										<div class="singup-textarea">
 											<div class="label">
 												ZipCode
 											</div>
-											<input type="text" name="textDefZipCode" id="textDefZipCode" required="true" class="singup-textbox-small" value="<%= @defZipcode  %>" />
+											<input type="text" name="textDefZipCode" id="textDefZipCode" required="true" class="singup-textbox-small" value="<%= @defZipcode  %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 
 										<div class="subscription-sub-Title">
@@ -121,32 +121,32 @@
 											<div class="label">
 												First Name
 											</div>
-											<input type="text" name="textPlainFirstName" id="textPlainFirstName" required="true" class="singup-textbox-small" value="<%= @plainFirstName %>" />
+											<input type="text" name="textPlainFirstName" id="textPlainFirstName" required="true" class="singup-textbox-small" value="<%= @plainFirstName %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Last Name
 											</div>
-											<input type="text" name="textPlainLastName" id="textPlainLastName" required="true" class="singup-textbox-small" value="<%= @plainLastName %>" />
+											<input type="text" name="textPlainLastName" id="textPlainLastName" required="true" class="singup-textbox-small" value="<%= @plainLastName %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Address
 											</div>
-											<input type="text" name="textPlainAddress" id="textPlainAddress" required="true" class="singup-textbox" value="<%= @plainAddress %>" />
+											<input type="text" name="textPlainAddress" id="textPlainAddress" required="true" class="singup-textbox" value="<%= @plainAddress %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												City, State
 											</div>
-											<input type="text" name="textPlainCity" id="textPlainCity" required="true" class="singup-textbox-small" value="<%= @plainCityState %>" />
+											<input type="text" name="textPlainCity" id="textPlainCity" required="true" class="singup-textbox-small" value="<%= @plainCityState %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 
 										<div class="singup-textarea">
 											<div class="label">
 												ZipCode
 											</div>
-											<input type="text" name="textPlainZipCode" id="textPlainZipCode" required="true" class="singup-textbox-small" value="<%= @plainZipcode  %>" />
+											<input type="text" name="textPlainZipCode" id="textPlainZipCode" required="true" class="singup-textbox-small" value="<%= @plainZipcode  %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 
 										<div class="subscription-Title">
@@ -157,13 +157,13 @@
 											<div class="label">
 												Date Issued
 											</div>
-											<input type="text" name="textDateIssued" id="textDateIssued" required="true" class="singup-textbox-small" value="<%= @dateIssued %>" />
+											<input type="text" name="textDateIssued" readonly="readonly" id="textDateIssued" required="true" class="singup-textbox-small" value="<%= @dateIssued %>" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Amount($)
 											</div>
-											<input type="text" name="textAmount" id="textAmount" required="true" class="singup-textbox-small" value="<%= @amount %>" />
+											<input type="text" name="textAmount" id="textAmount" required="true" class="singup-textbox-small" value="<%= @amount %>" pattern="\d+(\.\d{2})?" />
 										</div>
 
 										<div class="subscription-sub-Title">
@@ -173,32 +173,32 @@
 											<div class="label">
 												First Name
 											</div>
-											<input type="text" name="textGrantFirstName" id="textGrantFirstName" required="true" class="singup-textbox-small" value="<%= @grantFirstName %>" />
+											<input type="text" name="textGrantFirstName" id="textGrantFirstName" required="true" class="singup-textbox-small" value="<%= @grantFirstName %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Last Name
 											</div>
-											<input type="text" name="textGrantLastName" id="textGrantLastName" required="true" class="singup-textbox-small" value="<%= @grantLastName %>" />
+											<input type="text" name="textGrantLastName" id="textGrantLastName" required="true" class="singup-textbox-small" value="<%= @grantLastName %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												Address
 											</div>
-											<input type="text" name="textGrantAddress" id="textGrantAddress" required="true" class="singup-textbox" value="<%= @grantAddress %>" />
+											<input type="text" name="textGrantAddress" id="textGrantAddress" required="true" class="singup-textbox" value="<%= @grantAddress %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">
 												City, State
 											</div>
-											<input type="text" name="textGrantCity" id="textGrantCity" required="true" class="singup-textbox-small" value="<%= @grantCityState %>" />
+											<input type="text" name="textGrantCity" id="textGrantCity" required="true" class="singup-textbox-small" value="<%= @grantCityState %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 
 										<div class="singup-textarea">
 											<div class="label">
 												ZipCode
 											</div>
-											<input type="text" name="textGrantZipCode" id="textGrantZipCode" required="true" class="singup-textbox-small" value="<%= @grantZipcode  %>" />
+											<input type="text" name="textGrantZipCode" id="textGrantZipCode" required="true" class="singup-textbox-small" value="<%= @grantZipcode  %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 
 										<div style="width:100px">

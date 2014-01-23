@@ -83,7 +83,7 @@
 						<% i = 1 %>
 							<% @reviewQuestion.each do |quset| %>
 							<% if(quset.ParentID == nil) %>
-							<% if(!@reviewCount.blank? && i == 1 && @reviewCount.to_i > 1) %>
+							<% if(i == 1) %>
 							<div class="question-block-1">
 							<% else %>
 							<div class="question-block">

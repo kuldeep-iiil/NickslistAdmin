@@ -71,43 +71,35 @@
 								
 								<div style="margin-top: 20px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= public_records_ManagePublicRecords_url %>" method="post">
-										<!--<div class="singup-textarea">
-											<input name="txtFirstName" type="text" class="singup-textbox-small" id="txtFirstName" placeholder="First Name" value="<%= @firstName %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+										
+										<div class="singup-textarea">
+											<input name="txtStreetAddress" type="text" class="singup-textbox-small" id="txtStreetAddress" maxlength="100" placeholder="Street Address" value="<%= @streetAddress %>" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="txtLastName" type="text" class="singup-textbox-small" id="txtLastName" placeholder="Last Name" value="<%= @lastName %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
-										</div>-->
-										<div class="singup-textarea">
-											<input name="txtStreetAddress" type="text" class="singup-textbox-small" id="txtStreetAddress" placeholder="Street Address" value="<%= @streetAddress %>" />
+											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" id="selectCity" maxlength="20" placeholder="City, State" value="<%= @cityState %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" id="selectCity" placeholder="City, State" value="<%= @cityState %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" placeholder="Zipcode" maxlength="6" value="<%= @zipCode %>" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" placeholder="Zipcode" value="<%= @zipCode %>" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
-										</div>
-										<!--<div class="singup-textarea">
-											<input name="txtPhoneNumber" type="text" class="singup-textbox-small" id="txtPhoneNumber" placeholder="Phone Number" value="<%= @phoneNumber %>" pattern="^[0-9]{3,3}[-]?[0-9]{3,3}[-]?[0-9]{4,4}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [1234567890 or 123-456-7890] ')" oninput="setCustomValidity('')" />
-										</div>-->
-										<div class="singup-textarea">
-											<input type="text" name="textDateFrom" id="textDateFrom" autocomplete="off" class="singup-textbox-small"  placeholder="Date From" value="<%= @DateFrom %>" />
+											<input type="text" name="textDateFrom" id="textDateFrom" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Date From" value="<%= @DateFrom %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateTo" id="textDateTo" autocomplete="off" class="singup-textbox-small"  placeholder="Date To" value="<%= @DateTo %>" />
+											<input type="text" name="textDateTo" id="textDateTo" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
-											<input type="submit" name="Submit" id="Submit" value="FILTER ADDRESS LIST" class="org-bt-small" />
+											<input type="submit" name="Submit" id="Submit" value="FILTER SEARCH" class="org-bt-small" />
 										</div>
 										
 									</form>
 								</div>
 								
-								<div style="margin-top: -36px; margin-left: 385px; float: left;">
+								<div style="margin-top: -41px; margin-left: 345px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= public_records_ManagePublicRecords_url %>" method="post">
 										
 										<div class="singup-textarea">
 											<input type="hidden" id="hidSetFilter" name="hidSetFilter" value="1" />
-											<input type="submit" name="Submit" id="Submit" style="margin-top: -3px" value="RESET FILTER" class="org-bt-small" />
+											<input type="submit" name="Submit" id="Submit" value="RESET FILTER" class="org-bt-small" />
 										</div>
 									</form>
 								</div>
@@ -124,7 +116,7 @@
 												<th align="left">City</th>
 												<th align="left">State</th>
 												<th align="left">ZipCode</th>
-												<th align="left">ML&Judgements</th>
+												<th align="left">ML & Judgements</th>
 												<th align="left">Court Proceedings</th>
 											</tr>
 										</thead>

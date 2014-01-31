@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `nickslist_de` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE  IF NOT EXISTS `nickslist_dev` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `nickslist_dev`;
 -- MySQL dump 10.13  Distrib 5.5.31, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: nickslist_de
+-- Host: localhost    Database: nickslist_dev
 -- ------------------------------------------------------
 -- Server version	5.5.31-0ubuntu0.13.04.1
 
@@ -31,7 +31,7 @@ CREATE TABLE `site_modules` (
   `DateCreated` datetime NOT NULL,
   `DateUpdated` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,7 +40,7 @@ CREATE TABLE `site_modules` (
 
 LOCK TABLES `site_modules` WRITE;
 /*!40000 ALTER TABLE `site_modules` DISABLE KEYS */;
-INSERT INTO `site_modules` (`id`, `Module`, `Description`, `DateCreated`, `DateUpdated`) VALUES (1,'Manage Users','Authorized user can manage the subscribed user of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(2,'Manage Admin','Authorized user can manage the admin users of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(3,'Manage Reviews','Authorized user can manage the users reviews of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(4,'Manage Site Content','Authorized user can manage the content of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(5,'Public Records','Authorized user can manage the Public Records.','2013-12-02 16:59:54','2013-12-02 16:59:54');
+INSERT INTO `site_modules` (`id`, `Module`, `Description`, `DateCreated`, `DateUpdated`) VALUES (1,'Manage Users','Authorized user can manage the subscribed user of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(2,'Manage Admin','Authorized user can manage the admin users of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(3,'Manage Reviews','Authorized user can manage the users reviews of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(4,'Manage Site Content','Authorized user can manage the content of this site.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(5,'Public Records','Authorized user can manage the Public records.','2013-12-02 16:59:54','2013-12-02 16:59:54'),(6,'Reports','Authorized user can view the User and Admin activity reports.','2013-12-02 16:59:54','2013-12-02 16:59:54');
 /*!40000 ALTER TABLE `site_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -53,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-12-17 15:02:17
+-- Dump completed on 2014-01-31 21:59:40

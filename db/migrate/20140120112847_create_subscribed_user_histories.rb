@@ -17,6 +17,7 @@ class CreateSubscribedUserHistories < ActiveRecord::Migration
       t.column :AuthCodeUsed, :string, :limit => 45
       t.column :IsActivated, :boolean, :null => false
       t.column :IsSubscribed, :boolean, :null => false
+      t.column :IsNotification, :boolean, :null => false
       t.column :DateCreated, :datetime, :null => false
       t.column :DateUpdated, :datetime, :null => false
     end

@@ -33,7 +33,11 @@
 							Reports
 							<div style="float:right; margin-bottom: 20px">
 								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
-								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+									<input type="hidden" name="hidAdmin" id="hidAdmin" value="<%= params[:hidAdmin] %>" />
+									<input type="hidden" name="hidOperation" id="hidOperation" value="<%= params[:hidOperation] %>" />
+									<input type="hidden" name="hidFrom" id="hidFrom" value="<%= params[:hidFrom] %>" />
+									<input type="hidden" name="hidTo" id="hidTo" value="<%= params[:hidTo] %>" />
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
 								</form>	
 							</div>
 						</div>
@@ -57,16 +61,6 @@
 										<div class="content-textarea">
 											<div class="label">Page Content</div>
 											<div style="text-align: justify"><%= @content %></div>
-										</div>
-
-										<div style="width:100px">
-											&nbsp;
-										</div>
-
-										<div class="singup-textarea">
-											<input type="hidden" name="hidContentID" id="hidContentID" value="<%= @contentID %>" />
-											<input type="hidden" name="hidEditPageUrl" id="hidEditPageUrl" value="<%= sitecontent_EditAboutPage_url %>" />
-											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
 										</div>
 									</form>
 

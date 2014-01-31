@@ -14,6 +14,21 @@
 				
 				return result;
 			}
+			
+			function confirm_notification(isEnable){
+				var result;
+				if(isEnable == 1)
+				{
+					result = window.confirm('Do you really want to enable search notification for this user.');				
+				}
+				else
+				{
+					result = window.confirm('Do you really want to disable search notification for this user.');
+				}
+				
+				return result;
+			}
+			
 			function check_chkAddress(chk) {
 				var idSignupCode = document.getElementById('SignupCode');
 				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
@@ -51,7 +66,10 @@
 						Manage Users
 						<div style="float:right;">
 								<form id="getSelectedReview" action="<%= users_ManageUsers_url %>" method="post">
-								<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE USERS ACCOUNT" class="org-bt" />
+									<input type="hidden" name="hidStatus" id="hidStatus" value="<%= params[:hidStatus] %>" />
+									<input type="hidden" name="hidFrom" id="hidFrom" value="<%= params[:hidFrom] %>" />
+									<input type="hidden" name="hidTo" id="hidTo" value="<%= params[:hidTo] %>" />
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE USERS ACCOUNT" class="org-bt" />
 								</form>	
 							</div>
 					</div>
@@ -60,9 +78,9 @@
 							<div class="singup-form-heading">
 								<h1>
 									<div>Edit User's Account</div>
-									<% if(flash[:notice] != nil) %>
+									<% if(params[:successMessage] != nil) %>
 									<div id="messageDiv" class="success">
-									<%= flash[:notice] %>
+									<%= params[:successMessage] %>
 									</div>
 									<% end %>
 								</h1>
@@ -151,9 +169,9 @@
 											<div style="width:210px; margin-top: 10px">
 											<label for="chkOwner">Company Owner</label>
 											<% if(@subUser.AuthCodeUsed) %>
-												<input type="checkbox" checked="checked" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
-											<% else %>
 												<input type="checkbox" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
+											<% else %>
+												<input type="checkbox" checked="checked" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
 											<% end %>
 											</div>
 										</div>
@@ -178,7 +196,10 @@
 													
 										<div class="singup-textarea">
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
-										<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+											<input type="hidden" name="hidStatus" id="hidStatus" value="<%= params[:hidStatus] %>" />
+											<input type="hidden" name="hidFrom" id="hidFrom" value="<%= params[:hidFrom] %>" />
+											<input type="hidden" name="hidTo" id="hidTo" value="<%= params[:hidTo] %>" />
+											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
 										</div>
 									</form>
 									<div class="singup-textarea">
@@ -191,6 +212,19 @@
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
 											<input type="hidden" id="hidActivate" name="hidActivate" value="1" />
 											<input type="submit" name="Submit" id="Submit" value="Activate User" onclick="return confirm_activation('1');" class="org-bt" />
+										<% end %>
+									</form>
+									</div>
+									<div class="singup-textarea">
+									<form action="<%= users_SearchNotification_url %>" method="post">
+										<% if(@subUser.IsNotification) %>
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="hidden" id="hidNotification" name="hidNotification" value="0" />
+											<input type="submit" name="Submit" id="Submit" value="Disable Notification" onclick="return confirm_notification('0');" class="org-bt" />
+										<% else %>
+											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+											<input type="hidden" id="hidNotification" name="hidNotification" value="1" />
+											<input type="submit" name="Submit" id="Submit" value="Enable Notification" onclick="return confirm_notification('1');" class="org-bt" />
 										<% end %>
 									</form>
 									</div>

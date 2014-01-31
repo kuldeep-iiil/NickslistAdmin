@@ -217,9 +217,20 @@
 												<% else %>
 												No
 												<% end %> </td>
-												<td align="center"><%= rev.DateCreated.strftime('%B, %e %Y') %></td>
+												<td align="center"><%= rev.DateCreated.strftime('%B %e, %Y') %></td>
 												<td align="center">
 												<form id="frmEditUser<%= rev.id %>" action="<%= reviews_EditReview_url %>" method="post">
+													<input name="hidQuestion" type="hidden" id="hidQuestion" value="<%= @questionID %>" />
+													<input name="hidAnswer" type="hidden" id="hidAnswer" value="<%= @answerID %>" />
+													<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= @firstName %>" />
+													<input name="hidLastName" type="hidden" id="hidLastName" value="<%= @lastName %>" />
+													<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= @streetAddress %>" />
+													<input name="hidCity" type="hidden" id="hidCity" value="<%= @firstName %>" />
+													<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= @zipCode %>" />
+													<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= @phoneNumber %>" />
+													<input type="hidden" name="hidDateFrom" id="hidDateFrom" value="<%= @DateFrom %>" />
+													<input type="hidden" name="hidDateTo" id="hidDateTo" value="<%= @DateTo %>" />
+													<input name="hidStatus" type="hidden" id="hidStatus" value="<%= @statusID %>" />
 													<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= rev.id %>" />
 												</form><a id="linkManageRoles" href="#" onclick="EditReview(<%= rev.id %>);">Edit</a></td>
 											</tr>

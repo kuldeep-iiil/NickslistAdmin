@@ -14,6 +14,40 @@ class ReviewsController < ApplicationController
 
       @query = "SELECT distinct rev.id, rev.IsPublished, rev.IsApproved, rev.DateCreated, cust.FirstName as cFirstName, cust.LastName as cLastName, suser.FirstName as sFirstName, suser.LastName as sLastName FROM reviews rev JOIN customer_searches cust on rev.CustomerSearchID = cust.id join customer_addresses custAdd on cust.AddressID = custAdd.id join customer_phones custPhone on cust.id = custPhone.CustomerSearchID JOIN subscribed_users suser on rev.UserID = suser.id join review_answers revAns on rev.id = revAns.reviewID where rev.id != ''"
 
+      if(params[:hidQuestion] != nil)
+        params[:selectQuestion] = params[:hidQuestion]
+      end
+      if(params[:hidAnswer] != nil)
+        params[:selectAnswer] = params[:hidAnswer]
+      end
+      if(params[:hidFirstName] != nil)
+        params[:txtFirstName] = params[:hidFirstName]
+      end
+      if(params[:hidLastName] != nil)
+        params[:txtLastName] = params[:hidLastName]
+      end
+      if(params[:hidStreetAddress] != nil)
+        params[:txtStreetAddress] = params[:hidStreetAddress]
+      end
+      if(params[:hidCity] != nil)
+        params[:txtCity] = params[:hidCity]
+      end
+      if(params[:hidZipCode] != nil)
+        params[:txtZipCode] = params[:hidZipCode]
+      end
+      if(params[:hidPhoneNumber] != nil)
+        params[:txtPhoneNumber] = params[:hidPhoneNumber]
+      end
+      if(params[:hidDateFrom] != nil) 
+        params[:textDateFrom] = params[:hidDateFrom]
+      end
+      if(params[:hidDateTo] != nil)
+        params[:textDateTo] = params[:hidDateTo]
+      end
+      if(params[:hidStatus] != nil) 
+        params[:selectStatus] = params[:hidStatus]
+      end
+        
       if(params[:hidSetFilter] == nil)
         @statusID = '0'
         if(params[:selectStatus] != nil)
@@ -288,7 +322,7 @@ class ReviewsController < ApplicationController
         
       end
 
-      if(@isPublish.to_i == 1 || @isPublish.to_i == 2)
+      if(@reviews.IsApproved && @reviews.IsPublished)
         @searchID = @reviews.CustomerSearchID
         @search = CustomerSearch.find_by_sql("select cs.FirstName, cs.LastName, ca.StreetAddress, ca.City, ca.State, ca.ZipCode, cp.ContactNumber
                 from customer_searches cs join customer_addresses ca on cs.AddressID = ca.id
@@ -354,8 +388,28 @@ class ReviewsController < ApplicationController
             @rptReviewAnswersHistory = ReviewAnswerHistoryReport.new(ReportID: @adminActivity.id, ReviewID: revAns.ReviewID, QuestionID: revAns.QuestionID, Comments: revAns.Comments, IsYes: revAns.IsYes.to_s, DateCreated: time, DateUpdated: time)
             @rptReviewAnswersHistory.save
           end
-        end
-        
+        end        
+      end
+      
+      if(@reviews.IsApproved && @reviews.IsPublished)
+        @searchID = @reviews.CustomerSearchID
+        @search = CustomerSearch.find_by_sql("select cs.FirstName, cs.LastName, ca.StreetAddress, ca.City, ca.State, ca.ZipCode, cp.ContactNumber
+                from customer_searches cs join customer_addresses ca on cs.AddressID = ca.id
+                join customer_phones cp on cs.id = cp.CustomerSearchID where cs.id = " + @searchID.to_s)
+        @firstName = @search[0].FirstName
+        @lastName = @search[0].LastName
+        @phoneNumber = @search[0].ContactNumber
+        @streetAddress = @search[0].StreetAddress
+        @zipCode = @search[0].ZipCode
+        @cityState = @search[0].City + ", " + @search[0].State
+
+        @subscribedUser = SubscribedUser.find_by(id: @reviews.UserID)
+        @userfirstName = @subscribedUser.FirstName
+        @userlastName = @subscribedUser.LastName
+        @userEmail = @subscribedUser.EmailID
+
+        mail_to_user = UserMailer.ReviewPublished(@userfirstName, @userlastName, @userEmail, @firstName, @lastName, @phoneNumber, @streetAddress, @zipCode, @cityState)
+        mail_to_user.deliver
       end
     end
   end

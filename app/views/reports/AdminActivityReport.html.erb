@@ -77,10 +77,24 @@
 											</select>
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateFrom" id="textDateFrom" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date From" value="<%= @DateFrom %>" />
+											<select id="selectOperation" name="selectOperation" class="singup-select-small">
+												<option value="0">--Select Operation--</option>
+												<% if(!@operation.blank?) %>
+													<% @operation.each do |op| %>
+														<% if(@opID.to_i == op.OPCode) %>
+															<option value="<%= op.OPCode %>" selected = "selected"><%= op.Operation %></option>
+														<% else %>
+															<option value="<%= op.OPCode %>"><%= op.Operation %></option>
+														<% end %>
+													<% end %>
+												<% end %>
+											</select>
 										</div>
 										<div class="singup-textarea">
-											<input type="text" name="textDateTo" id="textDateTo" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Subscription Date To" value="<%= @DateTo %>" />
+											<input type="text" name="textDateFrom" id="textDateFrom" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Activity Date From" value="<%= @DateFrom %>" />
+										</div>
+										<div class="singup-textarea">
+											<input type="text" name="textDateTo" id="textDateTo" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Activity Date To" value="<%= @DateTo %>" />
 										</div>
 										<div class="singup-textarea">
 											<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
@@ -89,7 +103,7 @@
 									</form>
 								</div>
 								
-								<div style="margin-top: -49px; margin-left: 780px; float: left;">
+								<div style="margin-top: -49px; margin-left: 140px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= reports_AdminActivityReport_url %>" method="post">
 										
 										<div class="singup-textarea">
@@ -110,6 +124,7 @@
 												<th align="center">First Name</th>
 												<th align="center">Last Name</th>
 												<th align="center">Operation Performed</th>
+												<th align="center">Name</th>
 												<th align="center">Date/Time</th>
 												<th align="center">Action</th>
 											</tr>
@@ -121,12 +136,42 @@
 												<td><%= aActivity.FirstName %></td>
 												<td><%= aActivity.LastName %></td>
 												<td><%= aActivity.Operation %></td>
-												<td><% if(aActivity.DateCreated != nil) %><%= aActivity.DateCreated.strftime("%B, %e %Y %H:%M:%S") %><% end %></td>
+												<td>
+													<% if(aActivity.OPCode.to_i == 101 || aActivity.OPCode.to_i == 102 || aActivity.OPCode.to_i == 103 || aActivity.OPCode.to_i == 104 || aActivity.OPCode.to_i == 132 || aActivity.OPCode.to_i == 133) %>
+														<% @admin = SiteUserHistory.find_by(ReportID: aActivity.id) %>
+														<% if(!@admin.blank?) %>
+														<%= @admin.FirstName %> <%= @admin.LastName %>
+														<% else %>
+														-
+														<% end %>
+													<% elsif(aActivity.OPCode.to_i == 105 || aActivity.OPCode.to_i == 106 || aActivity.OPCode.to_i == 107 || aActivity.OPCode.to_i == 108 || aActivity.OPCode.to_i == 109 || aActivity.OPCode.to_i == 134 || aActivity.OPCode.to_i == 135) %>
+														<% @user = SubscribedUserHistory.find_by(ReportID: aActivity.id) %>
+														<% if(!@user.blank?) %>
+														<%= @user.FirstName %> <%= @user.LastName %>
+														<% else %>
+														-
+														<% end %>
+													<% elsif(aActivity.OPCode.to_i == 110 || aActivity.OPCode.to_i == 111 || aActivity.OPCode.to_i == 112 || aActivity.OPCode.to_i == 113) %>
+														<% @review = ReviewAnswerHistoryReport.find_by(ReportID: aActivity.id) %>
+														<% if(!@review.blank?) %>
+															<% @reviewDetails = CustomerSearch.find_by_sql("select cust.FirstName, cust.LastName from customer_addresses custadd join customer_searches cust on cust.AddressID = custadd.id
+                      											join customer_phones custphone on cust.id = custphone.CustomerSearchID join reviews rev on cust.ID  = rev.CustomerSearchID where rev.id = '" + @review.ReviewID.to_s + "'") %>
+                      										<% if(!@reviewDetails.blank?) %>
+																<%= @reviewDetails[0].FirstName %> <%= @reviewDetails[0].LastName %>
+															<% end %>
+														<% else %>
+														-
+														<% end %>
+													<% else %>
+														-
+													<% end %>
+												</td>
+												<td><% if(aActivity.DateCreated != nil) %><%= aActivity.DateCreated.strftime("%B %e, %Y %H:%M:%S") %><% end %></td>
 												<td align="center">
 													<diV style="float: left; margin-left: 20px">
 														<% if(aActivity.OPCode.to_i == 101 || aActivity.OPCode.to_i == 102 || aActivity.OPCode.to_i == 103 || aActivity.OPCode.to_i == 104 || aActivity.OPCode.to_i == 132 || aActivity.OPCode.to_i == 133) %>
 															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewAdmin_url %>" method="post">
-														<% elsif(aActivity.OPCode.to_i == 105 || aActivity.OPCode.to_i == 106 || aActivity.OPCode.to_i == 107 || aActivity.OPCode.to_i == 108 || aActivity.OPCode.to_i == 109) %>
+														<% elsif(aActivity.OPCode.to_i == 105 || aActivity.OPCode.to_i == 106 || aActivity.OPCode.to_i == 107 || aActivity.OPCode.to_i == 108 || aActivity.OPCode.to_i == 109 || aActivity.OPCode.to_i == 134 || aActivity.OPCode.to_i == 135) %>
 															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewUser_url %>" method="post">
 														<% elsif(aActivity.OPCode.to_i == 110 || aActivity.OPCode.to_i == 111 || aActivity.OPCode.to_i == 112 || aActivity.OPCode.to_i == 113) %>
 															<form id="frmViewDetails<%= aActivity.id %>" action="<%= reports_ViewReview_url %>" method="post">
@@ -145,6 +190,10 @@
 														<% end %>
 															<input type="hidden" name="hidOPCode" id="hidOPCode" value="<%= aActivity.TaskID %>" />
 															<input type="hidden" name="hidReportID" id="hidReportID" value="<%= aActivity.id %>" />
+															<input type="hidden" name="hidAdmin" id="hidAdmin" value="<%= @sUserID %>" />
+															<input type="hidden" name="hidOperation" id="hidOperation" value="<%= @opID %>" />
+															<input type="hidden" name="hidFrom" id="hidFrom" value="<%= @DateFrom %>" />
+															<input type="hidden" name="hidTo" id="hidTo" value="<%= @DateTo %>" />
 															</form>
 														<a id="linkVewDetails" href="#" onclick="ViewDetails(<%= aActivity.id %>);">View Details</a>
 													</diV>

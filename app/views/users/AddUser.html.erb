@@ -26,9 +26,38 @@
 					document.getElementById('textMailZipCode').readOnly = false;
 				}
 			}
+			
+			function SignupForm_AuthUser(authCode, bussStreetAddress, bussCity, bussZipCode, mailStreetAddress, mailCity, mailZipCode, error) {
+				var idSignupCode = document.getElementById('SignupCode');
+				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
+				var idSignupForm = document.getElementById('SignupForm');
+				if(authCode != "" && error != '1'){
+					document.getElementById('textCode').disabled = true;
+					document.getElementById('textCompany').readOnly = true;
+					document.getElementById('textIncorporationType').readOnly = true;
+					document.getElementById('textBussStreetAddress').readOnly = true;
+					document.getElementById('textBussCity').readOnly = true;
+					document.getElementById('textBussZipCode').readOnly = true;
+					document.getElementById('textMailStreetAddress').readOnly = true;
+					document.getElementById('textMailCity').readOnly = true;
+					document.getElementById('textMailZipCode').readOnly = true;
+					document.getElementById('textPhoneNumber').readOnly = true;
+					document.getElementById('textLicense').readOnly = true;
+				
+					if(bussStreetAddress != '' && bussCity != '' && bussZipCode != '')
+					{
+						if (bussStreetAddress == mailStreetAddress && bussCity == mailCity && bussZipCode == mailZipCode) {
+							document.getElementById('chkAddress').checked = true;
+						} else {
+							document.getElementById('chkAddress').checked = false;
+						}
+					}
+					document.getElementById('chkAddress').disabled = true;
+				} 
+			}
 		</script>		
 	</head>
-	<body>
+	<body onload="SignupForm_AuthUser('<%= @authCode %>', '<%= params[:textBussStreetAddress] %>', '<%= params[:textBussCity] %>', '<%= params[:textBussZipCode] %>', '<%= params[:textMailStreetAddress] %>', '<%= params[:textMailCity] %>', '<%= params[:textMailZipCode] %>', '<%= @error %>');">
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -48,15 +77,37 @@
 							<div class="singup-form-heading">
 								<h1>
 									<div>Create User Account</div>
-									<% if(flash[:notice] != nil) %>
-									<div id="messageDiv" class="success">
-									<%= flash[:notice] %>
+									<% if(@messageString != nil) %>
+									<div id="messageDiv" class="error">
+									<%= @messageString %>
 									</div>
 									<% end %>
 								</h1>
 							</div>
 
 							<div class="singup-form">
+								<div id="chkCodeBox">
+									<form action="<%= users_AddUser_url %>" method="post">
+										<div class="singup-textarea">
+											<b>Use Authorization Code (If provided to User)</b>
+											<input type="text" name="textCode" id="textCode" value="<%= params[:textCode] %>" required="true" class="singup-textbox-small" placeholder="Authorization Code" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [12345678]')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea" style="margin-top: -5px">
+											<input type="submit" name="Submit" id="Submit" value="Submit" class="org-bt" />
+										</div>
+									</form>
+									<% if(!@authCode.blank? && @error.to_i == 0)%>
+									<div class="singup-textarea" style="margin-top: -5px">
+										<form action="<%= users_AddUser_url %>" method="post">
+											<input type="submit" name="Submit" id="Submit" value="Reset" class="org-bt" />
+										</form>
+									</div>
+									<% end %>
+								</div>
+								
+								<div class="clear">&nbsp;</div>
+								<div style="border: 1px solid #e7e7e7;"></div>
+								<div class="clear">&nbsp;</div>
 								<div id="SignupForm">
 									<form action="<%= users_AddUser_url %>" method="post">
 										
@@ -134,6 +185,7 @@
 										</div>
 										
 										<div class="singup-textarea">
+											<input type="hidden" name="hidAuthCode" id="hidAuthCode" value="<%= params[:textCode] %>" >
 											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
 										</div>
 									</form>

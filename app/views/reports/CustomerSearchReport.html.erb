@@ -59,7 +59,12 @@
 										<div class="singup-textarea">
 											<input name="txtPhoneNumber" type="text" class="singup-textbox-small" id="txtPhoneNumber" maxlength="12" placeholder="Phone Number" value="<%= @phoneNumber %>" pattern="^[0-9]{3,3}[-]?[0-9]{3,3}[-]?[0-9]{4,4}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [1234567890 or 123-456-7890] ')" oninput="setCustomValidity('')" />
 										</div>
-										
+										<div class="singup-textarea">
+											<input name="txtUserFirstName" type="text" class="singup-textbox-small" maxlength="20" id="txtUserFirstName" placeholder="First Name (Searched By)" value="<%= @userFirstName %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="txtUserLastName" type="text" class="singup-textbox-small" maxlength="20" id="txtUserLastName" placeholder="Last Name (Searched By)" value="<%= @userLastName %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+										</div>
 										<div class="singup-textarea">
 											<input type="submit" name="Submit" id="Submit" value="FILTER SEARCH" class="org-bt-small" />
 										</div>
@@ -67,7 +72,7 @@
 									</form>
 								</div>
 								
-								<div style="margin-top: -40px; margin-left: 560px; float: left;">
+								<div style="margin-top: -38px; margin-left: 130px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= reports_CustomerSearchReport_url %>" method="post">
 										
 										<div class="singup-textarea">
@@ -111,8 +116,16 @@
 												<td width = "8%" align="center">
 													<diV style="float: left; margin-left: 20px">
 														<form id="frmSearchBy<%= cust.id %>" action="<%= reports_ViewCustomerSearchBy_url %>" method="post">
+															<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= @firstName %>" />
+															<input name="hidLastName" type="hidden" id="hidLastName" value="<%= @lastName %>" />
+															<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= @streetAddress %>" />
+															<input name="hidselectCity" type="hidden" id="hidselectCity" value="<%= @cityState %>" />
+															<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= @zipCode %>" />
+															<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= @phoneNumber %>" />
+															<input name="hidUserFirstName" type="hidden" id="hidUserFirstName" value="<%= @userFirstName %>" />
+															<input name="hidUserLastName" type="hidden" id="hidUserLastName" value="<%= @userLastName %>" />
 															<input type="hidden" name="hidCustID" id="hidCustID" value="<%= cust.id %>" />
-															</form>
+														</form>
 														<a id="linkVewHistory" href="#" onclick="ViewSearchBy(<%= cust.id %>);">View</a>
 													</diV>
 												</td>

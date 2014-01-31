@@ -32,6 +32,14 @@
 							Reports
 							<div style="float:right;">
 								<form id="goback" action="<%= reports_CustomerSearchReport_url %>" method="post">
+									<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= params[:hidFirstName] %>" />
+									<input name="hidLastName" type="hidden" id="hidLastName" value="<%= params[:hidLastName] %>" />
+									<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= params[:hidStreetAddress] %>" />
+									<input name="hidselectCity" type="hidden" id="hidselectCity" value="<%= params[:hidselectCity] %>" />
+									<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= params[:hidZipCode] %>" />
+									<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= params[:hidPhoneNumber] %>" />
+									<input name="hidUserFirstName" type="hidden" id="hidUserFirstName" value="<%= params[:hidUserFirstName] %>" />
+									<input name="hidUserLastName" type="hidden" id="hidUserLastName" value="<%= params[:hidUserLastName] %>" />
 									<input type="submit" name="Submit" id="Submit" value="GO BACK TO CUSTOMER SEARCH REPORT" class="org-bt" />
 								</form>
 							</div>
@@ -72,9 +80,10 @@
 											<tr>
 												<th align="left" width = "20%">First Name</th>
 												<th align="left" width = "20%">Last Name</th>
-												<th align="left" width = "20%">Reviewed</th>
-												<th align="left" width = "20%">Request Sent</th>
-												<th align="left" width = "20%">Searched Date</th>
+												<th align="left" width = "12%">Reviewed</th>
+												<th align="left" width = "14%">Request Sent</th>
+												<th align="left" width = "17%">Searched Date</th>
+												<th align="left" width = "17%">Searched Count</th>
 											</tr>
 										</thead>
 
@@ -95,7 +104,8 @@
 												No
 												<% end %> 
 												</td>
-												<td><%= cust.DateCreated.strftime('%B, %e %Y') %></td>
+												<td><%= cust.DateCreated.strftime('%B %e, %Y') %></td>
+												<td><%= cust.SearchCount %></td>
 											</tr>
 											<% end %>
 										</tbody>

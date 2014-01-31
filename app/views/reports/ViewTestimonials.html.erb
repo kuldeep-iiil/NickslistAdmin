@@ -11,7 +11,11 @@
 						Reports
 						<div style="float:right;">
 								<form id="frmManageReview" action="<%= reports_AdminActivityReport_url %>" method="post">
-								<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
+									<input type="hidden" name="hidAdmin" id="hidAdmin" value="<%= params[:hidAdmin] %>" />
+									<input type="hidden" name="hidOperation" id="hidOperation" value="<%= params[:hidOperation] %>" />
+									<input type="hidden" name="hidFrom" id="hidFrom" value="<%= params[:hidFrom] %>" />
+									<input type="hidden" name="hidTo" id="hidTo" value="<%= params[:hidTo] %>" />
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO ADMIN ACTIVITY REPORT" class="org-bt" />
 								</form>	
 							</div>
 					</div>

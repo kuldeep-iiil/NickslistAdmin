@@ -31,14 +31,33 @@
 				var isApproved = $('#hidIsApproved').val();
 				if(isApproved == 1)
 				{
-					
-					result = window.confirm("Review is not Approved. Do you also want to approve this review.");									
+					//var result = JQueryConfirm();
+					result = confirm("Review is not Approved. Do you also want to approve this review.");									
 					if(result)
 					{
 						$('#hidIsPublish').val("2");	
 					}
 				}
 				return true;
+			}
+			
+			function JQueryConfirm(){
+				$.alerts.okButton = 'Yes';
+				$.alerts.cancelButton = 'No';
+
+				jConfirm('Review is not Approved. Do you also want to approve this review.', 'Confirm', function(r) {
+					
+					if (r == false)
+					{
+						//Do stuff for no
+					}
+					else
+					{
+						//Do stuff for yes
+						$('#hidIsPublish').val("2");
+					}				
+				});
+				
 			}
 		</script>
 	</head>
@@ -68,7 +87,18 @@
 							Manage Reviews
 							<div style="float:right; margin-bottom: 20px">
 								<form id="frmManageReview" action="<%= reviews_ManageReviews_url %>" method="post">
-								<input type="submit" name="Submit" id="Submit" value="GO BACK TO REVIEW LISTING" class="org-bt" />
+									<input name="hidQuestion" type="hidden" id="hidQuestion" value="<%= params[:hidQuestion] %>" />
+									<input name="hidAnswer" type="hidden" id="hidAnswer" value="<%= params[:hidAnswer] %>" />
+									<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= params[:hidFirstName] %>" />
+									<input name="hidLastName" type="hidden" id="hidLastName" value="<%= params[:hidLastName] %>" />
+									<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= params[:hidStreetAddress] %>" />
+									<input name="hidCity" type="hidden" id="hidCity" value="<%= params[:hidCity] %>" />
+									<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= params[:hidZipCode] %>" />
+									<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= params[:hidPhoneNumber] %>" />
+									<input type="hidden" name="hidDateFrom" id="hidDateFrom" value="<%= params[:hidDateFrom] %>" />
+									<input type="hidden" name="hidDateTo" id="hidDateTo" value="<%= params[:hidDateTo] %>" />
+									<input name="hidStatus" type="hidden" id="hidStatus" value="<%= params[:hidStatus] %>" />
+									<input type="submit" name="Submit" id="Submit" value="GO BACK TO REVIEW LISTING" class="org-bt" />
 								</form>	
 							</div>
 						</div>
@@ -139,6 +169,17 @@
 							<% end %>
 						<div class="review-submit-bt">
 							<form action="<%= reviews_PublishReview_url %>" method="post">
+								<input name="hidQuestion" type="hidden" id="hidQuestion" value="<%= params[:hidQuestion] %>" />
+								<input name="hidAnswer" type="hidden" id="hidAnswer" value="<%= params[:hidAnswer] %>" />
+								<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= params[:hidFirstName] %>" />
+								<input name="hidLastName" type="hidden" id="hidLastName" value="<%= params[:hidLastName] %>" />
+								<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= params[:hidStreetAddress] %>" />
+								<input name="hidCity" type="hidden" id="hidCity" value="<%= params[:hidCity] %>" />
+								<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= params[:hidZipCode] %>" />
+								<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= params[:hidPhoneNumber] %>" />
+								<input type="hidden" name="hidDateFrom" id="hidDateFrom" value="<%= params[:hidDateFrom] %>" />
+								<input type="hidden" name="hidDateTo" id="hidDateTo" value="<%= params[:hidDateTo] %>" />
+								<input name="hidStatus" type="hidden" id="hidStatus" value="<%= params[:hidStatus] %>" />
 								<% if(@reviews.IsPublished) %>
 									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
 									<input type="hidden" id="hidIsPublish" name="hidIsPublish" value="0" />
@@ -152,6 +193,17 @@
 						</div>
 						<div class="review-submit-bt">
 							<form action="<%= reviews_ApproveReview_url %>" method="post">
+								<input name="hidQuestion" type="hidden" id="hidQuestion" value="<%= params[:hidQuestion] %>" />
+								<input name="hidAnswer" type="hidden" id="hidAnswer" value="<%= params[:hidAnswer] %>" />
+								<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= params[:hidFirstName] %>" />
+								<input name="hidLastName" type="hidden" id="hidLastName" value="<%= params[:hidLastName] %>" />
+								<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= params[:hidStreetAddress] %>" />
+								<input name="hidCity" type="hidden" id="hidCity" value="<%= params[:hidCity] %>" />
+								<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= params[:hidZipCode] %>" />
+								<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= params[:hidPhoneNumber] %>" />
+								<input type="hidden" name="hidDateFrom" id="hidDateFrom" value="<%= params[:hidDateFrom] %>" />
+								<input type="hidden" name="hidDateTo" id="hidDateTo" value="<%= params[:hidDateTo] %>" />
+								<input name="hidStatus" type="hidden" id="hidStatus" value="<%= params[:hidStatus] %>" />
 								<% if(@reviews.IsApproved) %>
 									<input type="hidden" name="hidReviewID" id="hidReviewID" value="<%= @reviewID %>" />
 									<input type="hidden" id="hidIsApproved" name="hidIsApproved" value="0" />

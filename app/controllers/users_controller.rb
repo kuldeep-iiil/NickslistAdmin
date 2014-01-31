@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token
+  include ActionView::Helpers::NumberHelper
+  include Sidekiq::Worker
   def ManageUsers
     @moduleID = SiteModule.find_by(Module: 'Manage Users')
     @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
@@ -9,6 +11,17 @@ class UsersController < ApplicationController
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
+      
+      if(params[:hidStatus] != nil)
+        params[:selectStatus] = params[:hidStatus]
+      end
+      if(params[:hidFrom] != nil)
+        params[:textDateFrom] = params[:hidFrom]
+      end
+      if(params[:hidTo] != nil)
+        params[:textDateTo] = params[:hidTo]
+      end  
+      
       @filterString = '0'
       if(params[:selectStatus] != nil)
         @filterString = params[:selectStatus]
@@ -86,8 +99,46 @@ class UsersController < ApplicationController
       redirect_to nicks_admin_Index_url
     else
       currentUserID = session[:user_id]
-
-      @usercompanyName = params[:textCompany]
+      
+      if(params[:hidAuthCode] != nil)
+        params[:textCode] = params[:hidAuthCode]
+      end
+      
+      if(params[:textCode] != nil)
+        @authCode = params[:textCode]
+        key = Key.find_by(Key: @authCode)
+        if(!key.blank?)  
+          userDetails = SubscribedUser.find_by(ID: key.UserID)
+          userBussAddressDetails = UserAddressDetail.find_by(UserID: key.UserID, AddressType: 'Business')
+          userMailAddressDetails = UserAddressDetail.find_by(UserID: key.UserID, AddressType: 'Mailing')
+        
+          params[:textCompany] = userDetails.CompanyName
+          params[:textIncorporationType] = userDetails.IncorporationType
+          params[:textBussStreetAddress] = userBussAddressDetails.Address
+          params[:textBussCity] = userBussAddressDetails.City + ', ' + userBussAddressDetails.State
+          #@bussState = userBussAddressDetails.State
+          params[:textBussZipCode] = userBussAddressDetails.ZipCode
+          params[:textMailStreetAddress] = userMailAddressDetails.Address
+          params[:textMailCity] = userMailAddressDetails.City + ', ' + userMailAddressDetails.State
+          #@mailState = userMailAddressDetails.State
+          params[:textMailZipCode] = userMailAddressDetails.ZipCode
+          params[:textPhoneNumber] = userDetails.ContactNumber
+          #params[:textEmail] = userDetails.EmailID
+          params[:textLicense] = userDetails.LicenseNumber
+          @error = "0"
+        else
+          @error = "1"         
+          @messageString = "Invalid Authcode!"
+        end
+      end
+      
+      
+      if(params[:textCompany] != nil && params[:textFirstName] != nil && params[:textLastName] != nil && params[:textIncorporationType] != nil &&
+      params[:textBussStreetAddress] != nil && params[:textBussCity] != nil && params[:textBussZipCode] != nil &&
+      params[:textMailStreetAddress] != nil && params[:textMailCity] != nil && params[:textMailZipCode] != nil &&
+      params[:textPhoneNumber] != nil && params[:textEmail] != nil && params[:textLicense] != nil && params[:textUserName] != nil && params[:textPassword] != nil)
+      
+        @usercompanyName = params[:textCompany]
       @userfirstName = params[:textFirstName]
       @userlastName = params[:textLastName]
       @userincorporationType = params[:textIncorporationType]
@@ -118,6 +169,7 @@ class UsersController < ApplicationController
       @userlicense = params[:textLicense]
       @userName = params[:textUserName]
       password = params[:textPassword]
+      keyCode = params[:textCode]
       currentTime = Time.new
       time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
       status = true
@@ -128,15 +180,22 @@ class UsersController < ApplicationController
         #password = BCrypt::Engine.hash_secret(password, salt)
         salt = currentTime.strftime("%Y%m%d").to_str
         encryptedpassword = AuthenticationController.new()
-      password = encryptedpassword.password_encryption(password, salt)
+        password = encryptedpassword.password_encryption(password, salt)
       end
-
-      if(@usercompanyName != nil and @userfirstName != nil and @userlastName != nil and @userincorporationType != nil and
-      @userbussStreetAddress != nil and @userbussCity != nil and @userbussZipCode != nil and
-      @usermailStreetAddress != nil and @usermailCity != nil and @usermailZipCode != nil and
-      @userphoneNumber != nil and @useremail != nil and @userlicense != nil and @userName != nil and password != nil and salt != nil)
-
-        isUsed='0'
+      
+        if(keyCode.blank?)
+          isUsed = '0'
+          iscompanyOwner = '1'
+          @subPlan = UserSubscriptionPlan.find_by(PlanType: 'New User')
+          @itemprice = @subPlan.price
+          @price = number_to_currency(@itemprice.to_i, :unit => "$")
+        else
+          isUsed='1'
+          @subPlan = UserSubscriptionPlan.find_by(PlanType: 'Subsequent User')
+          @itemprice = @subPlan.price
+          @price = number_to_currency(@itemprice.to_i, :unit => "$")
+        end
+        
         userExistence = SubscribedUser.find_by(UserName: @userName)
         emailExistence = SubscribedUser.find_by(EmailID: @useremail)
         licenseExistence = SubscribedUser.find_by(LicenseNumber: @userlicense)
@@ -144,50 +203,71 @@ class UsersController < ApplicationController
 
         if(!userExistence.blank?)
           status = false
-          @messageString="Error Message : Username already exists."
+          @messageString="Username already exists."
         end
 
         if(!emailExistence.blank?)
           status = false
-          @messageString="Error Message : Email ID already exists."
+          @messageString="Email ID already exists."
         end
 
         if(!licenseExistence.blank? && keyCode == nil)
           status = false
-          @messageString="Error Message : License Number already exists."
+          @messageString="License Number already exists."
         end
 
         if(!companyExistence.blank? && keyCode == nil)
           status = false
-          @messageString="Error Message : Company name already exists."
+          @messageString="Company name already exists."
         end
 
         if(status == true)
           @messageString = ''
 
           #Save User Information
-          @subscribedUser = SubscribedUser.new(UserName: @userName, Password: password, Salt: salt, FirstName: @userfirstName,
+          @subUser = SubscribedUser.new(UserName: @userName, Password: password, Salt: salt, FirstName: @userfirstName,
           LastName: @userlastName, EmailID: @useremail, CompanyName: @usercompanyName, IncorporationType: @userincorporationType,
-          ContactNumber: @userphoneNumber, LicenseNumber: @userlicense, AuthCodeUsed: isUsed, IsActivated: 0, IsSubscribed: 0,
+          ContactNumber: @userphoneNumber, LicenseNumber: @userlicense, AuthCodeUsed: isUsed, IsActivated: 0, IsSubscribed: 1, IsNotification: 1,
           DateCreated: time, DateUpdated: time)
-          @subscribedUser.save
+          @subUser.save
 
           #Get UserID for User to save user address details.
           user = SubscribedUser.find_by(UserName: @userName)
 
           #Save Address Details
-          @userBussAddressDetail = UserAddressDetail.new(UserID: user.id, AddressType: 'Business', Address: @userbussStreetAddress, City: @userbussCity, State: @userbussState, ZipCode: @userbussZipCode, DateCreated: time, DateUpdated: time)
-          @userBussAddressDetail.save
+          @subAddress1 = UserAddressDetail.new(UserID: user.id, AddressType: 'Business', Address: @userbussStreetAddress, City: @userbussCity, State: @userbussState, ZipCode: @userbussZipCode, DateCreated: time, DateUpdated: time)
+          @subAddress1.save
 
-          @userMailAddressDetail = UserAddressDetail.new(UserID: user.id, AddressType: 'Mailing' , Address: @usermailStreetAddress, City: @usermailCity, State: @usermailState, ZipCode: @usermailZipCode, DateCreated: time, DateUpdated: time)
-          @userMailAddressDetail.save
+          @subAddress2 = UserAddressDetail.new(UserID: user.id, AddressType: 'Mailing' , Address: @usermailStreetAddress, City: @usermailCity, State: @usermailState, ZipCode: @usermailZipCode, DateCreated: time, DateUpdated: time)
+          @subAddress2.save
 
-          @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '107', TaskID: @subscribedUser.id, DateCreated: time)
+          @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '107', TaskID: @subUser.id, DateCreated: time)
           @adminActivity.save
+          
+          @subscribedUser = SubscribedUserHistory.new(ReportID: @adminActivity.id, UserID: @subUser.id, UserName: @subUser.UserName, Password: @subUser.Password, Salt: @subUser.Salt, FirstName: @subUser.FirstName,
+          LastName: @subUser.LastName, EmailID: @subUser.EmailID, CompanyName: @subUser.CompanyName, IncorporationType: @subUser.IncorporationType,
+          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, IsNotification: @subUser.IsNotification, 
+          DateCreated: time, DateUpdated: time)        
+          @subscribedUser.save
+          
+          #Save Address Details
+          @userBussAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress1.UserID, AddressType: @subAddress1.AddressType, Address: @subAddress1.Address, City: @subAddress1.City, State: @subAddress1.State, ZipCode: @subAddress1.ZipCode, DateCreated: time, DateUpdated: time)
+          @userBussAddressDetail.save
+        
+          @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
+          @userMailAddressDetail.save
+          
+          
+          #Create key for the user company to be used by subsicuent user.
+          if(keyCode.blank?)
+            keyCode = Time.now.to_i
+            @keyCode = keyCode
+            @key = Key.new(UserID: user.id, Key: keyCode , DateCreated: time)
+            @key.save          
+          end
           
           redirect_to users_ManageUsers_url, :notice => "User added successfuly!"
         end
-
       end
     end
   end
@@ -328,7 +408,7 @@ class UsersController < ApplicationController
       
       @subscribedUser = SubscribedUserHistory.new(ReportID: @adminActivity.id, UserID: @subUser.id, UserName: @subUser.UserName, Password: @subUser.Password, Salt: @subUser.Salt, FirstName: @subUser.FirstName,
           LastName: @subUser.LastName, EmailID: @subUser.EmailID, CompanyName: @subUser.CompanyName, IncorporationType: @subUser.IncorporationType,
-          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, 
+          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, IsNotification: @subUser.IsNotification, 
           DateCreated: time, DateUpdated: time)        
           @subscribedUser.save
           
@@ -339,7 +419,43 @@ class UsersController < ApplicationController
       @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
       @userMailAddressDetail.save
       
-      redirect_to users_ManageUsers_url, :notice => "User updated successfuly!"
+    end
+  end
+  
+  def DeleteUser
+    @moduleID = SiteModule.find_by(Module: 'Manage Users')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    else
+      currentUserID = session[:user_id]
+
+      currentTime = Time.new
+      time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
+
+      @userID = params[:hidUserID]      
+      @subUser = SubscribedUser.find_by(ID: @userID)
+      @subAddress1 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
+      @subAddress2 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
+      @subAddressHistory1 = UserAddressDetailHistory.find_by(UserID: @userID, AddressType: 'Business')
+      @subAddressHistory2 = UserAddressDetailHistory.find_by(UserID: @userID, AddressType: 'Mailing')
+      
+      if(!@subAddress1.blank?)
+        @subAddress1.delete
+      end
+      
+      if(!@subAddress2.blank?)
+        @subAddress2.delete
+      end
+      
+      if(!@subUser.blank?)
+        @subUser.delete
+      end
+      
+      redirect_to users_ManageUsers_url
     end
   end
 
@@ -363,7 +479,7 @@ class UsersController < ApplicationController
         #password = BCrypt::Engine.hash_secret(password, salt)
         salt = currentTime.strftime("%Y%m%d").to_str
         encryptedpassword = AuthenticationController.new()
-      password = encryptedpassword.password_encryption(password, salt)
+        password = encryptedpassword.password_encryption(password, salt)
       end
 
       @subUser = SubscribedUser.find_by(ID: @userID)
@@ -374,6 +490,19 @@ class UsersController < ApplicationController
       
       @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '109', TaskID: @subUser.id, DateCreated: time)
       @adminActivity.save
+      
+      @subscribedUser = SubscribedUserHistory.new(ReportID: @adminActivity.id, UserID: @subUser.id, UserName: @subUser.UserName, Password: @subUser.Password, Salt: @subUser.Salt, FirstName: @subUser.FirstName,
+          LastName: @subUser.LastName, EmailID: @subUser.EmailID, CompanyName: @subUser.CompanyName, IncorporationType: @subUser.IncorporationType,
+          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, IsNotification: @subUser.IsNotification, 
+          DateCreated: time, DateUpdated: time)        
+          @subscribedUser.save
+          
+      #Save Address Details
+      @userBussAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress1.UserID, AddressType: @subAddress1.AddressType, Address: @subAddress1.Address, City: @subAddress1.City, State: @subAddress1.State, ZipCode: @subAddress1.ZipCode, DateCreated: time, DateUpdated: time)
+      @userBussAddressDetail.save
+        
+      @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
+      @userMailAddressDetail.save
     end
   end
 
@@ -404,13 +533,76 @@ class UsersController < ApplicationController
         
         @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '105', TaskID: @subUser.id, DateCreated: time)
         @adminActivity.save
-        
-        mail_to_user = UserMailer.UserActivation(@userfirstName, @userlastName, @useremail)
-        mail_to_user.deliver
       else
         @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '106', TaskID: @subUser.id, DateCreated: time)
         @adminActivity.save
       end
+      
+      @subscribedUser = SubscribedUserHistory.new(ReportID: @adminActivity.id, UserID: @subUser.id, UserName: @subUser.UserName, Password: @subUser.Password, Salt: @subUser.Salt, FirstName: @subUser.FirstName,
+          LastName: @subUser.LastName, EmailID: @subUser.EmailID, CompanyName: @subUser.CompanyName, IncorporationType: @subUser.IncorporationType,
+          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, IsNotification: @subUser.IsNotification, 
+          DateCreated: time, DateUpdated: time)        
+          @subscribedUser.save
+      
+      @subAddress1 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
+      @subAddress2 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
+          
+      #Save Address Details
+      @userBussAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress1.UserID, AddressType: @subAddress1.AddressType, Address: @subAddress1.Address, City: @subAddress1.City, State: @subAddress1.State, ZipCode: @subAddress1.ZipCode, DateCreated: time, DateUpdated: time)
+      @userBussAddressDetail.save
+        
+      @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
+      @userMailAddressDetail.save
+    end
+  end
+  
+  def SearchNotification
+    @moduleID = SiteModule.find_by(Module: 'Manage Users')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => users_ManageUsers_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    else
+      currentUserID = session[:user_id]
+
+      currentTime = Time.new
+      time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
+      @userID = params[:hidUserID]
+      @status = params[:hidNotification]
+      @subUser = SubscribedUser.find_by(ID: @userID)
+      @subUser.IsNotification = @status.to_i
+      @subUser.DateUpdated = time
+      @subUser.save
+
+      if(@status.to_i == 1)
+        @userfirstName = @subUser.FirstName
+        @userlastName = @subUser.LastName
+        @useremail = @subUser.EmailID
+        
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '134', TaskID: @subUser.id, DateCreated: time)
+        @adminActivity.save
+      else
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '135', TaskID: @subUser.id, DateCreated: time)
+        @adminActivity.save
+      end
+      
+      @subscribedUser = SubscribedUserHistory.new(ReportID: @adminActivity.id, UserID: @subUser.id, UserName: @subUser.UserName, Password: @subUser.Password, Salt: @subUser.Salt, FirstName: @subUser.FirstName,
+          LastName: @subUser.LastName, EmailID: @subUser.EmailID, CompanyName: @subUser.CompanyName, IncorporationType: @subUser.IncorporationType,
+          ContactNumber: @subUser.ContactNumber, LicenseNumber: @subUser.LicenseNumber, AuthCodeUsed: @subUser.AuthCodeUsed, IsActivated: @subUser.IsActivated, IsSubscribed: @subUser.IsSubscribed, IsNotification: @subUser.IsNotification,
+          DateCreated: time, DateUpdated: time)        
+          @subscribedUser.save
+      
+      @subAddress1 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
+      @subAddress2 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
+          
+      #Save Address Details
+      @userBussAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress1.UserID, AddressType: @subAddress1.AddressType, Address: @subAddress1.Address, City: @subAddress1.City, State: @subAddress1.State, ZipCode: @subAddress1.ZipCode, DateCreated: time, DateUpdated: time)
+      @userBussAddressDetail.save
+        
+      @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
+      @userMailAddressDetail.save
     end
   end
 end

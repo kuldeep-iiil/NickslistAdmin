@@ -1,0 +1,16 @@
+<html>
+	<head>
+		<script>
+			$(function(){			
+			
+			//$('#x_relay_response').val("FALSE");
+			$("#frmNotification").submit();
+		});
+		</script>
+	</head>
+	<body>
+		<form id="frmNotification" action="<%= users_EditUser_url %>" method="post">
+			<input type="hidden" name="hidUserID" id="hidUserID" value="<%= @userID %>" />
+		</form>
+	</body>
+</html>

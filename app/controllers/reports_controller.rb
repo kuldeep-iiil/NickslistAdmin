@@ -1,7 +1,9 @@
 class ReportsController < ApplicationController
   skip_before_action :verify_authenticity_token
   def UserLoginReport
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_UserLoginReport_url}
     elsif(@authCount.to_i == 0)
@@ -14,7 +16,9 @@ class ReportsController < ApplicationController
   end
 
   def AdminLoginReport
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminLoginReport_url}
     elsif(@authCount.to_i == 0)
@@ -27,33 +31,52 @@ class ReportsController < ApplicationController
   end
 
   def ViewUserLoginHistory
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_UserLoginReport_url}
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
-
+      @userID = params[:hidUserID]
+      @subUser = SubscribedUser.find_by(ID: @userID)
+      if(!@subUser.blank?)
+        @userFirstName = @subUser.FirstName
+        @userLastName = @subUser.LastName
+        @userUserName = @subUser.UserName
+      end
       @userLoginDetails = SubscribedUser.find_by_sql("SELECT distinct subUser.id, userLogin.LoginDateTime, userLogin.LogOutDateTime
-                  FROM subscribed_users subUser LEFT JOIN user_login_report_histories userLogin ON subUser.id = userLogin.UserID where userLogin.UserID = '" + params[:hidUserID] + "'")
+                  FROM subscribed_users subUser LEFT JOIN user_login_report_histories userLogin ON subUser.id = userLogin.UserID where userLogin.UserID = '" + @userID + "'")
     end
   end
 
   def ViewAdminLoginHistory
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminLoginReport_url}
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
-
+      @userID = params[:hidUserID]
+      @siteUser = SiteUser.find_by(ID: @userID)
+      if(!@siteUser.blank?)
+        @userFirstName = @siteUser.FirstName
+        @userLastName = @siteUser.LastName
+        @userUserName = @siteUser.UserName
+      end
+      
       @adminLoginDetails = SiteUser.find_by_sql("SELECT distinct adminUser.id, adminLogin.LoginDateTime, adminLogin.LogOutDateTime
-                  FROM site_users adminUser LEFT JOIN admin_login_report_histories adminLogin ON adminUser.id = adminLogin.UserID where adminLogin.UserID = '" + params[:hidUserID] + "'")
+                  FROM site_users adminUser LEFT JOIN admin_login_report_histories adminLogin ON adminUser.id = adminLogin.UserID where adminLogin.UserID = '" + @userID + "'")
     end
   end
 
   def CustomerSearchReport
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_CustomerSearchReport_url}
     elsif(@authCount.to_i == 0)
@@ -62,8 +85,39 @@ class ReportsController < ApplicationController
 
       @query = "select cust.id, cust.FirstName, cust.LastName, custadd.StreetAddress, custadd.City, custadd.State, custadd.ZipCode, custPhone.ContactNumber, COUNT(*) as count
                       from customer_addresses custadd join customer_searches cust on cust.AddressID = custadd.id
-                      join customer_phones custPhone on cust.id = custPhone.CustomerSearchID join customer_search_logs custLogs on cust.id = custLogs.CustomerSearchID where cust.id is not null"
-    
+                      join customer_phones custPhone on cust.id = custPhone.CustomerSearchID join customer_search_logs custLogs on cust.id = custLogs.CustomerSearchID join subscribed_users sUser on custLogs.UserID = sUser.id where cust.id is not null"
+      
+      if(params[:hidFirstName] != nil)
+        params[:txtFirstName] = params[:hidFirstName]
+      end
+      
+      if(params[:hidLastName] != nil)
+        params[:txtLastName] = params[:hidLastName]
+      end
+      
+      if(params[:hidStreetAddress] != nil)
+        params[:txtStreetAddress] = params[:hidStreetAddress]
+      end
+      
+      if(params[:hidselectCity] != nil)
+        params[:selectCity] = params[:hidselectCity]
+      end
+      
+      if(params[:hidZipCode] != nil)
+        params[:txtZipCode] = params[:hidZipCode]
+      end
+      
+      if(params[:hidPhoneNumber] != nil)
+        params[:txtPhoneNumber] = params[:hidPhoneNumber]
+      end
+      
+      if(params[:hidUserFirstName] != nil)
+        params[:txtUserFirstName] = params[:hidUserFirstName]
+      end 
+      
+      if(params[:hidUserLastName] != nil)
+        params[:txtUserLastName] = params[:hidUserLastName]
+      end     
 
       if(params[:hidSetFilter] == nil)
         
@@ -121,6 +175,24 @@ class ReportsController < ApplicationController
             @query = @query + " and " + @queryPhone
           end
         end
+        
+        @queryUserFirstName = ""
+        if(params[:txtUserFirstName] != nil)
+          @userFirstName = params[:txtUserFirstName].strip()
+          if(@userFirstName != "")
+            @queryUserFirstName = "sUser.FirstName = '" + @userFirstName +"'"
+            @query = @query + " and " + @queryUserFirstName
+          end
+        end
+
+        @queryUserLastName = ""
+        if(params[:txtUserLastName] != nil)
+          @userLastName = params[:txtUserLastName].strip()
+         if(@userLastName != "")
+            @queryUserLastName = "sUser.LastName = '" + @userLastName +"'"
+            @query = @query + " and " + @queryUserLastName
+          end
+        end
 
         if(!@query.blank?)
           @query = @query + " group by cust.id, cust.FirstName, cust.LastName, custadd.StreetAddress, custadd.City, custadd.State, custadd.ZipCode, custPhone.ContactNumber"
@@ -138,7 +210,9 @@ class ReportsController < ApplicationController
   end
 
   def ViewCustomerSearchBy
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_CustomerSearchReport_url}
     elsif(@authCount.to_i == 0)
@@ -157,28 +231,55 @@ class ReportsController < ApplicationController
       @revzipCode = @searchDetail[0].ZipCode
       @revphoneNumber = @searchDetail[0].ContactNumber
 
-      @custReviewDetails = CustomerSearch.find_by_sql("SELECT distinct subUser.id, subUser.FirstName, subUser.LastName, custRev.IsReviewGiven, custRev.IsRequestSent, custRev.DateCreated
-                  FROM subscribed_users subUser JOIN customer_review_joins custRev ON subUser.id = custRev.UserID where custRev.CustomerSearchID = '" + params[:hidCustID] + "'")
+      @custReviewDetails = CustomerSearch.find_by_sql("SELECT distinct subUser.id, subUser.FirstName, subUser.LastName, custRev.IsReviewGiven, custRev.IsRequestSent, custRev.DateCreated, COUNT(*) as SearchCount
+                  FROM customer_search_logs csLogs JOIN customer_review_joins custRev ON csLogs.UserID = custRev.UserID and csLogs.CustomerSearchID = custRev.CustomerSearchID join subscribed_users subUser ON subUser.id = custRev.UserID where csLogs.CustomerSearchID = '" + params[:hidCustID] + "' group by subUser.id, subUser.FirstName, subUser.LastName, custRev.IsReviewGiven, custRev.IsRequestSent, custRev.DateCreated")
     end
   end
   
   def AdminActivityReport
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
       redirect_to nicks_admin_Index_url
     else
       @siteUser =  SiteUser.all
+      @operation = OperationList.all
       
       @queryAdmin = ""
       @sUserID = '0'
+      @opID = '0'
+      
+      if(params[:hidAdmin] != nil)
+        params[:selectAdmin] = params[:hidAdmin]
+      end
+      if(params[:hidOperation] != nil)
+        params[:selectOperation] = params[:hidOperation]
+      end
+      if(params[:hidFrom] != nil)
+        params[:textDateFrom] = params[:hidFrom]
+      end
+      if(params[:hidTo] != nil)
+        params[:textDateTo] = params[:hidTo]
+      end 
+      
       if(params[:selectAdmin] != nil)
           @sUserID = params[:selectAdmin]
           if(@sUserID == '0')
             @queryAdmin = ""
           else
             @queryAdmin =" and adminUser.id = '" + @sUserID + "'"
+          end
+        end
+        
+      if(params[:selectOperation] != nil)
+          @opID = params[:selectOperation]
+          if(@opID == '0')
+            @queryOperation = ""
+          else
+            @queryOperation =" and adminAct.OPCode = '" + @opID + "'"
           end
         end
 
@@ -218,6 +319,10 @@ class ReportsController < ApplicationController
         @query = @query + @queryAdmin
       end
       
+      if(!@queryOperation.blank?)
+        @query = @query + @queryOperation
+      end
+      
       if(!@queryDate.blank?)
         @query = @query + @queryDate
       end
@@ -227,7 +332,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewReview
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -255,7 +362,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewAdmin
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -278,7 +387,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewUser
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -322,7 +433,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewMLJudgements
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -349,7 +462,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewCourtProceedings
-    @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -410,7 +525,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewSiteContent
-     @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -426,7 +543,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewFAQ
-     @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -444,7 +563,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewTestimonials
-     @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)
@@ -464,7 +585,9 @@ class ReportsController < ApplicationController
   end
   
   def ViewNewsUpdate
-     @authCount = SiteUser.where(id: session[:user_id], IsSuperAdmin: 1).count
+    @moduleID = SiteModule.find_by(Module: 'Reports')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
     if(!session[:user_id])
       redirect_to nicks_admin_Index_url, flash:{:redirectUrl => reports_AdminActivityReport_url}
     elsif(@authCount.to_i == 0)

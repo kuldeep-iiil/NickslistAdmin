@@ -24,6 +24,26 @@
 							<div class="singup-form">
 								<div id="SignupForm">
 									<form action="<%= site_users_AddUpdateRoles_url %>" method="post">
+										
+										<div class="singup-textarea">
+											<div class="label">
+												First Name
+											</div>
+											<input type="text" name="textFirstName" id="textFirstName" class="singup-textbox-small" readonly="readonly" value="<%= @userFirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Last Name
+											</div>
+											<input type="text" name="textLastName" id="textLastName" class="singup-textbox-small" readonly="readonly" value="<%= @userLastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Username
+											</div>
+											<input type="text" name="textUserName" id="textUserName" class="singup-textbox-small" readonly="readonly" value="<%= @userUserName %>" />
+										</div>
+										<div class="clear">&nbsp;</div>
 										<% if(!@siteModule.blank?) %>
 											<% @siteModule.each do |siteModule| %>
 												<div class="singup-textarea">

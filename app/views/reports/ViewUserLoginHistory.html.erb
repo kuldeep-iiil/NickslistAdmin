@@ -55,6 +55,26 @@
 
 							<div class="singup-form">
 								<div id="SignupForm">
+									<div class="singup-textarea">
+											<div class="label">
+												First Name
+											</div>
+											<input type="text" name="textFirstName" id="textFirstName" class="singup-textbox-small" readonly="readonly" value="<%= @userFirstName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Last Name
+											</div>
+											<input type="text" name="textLastName" id="textLastName" class="singup-textbox-small" readonly="readonly" value="<%= @userLastName %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">
+												Username
+											</div>
+											<input type="text" name="textUserName" id="textUserName" class="singup-textbox-small" readonly="readonly" value="<%= @userUserName %>" />
+										</div>
+										<div class="clear">&nbsp;</div>
+										
 									<% if(!@userLoginDetails.blank?) %>
 									
 									<table id="tbSubUser" style="width: 100%">
@@ -68,8 +88,8 @@
 										<tbody>
 											<% @userLoginDetails.each do |sUser| %>
 											<tr>
-												<td><% if(sUser.LoginDateTime != nil) %> <%= sUser.LoginDateTime.strftime("%B, %e %Y %H:%M:%S") %> <% end %></td>
-												<td><% if(sUser.LogOutDateTime != nil) %> <%= sUser.LogOutDateTime.strftime("%B, %e %Y %H:%M:%S") %><% end %></td>
+												<td><% if(sUser.LoginDateTime != nil) %> <%= sUser.LoginDateTime.strftime("%B %e, %Y %H:%M:%S") %> <% end %></td>
+												<td><% if(sUser.LogOutDateTime != nil) %> <%= sUser.LogOutDateTime.strftime("%B %e, %Y %H:%M:%S") %><% end %></td>
 											</tr>
 											<% end %>
 										</tbody>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+	</head>
+	<body>
+		<div id="wrapper">
+			<%= render partial: "/layouts/header" %>
+
+			<div id="main-content-wrapper">
+				<div class="browser-center">
+					<div class="review-block-wrapper">
+						<div class="page-heading">
+							Manage Site Content
+						</div>
+
+						<div id="singup-form-area">
+							<div class="singup-form-heading">
+								<h1>
+									<div>Edit Banner Text</div>
+									<% if(flash[:notice] != nil) %>
+									<div id="messageDiv" class="success">
+									<%= flash[:notice] %>
+									</div>
+									<% end %> 
+								</h1>
+							</div>
+
+							<div class="singup-form">
+								<div id="SignupForm">
+									<form action="<%= sitecontent_UpdateSiteContent_url %>" method="post">
+
+										<div class="content-textarea">
+											<div class="singup-textarea">
+											<div class="label">Header</div>
+											<input type="text" name="textTitle" id="textTitle" maxlength="50" required="true" class="singup-textbox-large" value="<%= @title %>" />
+										</div>
+										<div class="content-textarea">
+											<div class="label">Content</div>
+											<textarea id="textContent" name="textContent" maxlength="200" cols="103" rows="10"><%= @content %></textarea>
+										</div>
+
+										<div style="width:100px">
+											&nbsp;
+										</div>
+
+										<div class="singup-textarea">
+											<input type="hidden" name="hidContentID" id="hidContentID" value="<%= @contentID %>" />
+											<input type="hidden" name="hidEditPageUrl" id="hidEditPageUrl" value="<%= sitecontent_EditBannerText_url %>" />
+											<input type="submit" name="Submit" id="Submit" value="Save" class="org-bt" />
+										</div>
+									</form>
+
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+			<%= render partial: "/layouts/footer" %>
+
+		</div>
+	</body>
+</html>

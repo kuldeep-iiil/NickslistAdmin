@@ -94,6 +94,25 @@ class SitecontentController < ApplicationController
       end
     end
   end
+  
+  def EditBannerText
+    @moduleID = SiteModule.find_by(Module: 'Manage Site Content')
+    @authCount = SiteModuleUserJoin.where(ModuleID: @moduleID.id, UserID: session[:user_id]).count
+
+    if(!session[:user_id])
+      redirect_to nicks_admin_Index_url, flash:{:redirectUrl => sitecontent_EditPressReleasePage_url}
+    elsif(@authCount.to_i == 0)
+      redirect_to nicks_admin_Index_url
+    else
+
+      @siteContent = SiteContent.find_by(PageCode: 109)
+      if(!@siteContent.blank?)
+        @title = @siteContent.Title
+        @content = @siteContent.Content
+        @contentID = @siteContent.id
+      end
+    end
+  end
 
   def UpdateSiteContent
     
@@ -107,8 +126,26 @@ class SitecontentController < ApplicationController
       @siteContent.Content = params[:textContent]
       @siteContent.Title = params[:textTitle]
       @siteContent.save
-      @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '116', TaskID: @siteContent.id, DateCreated: time)
-      @adminActivity.save
+      
+      if(@siteContent.PageCode.to_i == 101)
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '136', TaskID: @siteContent.id, DateCreated: time)
+        @adminActivity.save
+      elsif(@siteContent.PageCode.to_i == 102)
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '137', TaskID: @siteContent.id, DateCreated: time)
+        @adminActivity.save
+      elsif(@siteContent.PageCode.to_i == 103)
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '138', TaskID: @siteContent.id, DateCreated: time)
+        @adminActivity.save
+      elsif(@siteContent.PageCode.to_i == 104)
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '139', TaskID: @siteContent.id, DateCreated: time)
+        @adminActivity.save
+      elsif(@siteContent.PageCode.to_i == 105)
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '140', TaskID: @siteContent.id, DateCreated: time)
+        @adminActivity.save
+      else
+        @adminActivity = AdminActivity.new(UserID: currentUserID, OPCode: '141', TaskID: @siteContent.id, DateCreated: time)
+        @adminActivity.save
+      end
       
       @siteContentHistory = SiteContentHistory.new(ReportID: @adminActivity.id, PageCode: @siteContent.PageCode, Title: @siteContent.Title, Content: @siteContent.Content, IsEnabled: @siteContent.IsEnabled, DateCreated: time, DateUpdated: time)
       @siteContentHistory.save

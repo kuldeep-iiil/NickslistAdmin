@@ -76,7 +76,10 @@
 											<input name="txtStreetAddress" type="text" class="singup-textbox-small" id="txtStreetAddress" maxlength="100" placeholder="Street Address" value="<%= @streetAddress %>" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" id="selectCity" maxlength="20" placeholder="City, State" value="<%= @cityState %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" maxlength="20" id="selectCity" placeholder="City" value="<%= @city %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="selectState" type="text" autocomplete="off" class="singup-textbox-small" maxlength="20" id="selectState" placeholder="State" value="<%= @state %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" placeholder="Zipcode" maxlength="6" value="<%= @zipCode %>" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
@@ -94,7 +97,7 @@
 									</form>
 								</div>
 								
-								<div style="margin-top: -41px; margin-left: 345px; float: left;">
+								<div style="margin-top: -41px; margin-left: 565px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= public_records_ManagePublicRecords_url %>" method="post">
 										
 										<div class="singup-textarea">
@@ -130,11 +133,23 @@
 												<td align="center"><%= add.ZipCode %></td>
 												<td align="center">
 													<form id="frmEditMLJudgements<%= add.id %>" action="<%= public_records_EditMLJudgements_url %>" method="post">
+														<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= @streetAddress %>" />
+														<input name="hidselectCity" type="hidden" id="hidselectCity" value="<%= @city %>" />
+														<input name="hidselectState" type="hidden" id="hidselectState" value="<%= @state %>" />
+														<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= @zipCode %>" />
+														<input name="hidDateFrom" type="hidden" id="hidDateFrom" value="<%= @DateFrom %>" />
+														<input name="hidDateTo" type="hidden" id="hidDateTo" value="<%= @DateTo %>" />
 														<input type="hidden" name="hidAddressID" id="hidAddressID" value="<%= add.id %>" />
 													</form>
 													<a id="linkEdit" href="#" onclick="EditMLJudgements(<%= add.id %>);">Edit</a></td>
 												<td align="center">
 													<form id="frmEditCourtPro<%= add.id %>" action="<%= public_records_EditCourtProceedings_url %>" method="post">
+														<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= @streetAddress %>" />
+														<input name="hidselectCity" type="hidden" id="hidselectCity" value="<%= @city %>" />
+														<input name="hidselectState" type="hidden" id="hidselectState" value="<%= @state %>" />
+														<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= @zipCode %>" />
+														<input name="hidDateFrom" type="hidden" id="hidDateFrom" value="<%= @DateFrom %>" />
+														<input name="hidDateTo" type="hidden" id="hidDateTo" value="<%= @DateTo %>" />
 														<input type="hidden" name="hidAddressID" id="hidAddressID" value="<%= add.id %>" />
 													</form>
 													<a id="linkEdit" href="#" onclick="EditCourtProceedings(<%= add.id %>);">Edit</a></td>

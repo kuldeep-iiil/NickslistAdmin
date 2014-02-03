@@ -12,6 +12,30 @@ class PublicRecordsController < ApplicationController
 
      @query = "SELECT * from customer_addresses where id is not null"
 
+    if(params[:hidStreetAddress] != nil)
+      params[:txtStreetAddress] = params[:hidStreetAddress]
+    end
+      
+    if(params[:hidselectCity] != nil)
+      params[:selectCity] = params[:hidselectCity]
+    end
+      
+    if(params[:hidselectState] != nil)
+      params[:selectState] = params[:hidselectState]
+    end
+      
+    if(params[:hidZipCode] != nil)
+      params[:txtZipCode] = params[:hidZipCode]
+    end
+      
+    if(params[:hidDateFrom] != nil)
+      params[:textDateFrom] = params[:hidDateFrom]
+    end
+    
+    if(params[:hidDateTo] != nil)
+      params[:textDateTo] = params[:hidDateTo]
+    end
+    
       if(params[:hidSetFilter] == nil)
         @queryAddress = ""
         if(params[:txtStreetAddress] != nil)
@@ -22,13 +46,21 @@ class PublicRecordsController < ApplicationController
           end
         end
 
-        @queryCityState = ""
+        @queryCity = ""
         if(params[:selectCity] != nil)
-          @cityState = params[:selectCity].strip()
-          if(@cityState != "")
-            @citystateValSplit = @cityState.split(',')
-            @queryCityState = "City = '" + @citystateValSplit.at(0).strip() + "' and State = '" + @citystateValSplit.at(1).strip() + "'"
-            @query = @query + " and " + @queryCityState
+          @city = params[:selectCity].strip()
+          if(@city != "")
+            @queryCity = "City = '" + @city.strip() + "'"
+            @query = @query + " and " + @queryCity
+          end
+        end
+        
+        @queryState = ""
+        if(params[:selectState] != nil)
+          @state = params[:selectState].strip()
+          if(@state != "")
+            @queryState = "State = '" + @state.strip() + "'"
+            @query = @query + " and " + @queryState
           end
         end
 
@@ -172,7 +204,8 @@ class PublicRecordsController < ApplicationController
           @defFirstName = @defendant.FirstName
           @defLastName = @defendant.LastName
           @defAddress = @defendant.StreetAddress
-          @defCityState = @defendant.City + ", " + @defendant.State
+          @defCity = @defendant.City
+          @defState = @defendant.State
           @defZipcode = @defendant.ZipCode
         end
         @plaintiff = Plaintiffs.find_by(id: @courtProceeding.PlaintiffID)
@@ -180,7 +213,8 @@ class PublicRecordsController < ApplicationController
           @plainFirstName = @plaintiff.FirstName
           @plainLastName = @plaintiff.LastName
           @plainAddress = @plaintiff.StreetAddress
-          @plainCityState = @plaintiff.City + ", " + @plaintiff.State
+          @plainCity = @plaintiff.City
+          @plainState = @plaintiff.State
           @plainZipcode = @plaintiff.ZipCode
         end
       end
@@ -194,7 +228,8 @@ class PublicRecordsController < ApplicationController
           @grantFirstName = @grantor.FirstName
           @grantLastName = @grantor.LastName
           @grantAddress = @grantor.StreetAddress
-          @grantCityState = @grantor.City + ", " + @grantor.State
+          @grantCity = @grantor.City
+          @grantState = @grantor.State
           @grantZipcode = @grantor.ZipCode
         end
       end
@@ -214,32 +249,36 @@ class PublicRecordsController < ApplicationController
 
       @addressID = params[:hidAddressID]
 
-      @defCityState = params[:textDefCity]
-      @defCity = ""
-      @defState = ""
-      if(!@defCityState.blank?)
-        @defCityState = @defCityState.split(',')
-        @defCity = @defCityState.at(0).strip()
-        @defState = @defCityState.at(1).strip()
-      end
+      @defCity = params[:textDefCity]
+      @defState = params[:textDefState]
+      #@defCity = ""
+      #@defState = ""
+      #if(!@defCityState.blank?)
+      #  @defCityState = @defCityState.split(',')
+      #  @defCity = @defCityState.at(0).strip()
+      #  @defState = @defCityState.at(1).strip()
+      #end
 
-      @grantCityState = params[:textGrantCity]
-      @grantCity = ""
-      @grantState = ""
-      if(!@grantCityState.blank?)
-        @grantCityState = @grantCityState.split(',')
-        @grantCity = @grantCityState.at(0).strip()
-        @grantState = @grantCityState.at(1).strip()
-      end
+      @grantCity = params[:textGrantCity]
+      @grantState = params[:textGrantState]
+      #@grantCity = ""
+      #@grantState = ""
+      #if(!@grantCityState.blank?)
+      #  @grantCityState = @grantCityState.split(',')
+      #  @grantCity = @grantCityState.at(0).strip()
+      #  @grantState = @grantCityState.at(1).strip()
+      #end
 
-      @plainCityState = params[:textPlainCity]
-      @plainCity = ""
-      @plainState = ""
-      if(!@plainCityState.blank?)
-        @plainCityState = @plainCityState.split(',')
-        @plainCity = @plainCityState.at(0).strip()
-        @plainState = @plainCityState.at(1).strip()
-      end
+      @plainCity = params[:textPlainCity]
+      @plainState = params[:textPlainState]
+      
+      #@plainCity = ""
+      #@plainState = ""
+      #if(!@plainCityState.blank?)
+      #  @plainCityState = @plainCityState.split(',')
+      #  @plainCity = @plainCityState.at(0).strip()
+      #  @plainState = @plainCityState.at(1).strip()
+      #end
 
       currentTime = Time.new
       time = currentTime.strftime("%Y-%m-%d %H:%M:%S")
@@ -353,7 +392,7 @@ class PublicRecordsController < ApplicationController
         @lienHistory.save
       end
       
-      redirect_to public_records_ManagePublicRecords_url, :notice => "Court Proceeding details updated successfuly!"
+      params[:successMessage] = "Court Proceeding details updated successfuly!"
     end
   end
 end

@@ -103,6 +103,10 @@ class ReportsController < ApplicationController
         params[:selectCity] = params[:hidselectCity]
       end
       
+      if(params[:hidselectState] != nil)
+        params[:selectState] = params[:hidselectState]
+      end
+      
       if(params[:hidZipCode] != nil)
         params[:txtZipCode] = params[:hidZipCode]
       end
@@ -148,13 +152,21 @@ class ReportsController < ApplicationController
           end
         end
 
-        @queryCityState = ""
+        @queryCity = ""
         if(params[:selectCity] != nil)
-          @cityState = params[:selectCity].strip()
-          if(@cityState != "")
-            @citystateValSplit = @cityState.split(',')
-            @queryCityState = "custadd.City = '" + @citystateValSplit.at(0).strip() + "' and custadd.State = '" + @citystateValSplit.at(1).strip() + "'"
-            @query = @query + " and " + @queryCityState
+          @city = params[:selectCity].strip()
+          if(@city != "")
+            @queryCity = "custadd.City = '" + @city.strip() + "'"
+            @query = @query + " and " + @queryCity
+          end
+        end
+        
+        @queryState = ""
+        if(params[:selectState] != nil)
+          @state = params[:selectState].strip()
+          if(@state != "")
+            @queryState = "custadd.State = '" + @state.strip() + "'"
+            @query = @query + " and " + @queryState
           end
         end
 
@@ -415,14 +427,17 @@ class ReportsController < ApplicationController
           @userName = @subUser.UserName
 
           @userbussStreetAddress = @subAddress1.Address
-          @userbusscitystateVal = @subAddress1.City + ', ' + @subAddress1.State
+          #@userbusscitystateVal = @subAddress1.City + ', ' + @subAddress1.State
+          @userbussCity = @subAddress1.City
+          @userbussState = @subAddress1.State
           @userbussZipCode = @subAddress1.ZipCode
 
           @usermailStreetAddress = @subAddress2.Address
-          @usermailcitystateVal = @subAddress2.City + ', ' + @subAddress2.State
+          @usermailCity = @subAddress2.City
+          @usermailState = @subAddress2.State
           @usermailZipCode = @subAddress2.ZipCode
 
-          if(@userbussStreetAddress == @usermailStreetAddress && @userbusscitystateVal == @userbusscitystateVal && @userbussZipCode == @usermailZipCode)
+          if(@userbussStreetAddress == @usermailStreetAddress && @userbussCity == @usermailCity && @userbussState == @usermailState && @userbussZipCode == @usermailZipCode)
             @addressCheck = true
           else
             @addressCheck = false

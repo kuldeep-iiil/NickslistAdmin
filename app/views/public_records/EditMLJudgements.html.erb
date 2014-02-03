@@ -11,6 +11,12 @@
 						Manage Public Records
 						<div style="float:right;">
 								<form id="frmManagePublicRecords" action="<%= public_records_ManagePublicRecords_url %>" method="post">
+								<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= params[:hidStreetAddress] %>" />
+								<input name="hidselectCity" type="hidden" id="hidselectCity" value="<%= params[:hidselectCity] %>" />
+								<input name="hidselectState" type="hidden" id="hidselectState" value="<%= params[:hidselectState] %>" />
+								<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= params[:hidZipCode] %>" />
+								<input name="hidDateFrom" type="hidden" id="hidDateFrom" value="<%= params[:hidDateFrom] %>" />
+								<input name="hidDateTo" type="hidden" id="hidDateTo" value="<%= params[:hidDateTo] %>" />
 								<input type="submit" name="Submit" id="Submit" value="GO BACK TO MANAGE PUBLIC RECORDS" class="org-bt" />
 								</form>	
 							</div>

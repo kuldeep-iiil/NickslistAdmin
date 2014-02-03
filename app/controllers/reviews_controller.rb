@@ -30,7 +30,10 @@ class ReviewsController < ApplicationController
         params[:txtStreetAddress] = params[:hidStreetAddress]
       end
       if(params[:hidCity] != nil)
-        params[:txtCity] = params[:hidCity]
+        params[:selectCity] = params[:hidCity]
+      end
+      if(params[:hidState] != nil)
+        params[:selectState] = params[:hidState]
       end
       if(params[:hidZipCode] != nil)
         params[:txtZipCode] = params[:hidZipCode]
@@ -48,7 +51,6 @@ class ReviewsController < ApplicationController
         params[:selectStatus] = params[:hidStatus]
       end
         
-      if(params[:hidSetFilter] == nil)
         @statusID = '0'
         if(params[:selectStatus] != nil)
           @statusID = params[:selectStatus]
@@ -145,13 +147,21 @@ class ReviewsController < ApplicationController
           end
         end
 
-        @queryCityState = ""
+        @queryCity = ""
         if(params[:selectCity] != nil)
-          @cityState = params[:selectCity].strip()
-          if(@cityState != "")
-            @citystateValSplit = @cityState.split(',')
-            @queryCityState = "custAdd.City = '" + @citystateValSplit.at(0).strip() + "' and custAdd.State = '" + @citystateValSplit.at(1).strip() + "'"
-            @query = @query + " and " + @queryCityState
+          @city = params[:selectCity].strip()
+          if(@city != "")
+            @queryCity = "custAdd.City = '" + @city + "'"
+            @query = @query + " and " + @queryCity
+          end
+        end
+        
+         @queryState = ""
+        if(params[:selectState] != nil)
+          @state = params[:selectState].strip()
+          if(@state != "")
+            @queryState = "custAdd.State = '" + @state + "'"
+            @query = @query + " and " + @queryState
           end
         end
 
@@ -208,9 +218,6 @@ class ReviewsController < ApplicationController
         if(!@query.blank?)
           @reviews = Review.find_by_sql(@query)
         end
-      else
-        @reviews = Review.find_by_sql(@query)
-      end
     end
   end
 

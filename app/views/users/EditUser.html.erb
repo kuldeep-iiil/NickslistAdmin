@@ -38,8 +38,8 @@
 					document.getElementById('textMailStreetAddress').readOnly = true;
 					document.getElementById('textMailCity').value = document.getElementById('textBussCity').value;
 					document.getElementById('textMailCity').readOnly = true;
-					//document.getElementById('textMailState').value= document.getElementById('textBussState').value;
-					//document.getElementById('textMailState').readOnly= true;
+					document.getElementById('textMailState').value= document.getElementById('textBussState').value;
+					document.getElementById('textMailState').readOnly= true;
 					document.getElementById('textMailZipCode').value = document.getElementById('textBussZipCode').value;
 					document.getElementById('textMailZipCode').readOnly = true;
 				} else {
@@ -47,8 +47,8 @@
 					document.getElementById('textMailStreetAddress').readOnly = false;
 					document.getElementById('textMailCity').value = '';
 					document.getElementById('textMailCity').readOnly = false;
-					//document.getElementById('textMailState').value= '';
-					//document.getElementById('textMailState').readOnly= false;
+					document.getElementById('textMailState').value= '';
+					document.getElementById('textMailState').readOnly= false;
 					document.getElementById('textMailZipCode').value = '';
 					document.getElementById('textMailZipCode').readOnly = false;
 				}
@@ -108,16 +108,21 @@
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Street Address</div>
-											<input type="text" name="textBussStreetAddress" required="true" id="textBussStreetAddress" class="singup-textbox"  placeholder="Business Street Address" value="<%= @userbussStreetAddress %>" />
+											<input type="text" name="textBussStreetAddress" required="true" id="textBussStreetAddress" class="singup-textbox-small"  placeholder="Business Street Address" value="<%= @userbussStreetAddress %>" />
+										</div>
+										<div class="singup-textarea">
+										<div class="label">City</div>
+											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= @userbussCity %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+										<div class="label">State</div>
+											<input type="text" name="textBussState" id="textBussState" required="true" class="singup-textbox-small" placeholder="State" value="<%= @userbussState %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Zip Code</div>
 											<input type="text" name="textBussZipCode" id="textBussZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= @userbussZipCode %>" />
 										</div>
-										<div class="singup-textarea">
-										<div class="label">City, State</div>
-											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= @userbusscitystateVal %>" />
-										</div>
+										
 										<div class="singup-textarea">
 											<% if(@addressCheck) %>
 												<input type="checkbox" checked="checked" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
@@ -129,16 +134,21 @@
 										<div style="width:300px">&nbsp;</div>
 										<div class="singup-textarea">
 											<div class="label">Street Address</div>
-											<input type="text" name="textMailStreetAddress" id="textMailStreetAddress" required="true" class="singup-textbox"  placeholder="Mailing Street Address" value="<%= @usermailStreetAddress %>" />
+											<input type="text" name="textMailStreetAddress" id="textMailStreetAddress" required="true" class="singup-textbox-small"  placeholder="Mailing Street Address" value="<%= @usermailStreetAddress %>" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">City</div>
+											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= @usermailCity %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">State</div>
+											<input type="text" name="textMailState" id="textMailState" required="true" class="singup-textbox-small" placeholder="State" value="<%= @usermailState %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Zip Code</div>
 											<input type="text" name="textMailZipCode" id="textMailZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= @usermailZipCode %>" />
 										</div>
-										<div class="singup-textarea">
-											<div class="label">City, State</div>
-											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= @usermailcitystateVal %>" />
-										</div>
+										
 										<div class="singup-textarea">
 											<div class="label">Contact Number</div>
 											<input type="text" name="textPhoneNumber" id="textPhoneNumber" required="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= @userphoneNumber %>" />

@@ -11,8 +11,8 @@
 					document.getElementById('textMailStreetAddress').readOnly = true;
 					document.getElementById('textMailCity').value = document.getElementById('textBussCity').value;
 					document.getElementById('textMailCity').readOnly = true;
-					//document.getElementById('textMailState').value= document.getElementById('textBussState').value;
-					//document.getElementById('textMailState').readOnly= true;
+					document.getElementById('textMailState').value= document.getElementById('textBussState').value;
+					document.getElementById('textMailState').readOnly= true;
 					document.getElementById('textMailZipCode').value = document.getElementById('textBussZipCode').value;
 					document.getElementById('textMailZipCode').readOnly = true;
 				} else {
@@ -20,14 +20,14 @@
 					document.getElementById('textMailStreetAddress').readOnly = false;
 					document.getElementById('textMailCity').value = '';
 					document.getElementById('textMailCity').readOnly = false;
-					//document.getElementById('textMailState').value= '';
-					//document.getElementById('textMailState').readOnly= false;
+					document.getElementById('textMailState').value= '';
+					document.getElementById('textMailState').readOnly= false;
 					document.getElementById('textMailZipCode').value = '';
 					document.getElementById('textMailZipCode').readOnly = false;
 				}
 			}
 			
-			function SignupForm_AuthUser(authCode, bussStreetAddress, bussCity, bussZipCode, mailStreetAddress, mailCity, mailZipCode, error) {
+			function SignupForm_AuthUser(authCode, bussStreetAddress, bussCity, bussState, bussZipCode, mailStreetAddress, mailCity, mailState, mailZipCode, error) {
 				var idSignupCode = document.getElementById('SignupCode');
 				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
 				var idSignupForm = document.getElementById('SignupForm');
@@ -37,16 +37,18 @@
 					document.getElementById('textIncorporationType').readOnly = true;
 					document.getElementById('textBussStreetAddress').readOnly = true;
 					document.getElementById('textBussCity').readOnly = true;
+					document.getElementById('textBussState').readOnly = true;
 					document.getElementById('textBussZipCode').readOnly = true;
 					document.getElementById('textMailStreetAddress').readOnly = true;
 					document.getElementById('textMailCity').readOnly = true;
+					document.getElementById('textMailState').readOnly = true;
 					document.getElementById('textMailZipCode').readOnly = true;
 					document.getElementById('textPhoneNumber').readOnly = true;
 					document.getElementById('textLicense').readOnly = true;
 				
-					if(bussStreetAddress != '' && bussCity != '' && bussZipCode != '')
+					if(bussStreetAddress != '' && bussCity != '' && bussState != '' && bussZipCode != '')
 					{
-						if (bussStreetAddress == mailStreetAddress && bussCity == mailCity && bussZipCode == mailZipCode) {
+						if (bussStreetAddress == mailStreetAddress && bussCity == mailCity && bussState == mailState && bussZipCode == mailZipCode) {
 							document.getElementById('chkAddress').checked = true;
 						} else {
 							document.getElementById('chkAddress').checked = false;
@@ -57,7 +59,7 @@
 			}
 		</script>		
 	</head>
-	<body onload="SignupForm_AuthUser('<%= @authCode %>', '<%= params[:textBussStreetAddress] %>', '<%= params[:textBussCity] %>', '<%= params[:textBussZipCode] %>', '<%= params[:textMailStreetAddress] %>', '<%= params[:textMailCity] %>', '<%= params[:textMailZipCode] %>', '<%= @error %>');">
+	<body onload="SignupForm_AuthUser('<%= @authCode %>', '<%= params[:textBussStreetAddress] %>', '<%= params[:textBussCity] %>', '<%= params[:textBussState] %>', '<%= params[:textBussZipCode] %>', '<%= params[:textMailStreetAddress] %>', '<%= params[:textMailCity] %>', '<%= params[:textMailState] %>', '<%= params[:textMailZipCode] %>', '<%= @error %>');">
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -129,16 +131,21 @@
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Street Address</div>
-											<input type="text" name="textBussStreetAddress" required="true" id="textBussStreetAddress" class="singup-textbox"  placeholder="Business Street Address" value="<%= params[:textBussStreetAddress] %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
+											<input type="text" name="textBussStreetAddress" required="true" id="textBussStreetAddress" class="singup-textbox-small"  placeholder="Business Street Address" value="<%= params[:textBussStreetAddress] %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+										<div class="label">City</div>
+											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= params[:textBussCity] %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+										<div class="label">State</div>
+											<input type="text" name="textBussState" id="textBussState" required="true" class="singup-textbox-small" placeholder="State" value="<%= params[:textBussState] %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Zip Code</div>
 											<input type="text" name="textBussZipCode" id="textBussZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textBussZipCode] %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
-										<div class="singup-textarea">
-											<div class="label">City, State</div>
-											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= params[:textBussCity] %>" maxlength="12" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
-										</div>
+										
 										<div class="singup-textarea">
 											<input type="checkbox" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
 											<label class="label" for="chkAddress">Use Business Address as Mailing Address.</label>
@@ -146,16 +153,21 @@
 										<div style="width:300px">&nbsp;</div>
 										<div class="singup-textarea">
 											<div class="label">Street Address</div>
-											<input type="text" name="textMailStreetAddress" id="textMailStreetAddress" required="true" class="singup-textbox"  placeholder="Mailing Street Address" value="<%= params[:textMailStreetAddress] %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
+											<input type="text" name="textMailStreetAddress" id="textMailStreetAddress" required="true" class="singup-textbox-small"  placeholder="Mailing Street Address" value="<%= params[:textMailStreetAddress] %>" maxlength="100" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">City</div>
+											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= params[:textMailCity] %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<div class="label">State</div>
+											<input type="text" name="textMailState" id="textMailState" required="true" class="singup-textbox-small" placeholder="State" value="<%= params[:textMailState] %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Zip Code</div>
 											<input type="text" name="textMailZipCode" id="textMailZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textMailZipCode] %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
-										<div class="singup-textarea">
-											<div class="label">City, State</div>
-											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small"  placeholder="City, State" value="<%= params[:textMailCity] %>" maxlength="20" pattern="^^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
-										</div>
+										
 										<div class="singup-textarea">
 											<div class="label">Phone Number</div>
 											<input type="text" name="textPhoneNumber" id="textPhoneNumber" required="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= params[:textPhoneNumber] %>" maxlength="12" pattern="^[0-9]{3,3}[-]?[0-9]{3,3}[-]?[0-9]{4,4}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [1234567890 or 123-456-7890] ')" oninput="setCustomValidity('')" />
@@ -180,9 +192,7 @@
 											<div class="label">Confirm Password</div>
 											<input type="password"  name="textConfirmPassword" id="textConfirmPassword" required="true" class="singup-textbox-small"  placeholder="Confirm Password" maxlength="20" />
 										</div>
-										<div style="width:400px">
-											&nbsp;
-										</div>
+										<div class="clear"></div>
 										
 										<div class="singup-textarea">
 											<input type="hidden" name="hidAuthCode" id="hidAuthCode" value="<%= params[:textCode] %>" >

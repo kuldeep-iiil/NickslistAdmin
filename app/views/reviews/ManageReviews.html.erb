@@ -123,7 +123,10 @@
 											<input name="txtStreetAddress" type="text" class="singup-textbox-small" id="txtStreetAddress" placeholder="Street Address" value="<%= @streetAddress %>" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" id="selectCity" placeholder="City, State" value="<%= @cityState %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+,[ ][A-Za-z]{2,2}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" id="selectCity" placeholder="City" value="<%= @city %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+										</div>
+										<div class="singup-textarea">
+											<input name="selectState" type="text" autocomplete="off" class="singup-textbox-small" id="selectState" placeholder="State" value="<%= @state %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" maxlength="6" placeholder="Zipcode" value="<%= @zipCode %>" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
@@ -173,7 +176,7 @@
 									</form>
 								</div>
 								
-								<div style="margin-top: -39px; margin-left: 130px; float: left;">
+								<div style="margin-top: -40px; margin-left: 350px; float: left;">
 									<form id="frmGetReviewsFilter" action="<%= reviews_ManageReviews_url %>" method="post">
 										
 										<div class="singup-textarea">
@@ -225,7 +228,8 @@
 													<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= @firstName %>" />
 													<input name="hidLastName" type="hidden" id="hidLastName" value="<%= @lastName %>" />
 													<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= @streetAddress %>" />
-													<input name="hidCity" type="hidden" id="hidCity" value="<%= @firstName %>" />
+													<input name="hidCity" type="hidden" id="hidCity" value="<%= @city %>" />
+													<input name="hidState" type="hidden" id="hidState" value="<%= @state %>" />
 													<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= @zipCode %>" />
 													<input name="hidPhoneNumber" type="hidden" id="hidPhoneNumber" value="<%= @phoneNumber %>" />
 													<input type="hidden" name="hidDateFrom" id="hidDateFrom" value="<%= @DateFrom %>" />

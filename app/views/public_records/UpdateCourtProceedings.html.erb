@@ -1,0 +1,23 @@
+<html>
+	<head>
+		<script>
+			$(function(){			
+			
+			//$('#x_relay_response').val("FALSE");
+			$("#frmCourtProceedings").submit();
+		});
+		</script>
+	</head>
+	<body>
+		<form id="frmCourtProceedings" action="<%= public_records_EditCourtProceedings_url %>" method="post">
+			<input type="hidden" name="hidAddressID" id="hidAddressID" value="<%= @addressID %>" />
+			<input name="hidStreetAddress" type="hidden" id="hidStreetAddress" value="<%= params[:hidStreetAddress] %>" />
+			<input name="hidselectCity" type="hidden" id="hidselectCity" value="<%= params[:hidselectCity] %>" />
+			<input name="hidselectState" type="hidden" id="hidselectState" value="<%= params[:hidselectState] %>" />
+			<input name="hidZipCode" type="hidden" id="hidZipCode" value="<%= params[:hidZipCode] %>" />
+			<input name="hidDateFrom" type="hidden" id="hidDateFrom" value="<%= params[:hidDateFrom] %>" />
+			<input name="hidDateTo" type="hidden" id="hidDateTo" value="<%= params[:hidDateTo] %>" />
+			<input type="hidden" name="successMessage" id="successMessage" value="User updated successfuly!" />
+		</form>
+	</body>
+</html>

@@ -115,12 +115,12 @@ class UsersController < ApplicationController
           params[:textCompany] = userDetails.CompanyName
           params[:textIncorporationType] = userDetails.IncorporationType
           params[:textBussStreetAddress] = userBussAddressDetails.Address
-          params[:textBussCity] = userBussAddressDetails.City + ', ' + userBussAddressDetails.State
-          #@bussState = userBussAddressDetails.State
+          params[:textBussCity] = userBussAddressDetails.City
+          params[:textBussState] = userBussAddressDetails.State
           params[:textBussZipCode] = userBussAddressDetails.ZipCode
           params[:textMailStreetAddress] = userMailAddressDetails.Address
-          params[:textMailCity] = userMailAddressDetails.City + ', ' + userMailAddressDetails.State
-          #@mailState = userMailAddressDetails.State
+          params[:textMailCity] = userMailAddressDetails.City
+          params[:textMailState] = userMailAddressDetails.State
           params[:textMailZipCode] = userMailAddressDetails.ZipCode
           params[:textPhoneNumber] = userDetails.ContactNumber
           #params[:textEmail] = userDetails.EmailID
@@ -134,35 +134,35 @@ class UsersController < ApplicationController
       
       
       if(params[:textCompany] != nil && params[:textFirstName] != nil && params[:textLastName] != nil && params[:textIncorporationType] != nil &&
-      params[:textBussStreetAddress] != nil && params[:textBussCity] != nil && params[:textBussZipCode] != nil &&
-      params[:textMailStreetAddress] != nil && params[:textMailCity] != nil && params[:textMailZipCode] != nil &&
+      params[:textBussStreetAddress] != nil && params[:textBussCity] != nil && params[:textBussState] != nil && params[:textBussZipCode] != nil &&
+      params[:textMailStreetAddress] != nil && params[:textMailCity] != nil && params[:textMailState] != nil && params[:textMailZipCode] != nil &&
       params[:textPhoneNumber] != nil && params[:textEmail] != nil && params[:textLicense] != nil && params[:textUserName] != nil && params[:textPassword] != nil)
       
-        @usercompanyName = params[:textCompany]
+      @usercompanyName = params[:textCompany]
       @userfirstName = params[:textFirstName]
       @userlastName = params[:textLastName]
       @userincorporationType = params[:textIncorporationType]
       @userbussStreetAddress = params[:textBussStreetAddress]
 
-      @userbusscitystateVal = params[:textBussCity]
-      @userbussCity = ""
-      @userbussState = ""
-      if(!@userbusscitystateVal.blank?)
-        @userbusscitystateVal = @userbusscitystateVal.split(',')
-        @userbussCity = @userbusscitystateVal.at(0).strip()
-        @userbussState = @userbusscitystateVal.at(1).strip()
-      end
+      #@userbusscitystateVal = params[:textBussCity]
+      @userbussCity = params[:textBussCity]
+      @userbussState = params[:textBussState]
+      #if(!@userbusscitystateVal.blank?)
+      #  @userbusscitystateVal = @userbusscitystateVal.split(',')
+      #  @userbussCity = @userbusscitystateVal.at(0).strip()
+      #  @userbussState = @userbusscitystateVal.at(1).strip()
+      #end
       @userbussZipCode = params[:textBussZipCode]
 
       @usermailStreetAddress = params[:textMailStreetAddress]
-      @usermailcitystateVal = params[:textMailCity]
-      @usermailCity = ""
-      @usermailState = ""
-      if(!@usermailcitystateVal.blank?)
-        @usermailcitystateVal = @usermailcitystateVal.split(',')
-        @usermailCity = @usermailcitystateVal.at(0).strip()
-        @usermailState = @usermailcitystateVal.at(1).strip()
-      end
+      #@usermailcitystateVal = params[:textMailCity]
+      @usermailCity = params[:textMailCity]
+      @usermailState = params[:textMailState]
+      #if(!@usermailcitystateVal.blank?)
+      #  @usermailcitystateVal = @usermailcitystateVal.split(',')
+      #  @usermailCity = @usermailcitystateVal.at(0).strip()
+      #  @usermailState = @usermailcitystateVal.at(1).strip()
+      #end
       @usermailZipCode = params[:textMailZipCode]
       @userphoneNumber = params[:textPhoneNumber]
       @useremail = params[:textEmail]
@@ -302,14 +302,18 @@ class UsersController < ApplicationController
           @userName = @subUser.UserName
 
           @userbussStreetAddress = @subAddress1.Address
-          @userbusscitystateVal = @subAddress1.City + ', ' + @subAddress1.State
+          #@userbusscitystateVal = @subAddress1.City + ', ' + @subAddress1.State
+          @userbussCity = @subAddress1.City
+          @userbussState = @subAddress1.State
           @userbussZipCode = @subAddress1.ZipCode
 
           @usermailStreetAddress = @subAddress2.Address
-          @usermailcitystateVal = @subAddress2.City + ', ' + @subAddress2.State
+          #@usermailcitystateVal = @subAddress2.City + ', ' + @subAddress2.State
+          @usermailCity = @subAddress2.City
+          @usermailState = @subAddress2.State
           @usermailZipCode = @subAddress2.ZipCode
 
-          if(@userbussStreetAddress == @usermailStreetAddress && @userbusscitystateVal == @userbusscitystateVal && @userbussZipCode == @usermailZipCode)
+          if(@userbussStreetAddress == @usermailStreetAddress && @userbussCity == @usermailCity && @userbussState == @usermailState && @userbussZipCode == @usermailZipCode)
             @addressCheck = true
           else
             @addressCheck = false
@@ -340,25 +344,25 @@ class UsersController < ApplicationController
       @userincorporationType = params[:textIncorporationType]
       @userbussStreetAddress = params[:textBussStreetAddress]
 
-      @userbusscitystateVal = params[:textBussCity]
-      @userbussCity = ""
-      @userbussState = ""
-      if(!@userbusscitystateVal.blank?)
-        @userbusscitystateVal = @userbusscitystateVal.split(',')
-        @userbussCity = @userbusscitystateVal.at(0).strip()
-        @userbussState = @userbusscitystateVal.at(1).strip()
-      end
+      #@userbusscitystateVal = params[:textBussCity]
+      @userbussCity = params[:textBussCity]
+      @userbussState = params[:textBussState]
+      #if(!@userbusscitystateVal.blank?)
+      #  @userbusscitystateVal = @userbusscitystateVal.split(',')
+      #  @userbussCity = @userbusscitystateVal.at(0).strip()
+      #  @userbussState = @userbusscitystateVal.at(1).strip()
+      #end
       @userbussZipCode = params[:textBussZipCode]
 
       @usermailStreetAddress = params[:textMailStreetAddress]
-      @usermailcitystateVal = params[:textMailCity]
-      @usermailCity = ""
-      @usermailState = ""
-      if(!@usermailcitystateVal.blank?)
-        @usermailcitystateVal = @usermailcitystateVal.split(',')
-        @usermailCity = @usermailcitystateVal.at(0).strip()
-        @usermailState = @usermailcitystateVal.at(1).strip()
-      end
+      #@usermailcitystateVal = params[:textMailCity]
+      @usermailCity = params[:textMailCity]
+      @usermailState = params[:textMailState]
+      #if(!@usermailcitystateVal.blank?)
+      #  @usermailcitystateVal = @usermailcitystateVal.split(',')
+      #  @usermailCity = @usermailcitystateVal.at(0).strip()
+      #  @usermailState = @usermailcitystateVal.at(1).strip()
+      #end
       @usermailZipCode = params[:textMailZipCode]
       @userphoneNumber = params[:textPhoneNumber]
       @useremail = params[:textEmail]

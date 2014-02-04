@@ -72,7 +72,8 @@ class ReviewsController < ApplicationController
         if(!@queryStatus.blank?)
           @query = @query + " and " + @queryStatus
         end
-
+        
+        @questionID = '0'
         if(params[:selectQuestion] != nil)
           @questionID = params[:selectQuestion]
           if(@questionID == '0')
@@ -86,6 +87,7 @@ class ReviewsController < ApplicationController
           @query = @query + " and " + @queryQuestion
         end
 
+        @answerID = '0'
         if(params[:selectAnswer] != nil)
           @answerID = params[:selectAnswer]
           if(@answerID == '1')

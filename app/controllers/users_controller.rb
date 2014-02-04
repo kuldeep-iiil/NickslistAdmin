@@ -12,6 +12,10 @@ class UsersController < ApplicationController
       redirect_to nicks_admin_Index_url
     else
       
+      @query = "SELECT distinct subUser.*, userPay.DateUpdated as SubscriptionDate
+                  FROM subscribed_users subUser
+                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID"
+      
       if(params[:hidStatus] != nil)
         params[:selectStatus] = params[:hidStatus]
       end
@@ -69,21 +73,13 @@ class UsersController < ApplicationController
       end
 
       if(@queryStatus != "" && @queryDate != "")
-        @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate
-                  FROM subscribed_users subUser
-                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID where " + @queryDate + " and " + @queryStatus)
+        @subUser = SubscribedUser.find_by_sql(@query + " where " + @queryDate + " and " + @queryStatus)
       elsif(@queryStatus == "" && @queryDate != "")
-        @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate
-                  FROM subscribed_users subUser
-                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID where " + @queryDate)
+        @subUser = SubscribedUser.find_by_sql(@query + " where " + @queryDate)
       elsif(@queryStatus != "" && @queryDate == "")
-        @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate
-                  FROM subscribed_users subUser
-                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID where " + @queryStatus)
+        @subUser = SubscribedUser.find_by_sql(@query + " where " + @queryStatus)
       else
-        @subUser = SubscribedUser.find_by_sql("SELECT distinct subUser.*, userPay.ResponseDateTime as SubscriptionDate
-                  FROM subscribed_users subUser
-                  LEFT JOIN user_payment_details userPay ON subUser.id = userPay.UserID")
+        @subUser = SubscribedUser.find_by_sql(@query)
       end
     end
   end
@@ -257,6 +253,20 @@ class UsersController < ApplicationController
           @userMailAddressDetail = UserAddressDetailHistory.new(ReportID: @adminActivity.id, UserID: @subAddress2.UserID, AddressType: @subAddress2.AddressType , Address: @subAddress2.Address, City: @subAddress2.City, State: @subAddress2.State, ZipCode: @subAddress2.ZipCode, DateCreated: time, DateUpdated: time)
           @userMailAddressDetail.save
           
+          if(keyCode.blank?)
+            isUsed='0'
+            @subPlan = UserSubscriptionPlan.find_by(PlanType: 'New User')
+            @itemprice = @subPlan.price
+            @price = number_to_currency(@itemprice.to_i, :unit => "$")
+          else
+            isUsed='1'
+            @subPlan = UserSubscriptionPlan.find_by(PlanType: 'Subsequent User')
+            @itemprice = @subPlan.price
+            @price = number_to_currency(@itemprice.to_i, :unit => "$")
+          end
+          
+          @userPaymentDetails = UserPaymentDetail.new(UserID: @subUser.id, TransactionAmount: @price, PayTransactionID: "", ResponseString: "",  DateCreated: time, DateUpdated: time)
+          @userPaymentDetails.save
           
           #Create key for the user company to be used by subsicuent user.
           if(keyCode.blank?)

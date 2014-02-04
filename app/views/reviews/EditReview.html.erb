@@ -31,32 +31,39 @@
 				var isApproved = $('#hidIsApproved').val();
 				if(isApproved == 1)
 				{
-					//var result = JQueryConfirm();
-					result = confirm("Review is not Approved. Do you also want to approve this review.");									
-					if(result)
-					{
-						$('#hidIsPublish').val("2");	
-					}
+					var result = JQueryConfirm();
+					//result = confirm("Review is not Approved. Do you also want to approve this review.");									
+					//if(result)
+					//{
+					//	$('#hidIsPublish').val("2");	
+					//}
 				}
-				return true;
+				return false;
 			}
 			
 			function JQueryConfirm(){
 				$.alerts.okButton = 'Yes';
 				$.alerts.cancelButton = 'No';
 
-				jConfirm('Review is not Approved. Do you also want to approve this review.', 'Confirm', function(r) {
+				return jConfirm('Review is not Approved. Do you also want to approve this review.', 'Confirm', function(r) {
 					
 					if (r == false)
 					{
 						//Do stuff for no
+						document.getElementById('frmPublishReview').submit();
+						return false;
 					}
 					else
 					{
+						
 						//Do stuff for yes
 						$('#hidIsPublish').val("2");
+						document.getElementById('frmPublishReview').submit();
+						return true;
 					}				
 				});
+				
+				return false;
 				
 			}
 		</script>
@@ -169,7 +176,7 @@
 							
 							<% end %>
 						<div class="review-submit-bt">
-							<form action="<%= reviews_PublishReview_url %>" method="post">
+							<form action="<%= reviews_PublishReview_url %>" id='frmPublishReview' method="post">
 								<input name="hidQuestion" type="hidden" id="hidQuestion" value="<%= params[:hidQuestion] %>" />
 								<input name="hidAnswer" type="hidden" id="hidAnswer" value="<%= params[:hidAnswer] %>" />
 								<input name="hidFirstName" type="hidden" id="hidFirstName" value="<%= params[:hidFirstName] %>" />

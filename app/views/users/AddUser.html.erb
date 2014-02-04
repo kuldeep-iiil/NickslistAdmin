@@ -119,11 +119,11 @@
 										</div>
 										<div class="singup-textarea">
 											<div class="label">First Name</div>
-											<input type="text" name="textFirstName" id="textFirstName" required="true" class="singup-textbox-small"  placeholder="First Name" value="<%= params[:textFirstName] %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+											<input type="text" name="textFirstName" id="textFirstName" required="true" class="singup-textbox-small"  placeholder="First Name" value="<%= params[:textFirstName] %>" maxlength="20" pattern="^[A-Za-z]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Last Name</div>
-											<input type="text" name="textLastName" id="textLastName" required="true" class="singup-textbox-small"  placeholder="Last Name" value="<%= params[:textLastName] %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
+											<input type="text" name="textLastName" id="textLastName" required="true" class="singup-textbox-small"  placeholder="Last Name" value="<%= params[:textLastName] %>" maxlength="20" pattern="^[A-Za-z]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Steve]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Incorporation Type</div>
@@ -135,15 +135,15 @@
 										</div>
 										<div class="singup-textarea">
 										<div class="label">City</div>
-											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= params[:textBussCity] %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textBussCity" id="textBussCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= params[:textBussCity] %>" maxlength="20" pattern="^[A-Za-z ]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 										<div class="label">State</div>
-											<input type="text" name="textBussState" id="textBussState" required="true" class="singup-textbox-small" placeholder="State" value="<%= params[:textBussState] %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textBussState" id="textBussState" required="true" class="singup-textbox-small" placeholder="State" value="<%= params[:textBussState] %>" maxlength="20" pattern="^[A-Za-z]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Zip Code</div>
-											<input type="text" name="textBussZipCode" id="textBussZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textBussZipCode] %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textBussZipCode" id="textBussZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textBussZipCode] %>" maxlength="6" pattern="^[0-9]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 										
 										<div class="singup-textarea">
@@ -157,20 +157,20 @@
 										</div>
 										<div class="singup-textarea">
 											<div class="label">City</div>
-											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= params[:textMailCity] %>" maxlength="20" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textMailCity" id="textMailCity" required="true" class="singup-textbox-small" placeholder="City" value="<%= params[:textMailCity] %>" maxlength="20" pattern="^[A-Za-z]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">State</div>
-											<input type="text" name="textMailState" id="textMailState" required="true" class="singup-textbox-small" placeholder="State" value="<%= params[:textMailState] %>" maxlength="20" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textMailState" id="textMailState" required="true" class="singup-textbox-small" placeholder="State" value="<%= params[:textMailState] %>" maxlength="20" pattern="^[A-Za-z]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Zip Code</div>
-											<input type="text" name="textMailZipCode" id="textMailZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textMailZipCode] %>" maxlength="6" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textMailZipCode" id="textMailZipCode" required="true" class="singup-textbox-small"  placeholder="ZipCode" value="<%= params[:textMailZipCode] %>" maxlength="6" pattern="^[0-9]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 										
 										<div class="singup-textarea">
 											<div class="label">Phone Number</div>
-											<input type="text" name="textPhoneNumber" id="textPhoneNumber" required="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= params[:textPhoneNumber] %>" maxlength="12" pattern="^[0-9]{3,3}[-]?[0-9]{3,3}[-]?[0-9]{4,4}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [1234567890 or 123-456-7890] ')" oninput="setCustomValidity('')" />
+											<input type="text" name="textPhoneNumber" id="textPhoneNumber" required="true" class="singup-textbox-small"  placeholder="Phone Number" value="<%= params[:textPhoneNumber] %>" maxlength="12" pattern="^[0-9]{3,3}[-][0-9]{3,3}[-][0-9]{4,4}$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123-456-7890] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<div class="label">Email ID</div>

@@ -76,13 +76,13 @@
 											<input name="txtStreetAddress" type="text" class="singup-textbox-small" id="txtStreetAddress" maxlength="100" placeholder="Street Address" value="<%= @streetAddress %>" pattern="^[A-Za-z0-9 ,]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [11111, Street Address]')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" maxlength="20" id="selectCity" placeholder="City" value="<%= @city %>" pattern="^[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]+[ ]?[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+											<input name="selectCity" type="text" autocomplete="off" class="singup-textbox-small" maxlength="20" id="selectCity" placeholder="City" value="<%= @city %>" pattern="^[A-Za-z ]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="selectState" type="text" autocomplete="off" class="singup-textbox-small" maxlength="20" id="selectState" placeholder="State" value="<%= @state %>" pattern="^[A-Za-z]+[A-Za-z]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
+											<input name="selectState" type="text" autocomplete="off" class="singup-textbox-small" maxlength="20" id="selectState" placeholder="State" value="<%= @state %>" pattern="^[A-Za-z]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [Seattle, WA] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
-											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" placeholder="Zipcode" maxlength="6" value="<%= @zipCode %>" pattern="^[0-9]+[0-9]$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
+											<input name="txtZipCode" type="text" class="singup-textbox-small" id="txtZipCode" placeholder="Zipcode" maxlength="6" value="<%= @zipCode %>" pattern="^[0-9]+$" oninvalid="this.setCustomValidity('Invalid format. Format should be like [123456] ')" oninput="setCustomValidity('')" />
 										</div>
 										<div class="singup-textarea">
 											<input type="text" name="textDateFrom" id="textDateFrom" readonly="readonly" autocomplete="off" class="singup-textbox-small"  placeholder="Date From" value="<%= @DateFrom %>" />

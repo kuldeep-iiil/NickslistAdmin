@@ -18,33 +18,6 @@ USE `nickslist_dev`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `site_module_user_joins`
---
-
-DROP TABLE IF EXISTS `site_module_user_joins`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `site_module_user_joins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ModuleID` int(11) NOT NULL,
-  `UserID` int(11) NOT NULL,
-  `DateCreated` datetime NOT NULL,
-  `DateUpdated` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `site_module_user_joins`
---
-
-LOCK TABLES `site_module_user_joins` WRITE;
-/*!40000 ALTER TABLE `site_module_user_joins` DISABLE KEYS */;
-INSERT INTO `site_module_user_joins` (`id`, `ModuleID`, `UserID`, `DateCreated`, `DateUpdated`) VALUES (1,2,1,'2013-12-02 16:59:54','2013-12-02 16:59:54'),(2,1,1,'2013-12-17 12:45:24','2013-12-17 12:45:24'),(3,3,1,'2013-12-17 12:45:24','2013-12-17 12:45:24'),(4,1,2,'2013-12-17 12:51:32','2013-12-17 12:51:32'),(5,3,2,'2013-12-17 12:51:32','2013-12-17 12:51:32');
-/*!40000 ALTER TABLE `site_module_user_joins` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `site_users`
 --
 
@@ -75,6 +48,33 @@ LOCK TABLES `site_users` WRITE;
 /*!40000 ALTER TABLE `site_users` DISABLE KEYS */;
 INSERT INTO `site_users` (`id`, `UserName`, `Password`, `Salt`, `FirstName`, `LastName`, `EmailID`, `IsActivated`, `IsSuperAdmin`, `DateCreated`, `DateUpdated`) VALUES (1,'admin','hÏkC·âYh4¯ëc\\','20131217','Nick','Perkins','nicks@iiil.in',1,1,'2013-12-16 20:27:11','2013-12-17 13:39:22');
 /*!40000 ALTER TABLE `site_users` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `site_module_user_joins`
+--
+
+DROP TABLE IF EXISTS `site_module_user_joins`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `site_module_user_joins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `ModuleID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `DateCreated` datetime NOT NULL,
+  `DateUpdated` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `site_module_user_joins`
+--
+
+LOCK TABLES `site_module_user_joins` WRITE;
+/*!40000 ALTER TABLE `site_module_user_joins` DISABLE KEYS */;
+INSERT INTO `site_module_user_joins` (`id`, `ModuleID`, `UserID`, `DateCreated`, `DateUpdated`) VALUES (1,1,1,'2013-12-02 16:59:54','2013-12-02 16:59:54'),(2,2,1,'2013-12-17 12:45:24','2013-12-17 12:45:24'),(3,3,1,'2013-12-17 12:45:24','2013-12-17 12:45:24'),(4,4,1,'2013-12-17 12:51:32','2013-12-17 12:51:32'),(5,5,1,'2013-12-17 12:51:32','2013-12-17 12:51:32'),(6,6,1,'2013-12-17 12:51:32','2013-12-17 12:51:32');
+/*!40000 ALTER TABLE `site_module_user_joins` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

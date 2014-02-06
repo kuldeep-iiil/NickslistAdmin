@@ -50,11 +50,11 @@ class UsersController < ApplicationController
       end
 
       if(@dateFrom != "" && @dateTo != "")
-        @queryDate = "userPay.ResponseDateTime BETWEEN '" + @dateFrom + "' AND '" + @dateTo + "'"
+        @queryDate = "userPay.DateUpdated BETWEEN '" + @dateFrom + "' AND '" + @dateTo + "'"
       elsif(@dateFrom != "" && @dateTo == "")
-        @queryDate = "userPay.ResponseDateTime >= '" + @dateFrom + "'"
+        @queryDate = "userPay.DateUpdated >= '" + @dateFrom + "'"
       elsif(@dateFrom == "" && @dateTo != "")
-        @queryDate = "userPay.ResponseDateTime <= '" + @dateTo + "'"
+        @queryDate = "userPay.DateUpdated <= '" + @dateTo + "'"
       else
         @queryDate = ""
       end
@@ -497,6 +497,9 @@ class UsersController < ApplicationController
       end
 
       @subUser = SubscribedUser.find_by(ID: @userID)
+      @subAddress1 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Business')
+      @subAddress2 = UserAddressDetail.find_by(UserID: @userID, AddressType: 'Mailing')
+        
       @subUser.Password = password
       @subUser.Salt = salt
       @subUser.DateUpdated = time

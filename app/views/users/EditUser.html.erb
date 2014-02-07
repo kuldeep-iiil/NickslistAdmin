@@ -29,12 +29,21 @@
 				return result;
 			}
 			
-			//function check_chkAddress(chk) {
-			function check_chkAddress() {
+			function load_chkAddress() {
 				var chk = document.getElementById('chkAddress');
-				var idSignupCode = document.getElementById('SignupCode');
-				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
-				var idSignupForm = document.getElementById('SignupForm');
+				if (chk.checked) {
+					document.getElementById('textMailStreetAddress').value = document.getElementById('textBussStreetAddress').value;
+					document.getElementById('textMailStreetAddress').readOnly = true;
+					document.getElementById('textMailCity').value = document.getElementById('textBussCity').value;
+					document.getElementById('textMailCity').readOnly = true;
+					document.getElementById('textMailState').value= document.getElementById('textBussState').value;
+					document.getElementById('textMailState').readOnly= true;
+					document.getElementById('textMailZipCode').value = document.getElementById('textBussZipCode').value;
+					document.getElementById('textMailZipCode').readOnly = true;
+				}
+			}
+			
+			function check_chkAddress(chk) {
 				if (chk.checked) {
 					document.getElementById('textMailStreetAddress').value = document.getElementById('textBussStreetAddress').value;
 					document.getElementById('textMailStreetAddress').readOnly = true;
@@ -57,7 +66,7 @@
 			}
 		</script>			
 	</head>
-	<body onload="check_chkAddress();">
+	<body onload="load_chkAddress();">
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -126,16 +135,10 @@
 										</div>
 										
 										<div class="singup-textarea">
-											<!--<% if(@addressCheck) %>
+											<% if(@addressCheck) %>
 												<input type="checkbox" checked="checked" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
 											<% else %>
 												<input type="checkbox" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
-											<% end %>-->
-											
-											<% if(@addressCheck) %>
-												<input type="checkbox" checked="checked" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress();" />
-											<% else %>
-												<input type="checkbox" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress();" />
 											<% end %>
 											<label for="chkAddress" class="label">Use Business Address as Mailing Address.</label>
 										</div>

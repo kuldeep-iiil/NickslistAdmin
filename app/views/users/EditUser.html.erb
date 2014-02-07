@@ -178,7 +178,7 @@
 										<div class="singup-textarea">
 											<div style="width:210px; margin-top: 10px">
 											<label for="chkOwner">Company Owner</label>
-											<% if(@subUser.AuthCodeUsed) %>
+											<% if(@subUser.AuthCodeUsed.to_i == 1) %>
 												<input type="checkbox" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />
 											<% else %>
 												<input type="checkbox" checked="checked" id="chkOwner" name="chkOwner" value="1" disabled="disabled" />

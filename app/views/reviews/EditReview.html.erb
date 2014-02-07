@@ -32,13 +32,12 @@
 				if(isApproved == 1)
 				{
 					var result = JQueryConfirm();
-					//result = confirm("Review is not Approved. Do you also want to approve this review.");									
-					//if(result)
-					//{
-					//	$('#hidIsPublish').val("2");	
-					//}
+					return false;
 				}
-				return false;
+				else
+				{
+					return true;
+				}
 			}
 			
 			function JQueryConfirm(){

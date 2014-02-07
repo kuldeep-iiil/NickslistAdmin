@@ -29,7 +29,9 @@
 				return result;
 			}
 			
-			function check_chkAddress(chk) {
+			//function check_chkAddress(chk) {
+			function check_chkAddress() {
+				var chk = document.getElementById('chkAddress');
 				var idSignupCode = document.getElementById('SignupCode');
 				var idSignupReadOnlyCode = document.getElementById('SignupReadOnlyCode');
 				var idSignupForm = document.getElementById('SignupForm');
@@ -55,7 +57,7 @@
 			}
 		</script>			
 	</head>
-	<body>
+	<body onload="check_chkAddress();">
 		<div id="wrapper">
 			<%= render partial: "/layouts/header" %>
 
@@ -124,10 +126,16 @@
 										</div>
 										
 										<div class="singup-textarea">
-											<% if(@addressCheck) %>
+											<!--<% if(@addressCheck) %>
 												<input type="checkbox" checked="checked" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
 											<% else %>
 												<input type="checkbox" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress(this);" />
+											<% end %>-->
+											
+											<% if(@addressCheck) %>
+												<input type="checkbox" checked="checked" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress();" />
+											<% else %>
+												<input type="checkbox" id="chkAddress" name="chkAddress" value="1" onclick="check_chkAddress();" />
 											<% end %>
 											<label for="chkAddress" class="label">Use Business Address as Mailing Address.</label>
 										</div>

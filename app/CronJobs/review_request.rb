@@ -1,6 +1,6 @@
 class ReviewRequest < ApplicationController
   def SendReviewRequest
-    @searchReview = CustomerReviewJoin.find_by_sql("select custRevjoin.id, custRevjoin.CustomerSearchID, custRevjoin.UserID, custRevjoin.DateCreated from customer_review_joins custRevjoin join subscribed_users sUser on sUser.id = custRevjoin.userID where sUser.IsNotification = '1' and custRevjoin.IsReviewGiven = '0' and custRevjoin.IsRequestSent = '0' and DATEDIFF(NOW(), custRevjoin.DateCreated) >= 0")
+    @searchReview = CustomerReviewJoin.find_by_sql("select custRevjoin.id, custRevjoin.CustomerSearchID, custRevjoin.UserID, custRevjoin.DateCreated from customer_review_joins custRevjoin join subscribed_users sUser on sUser.id = custRevjoin.userID where sUser.IsNotification = '1' and custRevjoin.IsReviewGiven = '0' and custRevjoin.IsRequestSent = '0' and DATEDIFF(NOW(), custRevjoin.DateCreated) >= 14")
     if(!@searchReview.blank?)
       @searchReview.each do |custSearch|
         @search = CustomerSearch.find_by_sql("select cs.FirstName, cs.LastName, ca.StreetAddress, ca.City, ca.State, ca.ZipCode, cp.ContactNumber

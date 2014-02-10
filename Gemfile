@@ -48,6 +48,9 @@ gem 'thin'
 #Payment gateway
 gem 'authorize-net'
 
+#To configure cronjob
+#gem 'gnome-schedule'
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
